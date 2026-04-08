@@ -1,7 +1,7 @@
 include: "/views/raw/pg_stat_database.view.lkml"
 
 view: +pg_stat_database {
-
+  label: "Stat Database"
   # --------------------------------------------------------------------------
   # Refined Dimensions
   # --------------------------------------------------------------------------
