@@ -1,6 +1,7 @@
 include: "/views/raw/pg_stat_activity.view.lkml"
 
 view: +pg_stat_activity {
+  label: "Stat Activity"
 
   # --------------------------------------------------------------------------
   # Refined Dimensions
@@ -113,7 +114,7 @@ view: +pg_stat_activity {
     type: string
     description: "Categorizes the connection as originating from Looker or another application based on the application_name."
     group_label: "Traffic Analysis"
-    sql: CASE 
+    sql: CASE
             WHEN ${application_name} LIKE '%Looker%' THEN 'Looker BI'
             ELSE 'Other Application'
          END ;;

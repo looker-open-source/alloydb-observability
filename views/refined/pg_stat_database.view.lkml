@@ -73,6 +73,15 @@ view: +pg_stat_database {
     sql: ${xact_rollback} ;;
   }
 
+  measure: transaction_failure_rate {
+    type: number
+    label: "Transaction Failure Rate"
+    description: "Percentage of total transactions that resulted in a rollback. High rates indicate deadlocks or app errors."
+    group_label: "Performance Ratios"
+    value_format_name: percent_2
+    sql: 1.0 * ${total_rollbacks} / NULLIF((${total_commits} + ${total_rollbacks}), 0) ;;
+  }
+
   measure: cache_hit_ratio {
     type: number
     description: "Ratio of disk blocks found already in the buffer cache to total blocks read. High is better (> 0.99)."

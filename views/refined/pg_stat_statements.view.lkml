@@ -1,7 +1,7 @@
 include: "/views/raw/pg_stat_statements.view.lkml"
 
 view: +pg_stat_statements {
-  
+  label: "Stat Statements"
   # --------------------------------------------------------------------------
   # Refined Dimensions
   # --------------------------------------------------------------------------
@@ -73,6 +73,14 @@ view: +pg_stat_statements {
     group_label: "Execution Metrics"
     value_format_name: decimal_2
     sql: ${total_exec_time} ;;
+  }
+
+  measure: workload_share {
+    type: percent_of_total
+    direction: "column"
+    description: "The percentage of total database execution time consumed by this specific grouping (e.g., Looker vs Non-Looker)."
+    group_label: "Traffic Analysis"
+    sql: ${total_execution_time_ms} ;;
   }
 
   measure: average_execution_time_ms {
