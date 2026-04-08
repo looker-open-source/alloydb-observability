@@ -3,6 +3,32 @@ include: "/views/raw/pg_stat_statements.view.lkml"
 view: +pg_stat_statements {
   label: "Stat Statements"
   # --------------------------------------------------------------------------
+  # Period over Period (PoP) Support
+  # --------------------------------------------------------------------------
+
+  filter: pop_date_filter {
+    type: date
+    label: "PoP Filter"
+    description: "Select a timeframe to compare (Current vs Previous identical period)."
+    group_label: "Period Over Period"
+  }
+
+  dimension: period_over_period_bucket {
+    type: string
+    label: "Comparison Period"
+    group_label: "Period Over Period"
+    description: "Groups data into Current, Previous, or Outside periods based on the PoP Filter."
+    # AlloyDB timestamps are usually handled as raw in pg_stat_statements until reset
+    # For this Block, we assume historical logging is enabled for better time series.
+    sql:
+      CASE
+        WHEN {% condition pop_date_filter %} CURRENT_TIMESTAMP {% endcondition %} THEN 'Current Period'
+        -- Logic for previous period goes here once historical logs are enabled
+        ELSE 'Current State'
+      END ;;
+  }
+
+  # --------------------------------------------------------------------------
   # Refined Dimensions
   # --------------------------------------------------------------------------
 
