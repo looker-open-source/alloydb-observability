@@ -1,33 +1,7 @@
 include: "/views/raw/pg_stat_statements.view.lkml"
 
 view: +pg_stat_statements {
-  label: "Stat Statements"
-  # --------------------------------------------------------------------------
-  # Period over Period (PoP) Support
-  # --------------------------------------------------------------------------
-
-  filter: pop_date_filter {
-    type: date
-    label: "PoP Filter"
-    description: "Select a timeframe to compare (Current vs Previous identical period)."
-    group_label: "Period Over Period"
-  }
-
-  dimension: period_over_period_bucket {
-    type: string
-    label: "Comparison Period"
-    group_label: "Period Over Period"
-    description: "Groups data into Current, Previous, or Outside periods based on the PoP Filter."
-    # AlloyDB timestamps are usually handled as raw in pg_stat_statements until reset
-    # For this Block, we assume historical logging is enabled for better time series.
-    sql:
-      CASE
-        WHEN {% condition pop_date_filter %} CURRENT_TIMESTAMP {% endcondition %} THEN 'Current Period'
-        -- Logic for previous period goes here once historical logs are enabled
-        ELSE 'Current State'
-      END ;;
-  }
-
+  
   # --------------------------------------------------------------------------
   # Refined Dimensions
   # --------------------------------------------------------------------------
@@ -64,7 +38,7 @@ view: +pg_stat_statements {
   }
 
   # --------------------------------------------------------------------------
-  # Looker Workload Identification & Liquid Formatting
+  # Looker Workload Identification
   # --------------------------------------------------------------------------
 
   dimension: is_looker_query {
@@ -83,38 +57,40 @@ view: +pg_stat_statements {
   }
 
   # --------------------------------------------------------------------------
-  # Custom Measures & Drills
+  # Custom Measures & Formatting
   # --------------------------------------------------------------------------
 
   measure: total_calls {
     type: sum
     description: "Total number of times the query was executed across all sessions."
     group_label: "Execution Metrics"
+    value_format_name: decimal_0
     sql: ${calls} ;;
   }
 
-  measure: total_execution_time_ms {
+  measure: total_execution_time_seconds {
     type: sum
-    description: "Total time spent executing the query, in milliseconds."
+    label: "Total Execution Time (Secs)"
+    description: "Cumulative time spent executing the query, converted to seconds for easier reading."
     group_label: "Execution Metrics"
-    value_format_name: decimal_2
-    sql: ${total_exec_time} ;;
+    value_format: "#,##0.00 \"s\""
+    sql: ${total_exec_time} / 1000.0 ;;
   }
 
   measure: workload_share {
     type: percent_of_total
     direction: "column"
-    description: "The percentage of total database execution time consumed by this specific grouping (e.g., Looker vs Non-Looker)."
+    description: "The percentage of total database execution time consumed by this specific grouping."
     group_label: "Traffic Analysis"
-    sql: ${total_execution_time_ms} ;;
+    sql: ${total_execution_time_seconds} ;;
   }
 
   measure: average_execution_time_ms {
     type: number
     description: "Average execution time per call, in milliseconds."
     group_label: "Execution Metrics"
-    value_format_name: decimal_2
-    sql: 1.0 * ${total_execution_time_ms} / NULLIF(${total_calls}, 0) ;;
+    value_format: "#,##0.00 \"ms\""
+    sql: 1.0 * SUM(${total_exec_time}) / NULLIF(SUM(${calls}), 0) ;;
     drill_fields: [query_formatted, total_calls, average_execution_time_ms, max_execution_time_ms]
   }
 
@@ -122,7 +98,7 @@ view: +pg_stat_statements {
     type: max
     description: "Maximum execution time recorded for the query, in milliseconds."
     group_label: "Execution Metrics"
-    value_format_name: decimal_2
+    value_format: "#,##0.00 \"ms\""
     sql: ${max_exec_time} ;;
   }
 }
