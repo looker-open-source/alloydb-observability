@@ -1,5 +1,6 @@
 ---
 - dashboard: alloydb_performance_overview
+  extends: navbaralloydb
   title: AlloyDB Performance Overview
   preferred_viewer: dashboards-next
   description: ''
@@ -357,35 +358,6 @@
     width: 10
     height: 6
     tab_name: ''
-  - title: _
-    name: _
-    model: operational_intelligence_alloy_db
-    explore: alloydb_performance
-    type: single_value
-    fields: [navigation_bar.horizontal_navigation_bar]
-    filters:
-      pg_stat_activity.query_start_date: 7 days
-      pg_stat_database.datname: '"global_gadgets_demo"'
-    sorts: [navigation_bar.horizontal_navigation_bar]
-    limit: 500
-    column_limit: 50
-    custom_color_enabled: true
-    show_single_value_title: true
-    show_comparison: false
-    comparison_type: value
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    enable_conditional_formatting: false
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    defaults_version: 1
-    hidden_pivots: {}
-    listen: {}
-    row: 0
-    col: 0
-    width: 24
-    height: 3
-    tab_name: ''
   filters:
   - name: Date
     title: Date
@@ -401,16 +373,3 @@
     explore: alloydb_performance
     listens_to_filters: []
     field: pg_stat_activity.query_start_date
-  - name: Database Name
-    title: Database Name
-    type: field_filter
-    default_value: postgres
-    allow_multiple_values: true
-    required: false
-    ui_config:
-      type: dropdown_menu
-      display: inline
-    model: operational_intelligence_alloy_db
-    explore: alloydb_performance
-    listens_to_filters: []
-    field: pg_stat_database.datname

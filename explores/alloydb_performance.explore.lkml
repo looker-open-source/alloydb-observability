@@ -1,8 +1,8 @@
 include: "/views/refined/*.view.lkml"
 
 explore: alloydb_performance {
-  label: "AlloyDB Performance Metrics"
-  description: "Explore Query Performance, Active Connections, and Database Health Metrics."
+  label: "AlloyDB Performance Monitoring"
+  description: "The central hub for all AlloyDB metrics: Query execution, live connections, and database health."
 
   view_name: pg_stat_statements
 

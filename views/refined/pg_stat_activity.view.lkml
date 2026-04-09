@@ -198,9 +198,9 @@ view: +pg_stat_activity {
     type: string
     description: "Categorizes the connection as originating from Looker or another application."
     group_label: "Traffic Analysis"
-    sql: CASE 
-            WHEN ${application_name} LIKE '%Looker%' 
-                 OR ${application_name} = 'PostgreSQL JDBC Driver' 
+    sql: CASE
+            WHEN ${application_name} LIKE '%Looker%'
+                 OR ${application_name} = 'PostgreSQL JDBC Driver'
                  OR ${query} LIKE '%-- Looker%' THEN 'Looker BI'
             ELSE 'Other Application'
          END ;;
