@@ -6,54 +6,31 @@ view: +pg_stat_statements {
   # Refined Dimensions
   # --------------------------------------------------------------------------
 
-  dimension: queryid {
-    primary_key: yes
-    type: number
-    description: "Internal hash code computed from the statement's parse tree."
-    group_label: "Query Identification"
-    sql: ${TABLE}.queryid ;;
-  }
-
-  dimension: userid {
-    type: number
-    hidden: yes
-    description: "OID of user who executed the statement."
-    group_label: "Query Identification"
-    sql: ${TABLE}.userid ;;
-  }
-
-  dimension: dbid {
-    type: number
-    hidden: yes
-    description: "OID of database in which the statement was executed."
-    group_label: "Query Identification"
-    sql: ${TABLE}.dbid ;;
-  }
-
-  dimension: query {
+  dimension: query_pii_masked {
+    label: "SQL Statement (PII Sensitive)"
     type: string
-    description: "The raw SQL statement text."
+    description: "The SQL statement text. Masked if PII_QUERY_TEXT constant is set to HIDE."
     group_label: "Query Details"
-    sql: ${TABLE}.query ;;
-  }
-
-  # --------------------------------------------------------------------------
-  # Looker Workload Identification
-  # --------------------------------------------------------------------------
-
-  dimension: is_looker_query {
-    type: yesno
-    description: "Identifies if the query originated from Looker by checking for Looker's signature SQL comments."
-    group_label: "Traffic Analysis"
-    sql: ${query} LIKE '%-- Looker%' OR ${query} LIKE '%-- looker%' ;;
+    sql: 
+      CASE 
+        WHEN '@{PII_QUERY_TEXT}' = 'HIDE' THEN '--- MASKED FOR PII ---'
+        ELSE ${TABLE}.query 
+      END ;;
   }
 
   dimension: query_formatted {
     type: string
     description: "The SQL statement text with monospace code formatting for easy reading."
     group_label: "Query Details"
-    sql: ${query} ;;
+    sql: ${query_pii_masked} ;;
     html: <div style="font-family: monospace; white-space: pre-wrap;">{{ value }}</div> ;;
+  }
+
+  dimension: is_looker_query {
+    type: yesno
+    description: "Identifies if the query originated from Looker by checking for Looker's signature SQL comments."
+    group_label: "Traffic Analysis"
+    sql: ${TABLE}.query LIKE '%-- Looker%' OR ${TABLE}.query LIKE '%-- looker%' ;;
   }
 
   # --------------------------------------------------------------------------

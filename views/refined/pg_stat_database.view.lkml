@@ -2,9 +2,17 @@ include: "/views/raw/pg_stat_database.view.lkml"
 
 view: +pg_stat_database {
   label: "Stat Database"
+
   # --------------------------------------------------------------------------
   # Refined Dimensions
   # --------------------------------------------------------------------------
+
+  dimension: is_primary_database {
+    type: yesno
+    description: "Identifies if this database matches the DATABASE_NAME constant."
+    group_label: "Database Info"
+    sql: ${datname} = '@{DATABASE_NAME}' ;;
+  }
 
   dimension: datid {
     primary_key: yes

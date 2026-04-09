@@ -168,7 +168,7 @@ view: +pg_stat_activity {
   dimension: query {
     type: string
     label: "Current Query Text"
-    description: "Text of this backend's most recent query."
+    description: "Text of this backend's most recent query. If state is active, this is the currently executing query."
     group_label: "Query Information"
     sql: ${TABLE}.query ;;
   }
@@ -191,7 +191,7 @@ view: +pg_stat_activity {
   }
 
   # --------------------------------------------------------------------------
-  # Looker Workload Identification
+  # Looker Workload Identification (Three-Pronged)
   # --------------------------------------------------------------------------
 
   dimension: traffic_source {
@@ -199,7 +199,9 @@ view: +pg_stat_activity {
     description: "Categorizes the connection as originating from Looker or another application."
     group_label: "Traffic Analysis"
     sql: CASE 
-            WHEN ${application_name} LIKE '%Looker%' THEN 'Looker BI'
+            WHEN ${application_name} LIKE '%Looker%' 
+                 OR ${application_name} = 'PostgreSQL JDBC Driver' 
+                 OR ${query} LIKE '%-- Looker%' THEN 'Looker BI'
             ELSE 'Other Application'
          END ;;
   }
