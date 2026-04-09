@@ -1,5 +1,5 @@
 view: pg_stat_statements {
-  sql_table_name: public.pg_stat_statements ;;
+  sql_table_name: @{STATEMENTS_SCHEMA}.pg_stat_statements ;;
 
   # --------------------------------------------------------------------------
   # Dimensions (1:1 Mapping with Database)
