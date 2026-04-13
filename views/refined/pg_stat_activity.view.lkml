@@ -180,13 +180,7 @@ view: +pg_stat_activity {
   dimension_group: query_start {
     type: time
     description: "Time when the currently active query was started."
-    timeframes: [
-      raw,
-      time,
-      minute,
-      hour,
-      date
-    ]
+    timeframes: [raw, time, minute, hour, date]
     sql: ${TABLE}.query_start ;;
   }
 
@@ -222,6 +216,45 @@ view: +pg_stat_activity {
   }
 
   # --------------------------------------------------------------------------
+  # LIVE FORENSICS: Waiting & Blocking
+  # --------------------------------------------------------------------------
+
+  dimension: is_waiting {
+    type: yesno
+    description: "Identifies if the session is currently stuck waiting for an event (e.g., a Lock)."
+    group_label: "Connection Status"
+    sql: ${wait_event_type} IS NOT NULL ;;
+  }
+
+  dimension: is_blocked_by_lock {
+    type: yesno
+    description: "Identifies if the session is specifically stuck waiting for a database lock."
+    group_label: "Connection Status"
+    sql: ${wait_event_type} = 'Lock' ;;
+  }
+
+  dimension: query_age_seconds {
+    type: number
+    description: "The number of seconds the current query has been running."
+    group_label: "Execution Metrics"
+    sql: EXTRACT(EPOCH FROM (CURRENT_TIMESTAMP - ${query_start_raw})) ;;
+  }
+
+  dimension: transaction_age_seconds {
+    type: number
+    description: "The number of seconds the current transaction has been open."
+    group_label: "Execution Metrics"
+    sql: EXTRACT(EPOCH FROM (CURRENT_TIMESTAMP - ${TABLE}.xact_start)) ;;
+  }
+
+  dimension: is_parallel_worker {
+    type: yesno
+    description: "Identifies if this PID is a parallel worker process spawned by a leader query."
+    group_label: "Connection Details"
+    sql: ${TABLE}.leader_pid IS NOT NULL ;;
+  }
+
+  # --------------------------------------------------------------------------
   # Advanced Measures
   # --------------------------------------------------------------------------
 
@@ -237,5 +270,22 @@ view: +pg_stat_activity {
     group_label: "Connection Metrics"
     filters: [state: "active"]
     drill_fields: [pid, usename, application_name, query, query_start_time]
+  }
+
+  measure: stuck_session_count {
+    type: count
+    label: "Stuck Sessions (Locks)"
+    description: "Number of sessions currently waiting on a database lock. Spikes indicate severe performance bottlenecks."
+    group_label: "Connection Metrics"
+    filters: [is_blocked_by_lock: "yes"]
+    drill_fields: [pid, usename, wait_event_type, query]
+  }
+
+  measure: max_query_age_seconds {
+    type: max
+    description: "The age of the longest-running active query in the database."
+    group_label: "Execution Metrics"
+    sql: ${query_age_seconds} ;;
+    filters: [state: "active"]
   }
 }

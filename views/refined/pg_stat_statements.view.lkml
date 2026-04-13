@@ -61,22 +61,22 @@ view: +pg_stat_statements {
     sql: ${total_exec_time} / 1000.0 ;;
   }
 
-  measure: workload_share {
-    type: percent_of_total
-    direction: "column"
-    description: "The percentage of total database execution time consumed by this specific grouping."
-    group_label: "Traffic Analysis"
-    sql: ${total_execution_time_seconds} ;;
-  }
-
   measure: average_execution_time_ms {
     type: number
     description: "Average execution time per call, in milliseconds."
     group_label: "Execution Metrics"
     value_format: "#,##0.00 \"ms\""
     sql: 1.0 * SUM(${total_exec_time}) / NULLIF(SUM(${calls}), 0) ;;
-    # The drill allows users to jump from the Bar Chart/Scatter Plot straight to the Inspector
-    drill_fields: [query_hash, query_formatted, total_calls, average_execution_time_ms, max_execution_time_ms]
+    # Upgraded drill fields for deeper forensics
+    drill_fields: [
+      query_hash,
+      query_formatted,
+      total_calls,
+      average_execution_time_ms,
+      max_execution_time_ms,
+      total_disk_read_time_seconds,
+      total_temp_blocks_written
+    ]
   }
 
   measure: max_execution_time_ms {
@@ -85,5 +85,46 @@ view: +pg_stat_statements {
     group_label: "Execution Metrics"
     value_format: "#,##0.00 \"ms\""
     sql: ${max_exec_time} ;;
+  }
+
+  measure: average_rows_returned {
+    type: number
+    description: "Average number of rows sent back to the application per execution. High numbers with high latency suggest unoptimized scans."
+    group_label: "Execution Metrics"
+    value_format_name: decimal_0
+    sql: 1.0 * SUM(${TABLE}.rows) / NULLIF(SUM(${calls}), 0) ;;
+  }
+
+  measure: total_disk_read_time_seconds {
+    type: sum
+    label: "Total Disk Wait Time (Secs)"
+    description: "Total time spent waiting for physical disk I/O. High values indicate missing indexes."
+    group_label: "Memory & I/O"
+    value_format: "#,##0.00 \"s\""
+    sql: ${blk_read_time} / 1000.0 ;;
+  }
+
+  measure: total_temp_blocks_read {
+    type: sum
+    description: "Number of temporary disk blocks read. High values indicate the query is spilling to disk because it exceeds RAM (work_mem)."
+    group_label: "Memory & I/O"
+    value_format_name: decimal_0
+    sql: ${temp_blks_read} ;;
+  }
+
+  measure: total_temp_blocks_written {
+    type: sum
+    description: "Number of temporary disk blocks written. This is a critical indicator of memory pressure (work_mem exhaustion)."
+    group_label: "Memory & I/O"
+    value_format_name: decimal_0
+    sql: ${temp_blks_written} ;;
+  }
+
+  measure: workload_share {
+    type: percent_of_total
+    direction: "column"
+    description: "The percentage of total database execution time consumed by this specific grouping."
+    group_label: "Traffic Analysis"
+    sql: ${total_execution_time_seconds} ;;
   }
 }
