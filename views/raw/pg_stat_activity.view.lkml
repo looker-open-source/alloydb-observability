@@ -41,6 +41,11 @@ view: pg_stat_activity {
     sql: ${TABLE}.state ;;
   }
 
+  dimension: backend_type {
+    type: string
+    sql: ${TABLE}.backend_type ;;
+  }
+
   dimension: wait_event_type {
     type: string
     sql: ${TABLE}.wait_event_type ;;
