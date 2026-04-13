@@ -1,7 +1,7 @@
 include: "/views/raw/pg_stat_statements.view.lkml"
 
 view: +pg_stat_statements {
-  
+
   # --------------------------------------------------------------------------
   # Refined Dimensions
   # --------------------------------------------------------------------------
@@ -11,10 +11,10 @@ view: +pg_stat_statements {
     type: string
     description: "The SQL statement text. Masked if PII_QUERY_TEXT constant is set to HIDE."
     group_label: "Query Details"
-    sql: 
-      CASE 
+    sql:
+      CASE
         WHEN '@{PII_QUERY_TEXT}' = 'HIDE' THEN '--- MASKED FOR PII ---'
-        ELSE ${TABLE}.query 
+        ELSE ${TABLE}.query
       END ;;
   }
 
@@ -31,6 +31,13 @@ view: +pg_stat_statements {
     description: "Identifies if the query originated from Looker by checking for Looker's signature SQL comments."
     group_label: "Traffic Analysis"
     sql: ${TABLE}.query LIKE '%-- Looker%' OR ${TABLE}.query LIKE '%-- looker%' ;;
+  }
+
+  dimension: query_hash {
+    type: string
+    description: "String representation of the internal query hash code, useful for exact filtering."
+    group_label: "Query Identification"
+    sql: CAST(${queryid} AS VARCHAR) ;;
   }
 
   # --------------------------------------------------------------------------
@@ -68,7 +75,8 @@ view: +pg_stat_statements {
     group_label: "Execution Metrics"
     value_format: "#,##0.00 \"ms\""
     sql: 1.0 * SUM(${total_exec_time}) / NULLIF(SUM(${calls}), 0) ;;
-    drill_fields: [query_formatted, total_calls, average_execution_time_ms, max_execution_time_ms]
+    # The drill allows users to jump from the Bar Chart/Scatter Plot straight to the Inspector
+    drill_fields: [query_hash, query_formatted, total_calls, average_execution_time_ms, max_execution_time_ms]
   }
 
   measure: max_execution_time_ms {
