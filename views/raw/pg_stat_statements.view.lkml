@@ -40,4 +40,24 @@ view: pg_stat_statements {
     type: number
     sql: ${TABLE}.max_exec_time ;;
   }
+
+  dimension: rows {
+    type: number
+    sql: ${TABLE}.rows ;;
+  }
+
+  dimension: blk_read_time {
+    type: number
+    sql: ${TABLE}.blk_read_time ;;
+  }
+
+  dimension: temp_blks_read {
+    type: number
+    sql: ${TABLE}.temp_blks_read ;;
+  }
+
+  dimension: temp_blks_written {
+    type: number
+    sql: ${TABLE}.temp_blks_written ;;
+  }
 }
