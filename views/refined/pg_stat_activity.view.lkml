@@ -191,6 +191,21 @@ view: +pg_stat_activity {
   }
 
   # --------------------------------------------------------------------------
+  # Instance Utilization (Primary vs Read Pool)
+  # --------------------------------------------------------------------------
+
+  dimension: instance_role {
+    type: string
+    description: "Identifies if the query is running on the Primary Instance or an AlloyDB Read Pool."
+    group_label: "Traffic Analysis"
+    sql: 
+      CASE 
+        WHEN pg_is_in_recovery() THEN 'Read Pool'
+        ELSE 'Primary Instance'
+      END ;;
+  }
+
+  # --------------------------------------------------------------------------
   # Looker Workload Identification (Three-Pronged)
   # --------------------------------------------------------------------------
 
@@ -198,9 +213,9 @@ view: +pg_stat_activity {
     type: string
     description: "Categorizes the connection as originating from Looker or another application."
     group_label: "Traffic Analysis"
-    sql: CASE
-            WHEN ${application_name} LIKE '%Looker%'
-                 OR ${application_name} = 'PostgreSQL JDBC Driver'
+    sql: CASE 
+            WHEN ${application_name} LIKE '%Looker%' 
+                 OR ${application_name} = 'PostgreSQL JDBC Driver' 
                  OR ${query} LIKE '%-- Looker%' THEN 'Looker BI'
             ELSE 'Other Application'
          END ;;
