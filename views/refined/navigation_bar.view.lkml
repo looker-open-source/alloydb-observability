@@ -52,10 +52,10 @@ view: navigation_bar {
       {% endif %}
 
       <!-- Dashboard 3: Looker Impact -->
-      {% if _explore._dashboard_url contains 'looker_impact' %}
+      {% if _explore._dashboard_url contains 'looker_workload_impact' %}
         <span style="{{ style_active }}">🎯 Looker Impact</span>
       {% else %}
-        <a style="{{ style_inactive }}" href="/dashboards/operational_intelligence_alloy_db::looker_impact?Database+Name={{ _filters['datname'] | url_encode }}">🎯 Looker Impact</a>
+        <a style="{{ style_inactive }}" href="/dashboards/operational_intelligence_alloy_db::looker_workload_impact?Database+Name={{ _filters['datname'] | url_encode }}">🎯 Looker Impact</a>
       {% endif %}
 
     </div> ;;

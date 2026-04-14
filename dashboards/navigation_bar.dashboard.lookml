@@ -5,8 +5,8 @@
   description: ''
   layout: newspaper
   elements:
-  - title: Navbar
-    name: Navbar
+  - title: ''
+    name: ''
     model: operational_intelligence_alloy_db
     explore: navigation_bar
     type: single_value
