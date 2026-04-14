@@ -84,6 +84,7 @@ view: +pg_stat_activity {
     view_label: "_PoP"
     label: "Active Connections (Selected Period)"
     type: count_distinct
+    description: "Count of distinct process IDs active during the selected period."
     sql: ${pid} ;;
     filters: [is_current_period: "yes", state: "active"]
     value_format_name: decimal_0
@@ -93,6 +94,7 @@ view: +pg_stat_activity {
     view_label: "_PoP"
     label: "Active Connections (Previous Period)"
     type: count_distinct
+    description: "Count of distinct process IDs active during the previous comparison period."
     sql: ${pid} ;;
     filters: [is_previous_period: "yes", state: "active"]
     value_format_name: decimal_0
@@ -102,6 +104,7 @@ view: +pg_stat_activity {
     view_label: "_PoP"
     label: "Looker Connections (Selected Period)"
     type: count_distinct
+    description: "Count of distinct Looker process IDs active during the selected period."
     sql: ${pid} ;;
     filters: [is_current_period: "yes", state: "active", traffic_source: "Looker BI"]
     value_format_name: decimal_0
@@ -111,6 +114,7 @@ view: +pg_stat_activity {
     view_label: "_PoP"
     label: "Looker Connections (Previous Period)"
     type: count_distinct
+    description: "Count of distinct Looker process IDs active during the previous comparison period."
     sql: ${pid} ;;
     filters: [is_previous_period: "yes", state: "active", traffic_source: "Looker BI"]
     value_format_name: decimal_0
@@ -192,25 +196,27 @@ view: +pg_stat_activity {
     type: string
     description: "Identifies if the query is running on the Primary Instance or an AlloyDB Read Pool."
     group_label: "Traffic Analysis"
-    sql: 
-      CASE 
+    sql:
+      CASE
         WHEN pg_is_in_recovery() THEN 'Read Pool'
         ELSE 'Primary Instance'
       END ;;
   }
 
   # --------------------------------------------------------------------------
-  # Looker Workload Identification (Three-Pronged)
+  # Looker Workload Identification (Enhanced Logic)
   # --------------------------------------------------------------------------
 
   dimension: traffic_source {
     type: string
     description: "Categorizes the connection as originating from Looker or another application."
     group_label: "Traffic Analysis"
-    sql: CASE 
-            WHEN ${application_name} LIKE '%Looker%' 
-                 OR ${application_name} = 'PostgreSQL JDBC Driver' 
-                 OR ${query} LIKE '%-- Looker%' THEN 'Looker BI'
+    sql: CASE
+            WHEN ${application_name} LIKE '%Looker%'
+                 OR ${application_name} LIKE '%PostgreSQL JDBC Driver%'
+                 OR ${application_name} LIKE '%Looker-MCP%'
+                 OR ${query} LIKE '%-- Looker%'
+                 OR ${query} LIKE '%-- looker%' THEN 'Looker BI'
             ELSE 'Other Application'
          END ;;
   }
@@ -287,5 +293,38 @@ view: +pg_stat_activity {
     group_label: "Execution Metrics"
     sql: ${query_age_seconds} ;;
     filters: [state: "active"]
+  }
+
+  # KPI 4: Connection Saturation %
+  measure: connection_saturation_pct {
+    type: number
+    label: "Connection Saturation (%)"
+    description: "Percentage of maximum allowed connections currently in use. Calculated as current connections / MAX_CONNECTIONS constant."
+    group_label: "Connection Metrics"
+    value_format_name: percent_1
+    sql:
+      1.0 * ${total_connections} /
+      NULLIF(@{MAX_CONNECTIONS}, 0) ;;
+  }
+
+  # KPI 8: Idle-in-Transaction Age
+  measure: max_idle_in_transaction_age_seconds {
+    type: max
+    label: "Max Idle-in-Transaction Age (Secs)"
+    description: "The age of the longest-running session that is currently in the 'idle in transaction' state. These sessions are dangerous as they hold locks while doing nothing for extended periods. Official PostgreSQL Documentation: pg_stat_activity.state_change."
+    group_label: "Execution Metrics"
+    value_format_name: decimal_0
+    sql: EXTRACT(EPOCH FROM (CURRENT_TIMESTAMP - ${TABLE}.state_change)) ;;
+    filters: [state: "idle in transaction"]
+  }
+
+  # KPI 10 Fix: Snapshot/Peak Concurrency
+  measure: current_active_connections {
+    type: count
+    label: "Active Connections (Snapshot)"
+    description: "The number of active connections at the exact moment of the query. Represents the 'Peak' in real-time dashboards."
+    group_label: "Connection Metrics"
+    filters: [state: "active"]
+    value_format_name: decimal_0
   }
 }

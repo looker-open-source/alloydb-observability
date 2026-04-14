@@ -35,4 +35,39 @@ view: pg_stat_database {
     type: number
     sql: ${TABLE}.blks_hit ;;
   }
+
+  dimension: tup_inserted {
+    type: number
+    sql: ${TABLE}.tup_inserted ;;
+  }
+
+  dimension: tup_updated {
+    type: number
+    sql: ${TABLE}.tup_updated ;;
+  }
+
+  dimension: tup_deleted {
+    type: number
+    sql: ${TABLE}.tup_deleted ;;
+  }
+
+  dimension: tup_fetched {
+    type: number
+    sql: ${TABLE}.tup_fetched ;;
+  }
+
+  dimension: deadlocks {
+    type: number
+    sql: ${TABLE}.deadlocks ;;
+  }
+
+  dimension: temp_bytes {
+    type: number
+    sql: ${TABLE}.temp_bytes ;;
+  }
+
+  dimension: stats_reset {
+    type: date_time
+    sql: ${TABLE}.stats_reset ;;
+  }
 }

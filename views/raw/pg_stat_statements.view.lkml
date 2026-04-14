@@ -46,9 +46,34 @@ view: pg_stat_statements {
     sql: ${TABLE}.rows ;;
   }
 
+  dimension: shared_blks_hit {
+    type: number
+    sql: ${TABLE}.shared_blks_hit ;;
+  }
+
+  dimension: shared_blks_read {
+    type: number
+    sql: ${TABLE}.shared_blks_read ;;
+  }
+
+  dimension: shared_blks_dirtied {
+    type: number
+    sql: ${TABLE}.shared_blks_dirtied ;;
+  }
+
+  dimension: shared_blks_written {
+    type: number
+    sql: ${TABLE}.shared_blks_written ;;
+  }
+
   dimension: blk_read_time {
     type: number
     sql: ${TABLE}.blk_read_time ;;
+  }
+
+  dimension: blk_write_time {
+    type: number
+    sql: ${TABLE}.blk_write_time ;;
   }
 
   dimension: temp_blks_read {
@@ -59,5 +84,10 @@ view: pg_stat_statements {
   dimension: temp_blks_written {
     type: number
     sql: ${TABLE}.temp_blks_written ;;
+  }
+
+  dimension: wal_bytes {
+    type: number
+    sql: ${TABLE}.wal_bytes ;;
   }
 }
