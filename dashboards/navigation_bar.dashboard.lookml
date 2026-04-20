@@ -3,15 +3,19 @@
   title: NavBarAlloyDB
   preferred_viewer: dashboards-next
   description: ''
+  preferred_slug: TlKEG7HTRwYgP8VyWNijtt
   layout: newspaper
+  tabs:
   elements:
-  - title: ''
-    name: ''
+  - title: ""
+    name: ""
     model: operational_intelligence_alloy_db
     explore: navigation_bar
     type: single_value
-    fields: [navigation_bar.horizontal_navigation_bar]
-    sorts: [navigation_bar.horizontal_navigation_bar]
+    fields: [navigation_bar.tabbed_navigation_bar]
+    filters:
+      navigation_bar.datname: "%postgres%"
+    sorts: [navigation_bar.tabbed_navigation_bar]
     limit: 500
     column_limit: 50
     custom_color_enabled: true
@@ -23,9 +27,15 @@
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
+    hidden_fields: []
+    hidden_points_if_no: []
+    series_labels: {}
+    show_view_names: false
+    font_size_main: ''
+    orientation: auto
+    show_title_navigation_bar.tabbed_navigation_bar: false
     x_axis_gridlines: false
     y_axis_gridlines: true
-    show_view_names: false
     show_y_axis_labels: true
     show_y_axis_ticks: true
     y_axis_tick_density: default
@@ -51,12 +61,22 @@
     show_silhouette: false
     totals_color: "#808080"
     defaults_version: 1
-    listen:
-      Database Name: navigation_bar.datname
+    show_row_numbers: true
+    transpose: false
+    truncate_text: true
+    hide_totals: false
+    hide_row_totals: false
+    size_to_fit: true
+    table_theme: white
+    header_text_alignment: left
+    header_font_size: 12
+    rows_font_size: 12
+    listen: {}
     row: 0
     col: 0
     width: 24
-    height: 3
+    height: 1
+     
   filters:
   - name: Database Name
     title: Database Name
