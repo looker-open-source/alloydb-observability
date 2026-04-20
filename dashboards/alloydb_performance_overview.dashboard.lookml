@@ -1,23 +1,46 @@
 ---
 - dashboard: alloydb_performance_overview
-  extends: navbaralloydb
   title: AlloyDB Performance Overview
+  extends: navbaralloydb
   preferred_viewer: dashboards-next
   description: ''
   preferred_slug: Xfoj3N2CrGFVnCBeKDnsCv
   layout: newspaper
-  tabs:
-  - name: ''
-    label: ''
   elements:
-  - title: Global Cache Hit Ratio
-    name: Global Cache Hit Ratio
+  - title: Total Compute Load
+    name: Total Compute Load
     model: operational_intelligence_alloy_db
-    explore: alloydb_performance
+    explore: alloydb_historical_statements
+    type: single_value
+    fields: [pg_stat_statements.total_execution_time_seconds]
+    filters:
+      pg_stat_database.is_primary_database: 'Yes'
+    limit: 500
+    column_limit: 50
+    custom_color_enabled: true
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    defaults_version: 1
+    listen: {}
+    row: 0
+    col: 0
+    width: 6
+    height: 3
+     
+  - title: Cache Hit Ratio
+    name: Cache Hit Ratio
+    model: operational_intelligence_alloy_db
+    explore: alloydb_historical_statements
     type: marketplace_viz_radial_gauge::radial_gauge-marketplace
     fields: [pg_stat_database.cache_hit_ratio]
     filters:
-      pg_stat_activity.date_filter: 7 days
+      pg_stat_database.is_primary_database: 'Yes'
     limit: 500
     column_limit: 50
     hidden_fields: []
@@ -56,369 +79,28 @@
     target_label_padding: 1.06
     custom_color_enabled: true
     show_single_value_title: true
-    smart_single_value_size: false
     show_comparison: false
-    comparison_type: change
+    comparison_type: value
     comparison_reverse_colors: false
-    show_comparison_label: false
+    show_comparison_label: true
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
     defaults_version: 0
-    hidden_pivots: {}
+    range_max:
     title_hidden: true
-    listen:
-      Database Name: pg_stat_database.datname
-      Date: pg_stat_activity.query_start_date
-    row: 0
-    col: 8
-    width: 8
-    height: 6
-    tab_name: ''
-  - title: Transaction Failure Rate
-    name: Transaction Failure Rate
-    model: operational_intelligence_alloy_db
-    explore: alloydb_performance
-    type: single_value
-    fields: [pg_stat_database.transaction_failure_rate]
-    filters:
-      pg_stat_activity.date_filter: 7 days
-    limit: 500
-    column_limit: 50
-    custom_color_enabled: true
-    show_single_value_title: true
-    show_comparison: false
-    comparison_type: change
-    comparison_reverse_colors: false
-    show_comparison_label: false
-    enable_conditional_formatting: false
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    arm_length: 9
-    arm_weight: 48
-    spinner_length: 153
-    spinner_weight: 25
-    target_length: 10
-    target_gap: 10
-    target_weight: 8
-    range_min: 0
-    value_label_type: both
-    value_label_font: 12
-    value_label_padding: 45
-    target_source: 'off'
-    target_label_type: both
-    target_label_font: 3
-    label_font_size: 3
-    spinner_type: needle
-    fill_color: "#0092E5"
-    background_color: "#CECECE"
-    spinner_color: "#282828"
-    range_color: "#282828"
-    gauge_fill_type: segment
-    fill_colors: ["#EE7772", "#ffed6f", "#7FCDAE"]
-    viz_trellis_by: none
-    trellis_rows: 2
-    trellis_cols: 2
-    angle: 90
-    cutout: 30
-    range_x: 1
-    range_y: 1
-    target_label_padding: 1.06
-    smart_single_value_size: false
-    defaults_version: 1
-    hidden_fields: []
-    hidden_points_if_no: []
-    hidden_pivots: {}
-    series_labels: {}
-    show_view_names: true
-    listen:
-      Database Name: pg_stat_database.datname
-      Date: pg_stat_activity.query_start_date
-    row: 0
-    col: 16
-    width: 8
-    height: 3
-    tab_name: ''
-  - title: Total Compute Load
-    name: Total Compute Load
-    model: operational_intelligence_alloy_db
-    explore: alloydb_performance
-    type: single_value
-    fields: [pg_stat_statements.total_execution_time_seconds]
-    limit: 500
-    column_limit: 50
-    custom_color_enabled: true
-    show_single_value_title: true
-    show_comparison: false
-    comparison_type: value
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    enable_conditional_formatting: false
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    defaults_version: 1
-    listen:
-      Database Name: pg_stat_database.datname
-      Date: pg_stat_activity.query_start_date
-    row: 0
-    col: 0
-    width: 8
-    height: 3
-    tab_name: ''
-  - title: Query Volume
-    name: Query Volume
-    model: operational_intelligence_alloy_db
-    explore: alloydb_performance
-    type: looker_area
-    fields: [pg_stat_activity.total_connections, pg_stat_activity.query_start_date]
-    fill_fields: [pg_stat_activity.query_start_date]
-    filters:
-      pg_stat_activity.date_filter: 7 days
-      pg_stat_activity.query_start_date: NOT NULL
-    sorts: [pg_stat_activity.query_start_date desc]
-    limit: 500
-    column_limit: 50
-    x_axis_gridlines: false
-    y_axis_gridlines: true
-    show_view_names: true
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: true
-    show_x_axis_ticks: true
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    trellis: ''
-    stacking: ''
-    limit_displayed_rows: false
-    legend_position: center
-    point_style: none
-    show_value_labels: false
-    label_density: 25
-    x_axis_scale: auto
-    y_axis_combined: true
-    show_null_points: true
-    interpolation: monotone
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
-    x_axis_zoom: true
-    y_axis_zoom: true
-    trellis_rows: 2
-    series_labels: {}
-    hidden_fields: []
-    hidden_points_if_no: []
-    arm_length: 9
-    arm_weight: 48
-    spinner_length: 153
-    spinner_weight: 25
-    target_length: 10
-    target_gap: 10
-    target_weight: 8
-    range_min: 0
-    value_label_type: both
-    value_label_font: 12
-    value_label_padding: 45
-    target_source: 'off'
-    target_label_type: both
-    target_label_font: 3
-    label_font_size: 3
-    spinner_type: needle
-    fill_color: "#0092E5"
-    background_color: "#CECECE"
-    spinner_color: "#282828"
-    range_color: "#282828"
-    gauge_fill_type: segment
-    fill_colors: ["#EE7772", "#ffed6f", "#7FCDAE"]
-    viz_trellis_by: none
-    trellis_cols: 2
-    angle: 90
-    cutout: 30
-    range_x: 1
-    range_y: 1
-    target_label_padding: 1.06
-    custom_color_enabled: true
-    show_single_value_title: true
-    smart_single_value_size: false
-    show_comparison: false
-    comparison_type: change
-    comparison_reverse_colors: false
-    show_comparison_label: false
-    enable_conditional_formatting: false
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    defaults_version: 1
-    hidden_pivots: {}
-    range_max:
-    listen:
-      Database Name: pg_stat_database.datname
-      Date: pg_stat_activity.query_start_date
-    row: 6
-    col: 0
-    width: 14
-    height: 6
-    tab_name: ''
-  - title: Live Traffic Breakdown
-    name: Live Traffic Breakdown
-    model: operational_intelligence_alloy_db
-    explore: alloydb_performance
-    type: looker_pie
-    fields: [pg_stat_activity.total_connections, pg_stat_activity.traffic_source]
-    filters:
-      pg_stat_activity.date_filter: 7 days
-      pg_stat_activity.query_start_date: NOT NULL
-    sorts: [pg_stat_activity.total_connections desc 0]
-    limit: 500
-    column_limit: 50
-    value_labels: legend
-    label_type: labPer
-    x_axis_gridlines: false
-    y_axis_gridlines: true
-    show_view_names: true
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: true
-    show_x_axis_ticks: true
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    x_axis_zoom: true
-    y_axis_zoom: true
-    trellis: ''
-    stacking: ''
-    limit_displayed_rows: false
-    legend_position: center
-    trellis_rows: 2
-    point_style: none
-    series_labels: {}
-    show_value_labels: false
-    label_density: 25
-    x_axis_scale: auto
-    y_axis_combined: true
-    show_null_points: true
-    interpolation: monotone
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
-    hidden_fields: []
-    hidden_points_if_no: []
-    arm_length: 9
-    arm_weight: 48
-    spinner_length: 153
-    spinner_weight: 25
-    target_length: 10
-    target_gap: 10
-    target_weight: 8
-    range_min: 0
-    value_label_type: both
-    value_label_font: 12
-    value_label_padding: 45
-    target_source: 'off'
-    target_label_type: both
-    target_label_font: 3
-    label_font_size: 3
-    spinner_type: needle
-    fill_color: "#0092E5"
-    background_color: "#CECECE"
-    spinner_color: "#282828"
-    range_color: "#282828"
-    gauge_fill_type: segment
-    fill_colors: ["#EE7772", "#ffed6f", "#7FCDAE"]
-    viz_trellis_by: none
-    trellis_cols: 2
-    angle: 90
-    cutout: 30
-    range_x: 1
-    range_y: 1
-    target_label_padding: 1.06
-    custom_color_enabled: true
-    show_single_value_title: true
-    smart_single_value_size: false
-    show_comparison: false
-    comparison_type: change
-    comparison_reverse_colors: false
-    show_comparison_label: false
-    enable_conditional_formatting: false
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    defaults_version: 1
-    hidden_pivots: {}
-    range_max:
-    listen:
-      Database Name: pg_stat_database.datname
-      Date: pg_stat_activity.query_start_date
-    row: 6
-    col: 14
-    width: 10
-    height: 6
-    tab_name: ''
-  - title: Transaction Throughput (TPS)
-    name: Transaction Throughput (TPS)
-    model: operational_intelligence_alloy_db
-    explore: alloydb_performance
-    type: single_value
-    fields: [pg_stat_database.datname, pg_stat_database.tps, pg_stat_database.is_primary_database]
-    filters:
-      pg_stat_database.is_primary_database: 'Yes'
-    sorts: [pg_stat_database.tps desc 0]
-    limit: 500
-    column_limit: 50
-    custom_color_enabled: true
-    show_single_value_title: true
-    show_comparison: false
-    comparison_type: value
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    enable_conditional_formatting: false
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    x_axis_gridlines: false
-    y_axis_gridlines: true
-    show_view_names: false
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: true
-    show_x_axis_ticks: true
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    trellis: ''
-    stacking: ''
-    limit_displayed_rows: false
-    legend_position: center
-    point_style: none
-    show_value_labels: false
-    label_density: 25
-    x_axis_scale: auto
-    y_axis_combined: true
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
-    defaults_version: 1
-    hidden_pivots: {}
     listen: {}
     row: 3
     col: 0
-    width: 8
-    height: 3
-    tab_name: ''
-  - title: WAL Generation Rate
-    name: WAL Generation Rate
+    width: 7
+    height: 6
+     
+  - title: Transaction Failure Rate
+    name: Transaction Failure Rate
     model: operational_intelligence_alloy_db
-    explore: alloydb_performance
+    explore: alloydb_historical_statements
     type: single_value
-    fields: [pg_stat_statements.total_wal_generation_mb]
+    fields: [pg_stat_database.transaction_failure_rate]
     filters:
       pg_stat_database.is_primary_database: 'Yes'
     limit: 500
@@ -432,54 +114,59 @@
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
-    x_axis_gridlines: false
-    y_axis_gridlines: true
-    show_view_names: false
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: true
-    show_x_axis_ticks: true
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    trellis: ''
-    stacking: ''
-    limit_displayed_rows: false
-    legend_position: center
-    point_style: none
-    show_value_labels: false
-    label_density: 25
-    x_axis_scale: auto
-    y_axis_combined: true
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
+    hidden_fields: []
+    hidden_points_if_no: []
+    series_labels: {}
+    show_view_names: true
+    arm_length: 9
+    arm_weight: 48
+    spinner_length: 153
+    spinner_weight: 25
+    target_length: 10
+    target_gap: 10
+    target_weight: 8
+    range_min: 0
+    value_label_type: both
+    value_label_font: 12
+    value_label_padding: 45
+    target_source: 'off'
+    target_label_type: both
+    target_label_font: 3
+    label_font_size: 3
+    spinner_type: needle
+    fill_color: "#0092E5"
+    background_color: "#CECECE"
+    spinner_color: "#282828"
+    range_color: "#282828"
+    gauge_fill_type: segment
+    fill_colors: ["#EE7772", "#ffed6f", "#7FCDAE"]
+    viz_trellis_by: none
+    trellis_rows: 2
+    trellis_cols: 2
+    angle: 90
+    cutout: 30
+    range_x: 1
+    range_y: 1
+    target_label_padding: 1.06
     defaults_version: 1
+    range_max:
     hidden_pivots: {}
     listen: {}
-    row: 12
-    col: 0
-    width: 8
-    height: 4
-    tab_name: ''
-  - title: Database DML Intensity
-    name: Database DML Intensity
+    row: 0
+    col: 12
+    width: 6
+    height: 3
+     
+  - title: Transaction Throughput (TPS)
+    name: Transaction Throughput (TPS)
     model: operational_intelligence_alloy_db
-    explore: alloydb_performance
-    type: looker_donut_multiples
-    fields: [pg_stat_database.total_dml_reads, pg_stat_database.total_dml_writes]
+    explore: alloydb_historical_statements
+    type: single_value
+    fields: [pg_stat_database.tps]
     filters:
       pg_stat_database.is_primary_database: 'Yes'
-    sorts: [pg_stat_database.total_dml_reads desc 0]
     limit: 500
     column_limit: 50
-    show_value_labels: false
-    font_size: 12
     custom_color_enabled: true
     show_single_value_title: true
     show_comparison: false
@@ -489,56 +176,53 @@
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
-    x_axis_gridlines: false
-    y_axis_gridlines: true
-    show_view_names: false
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: true
-    show_x_axis_ticks: true
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    trellis: ''
-    stacking: ''
-    limit_displayed_rows: false
-    legend_position: center
-    point_style: none
-    label_density: 25
-    x_axis_scale: auto
-    y_axis_combined: true
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
+    hidden_fields: []
+    hidden_points_if_no: []
+    series_labels: {}
+    show_view_names: true
+    arm_length: 9
+    arm_weight: 48
+    spinner_length: 153
+    spinner_weight: 25
+    target_length: 10
+    target_gap: 10
+    target_weight: 8
+    range_min: 0
+    value_label_type: both
+    value_label_font: 12
+    value_label_padding: 45
+    target_source: 'off'
+    target_label_type: both
+    target_label_font: 3
+    label_font_size: 3
+    spinner_type: needle
+    fill_color: "#0092E5"
+    background_color: "#CECECE"
+    spinner_color: "#282828"
+    range_color: "#282828"
+    gauge_fill_type: segment
+    fill_colors: ["#EE7772", "#ffed6f", "#7FCDAE"]
+    viz_trellis_by: none
+    trellis_rows: 2
+    trellis_cols: 2
+    angle: 90
+    cutout: 30
+    range_x: 1
+    range_y: 1
+    target_label_padding: 1.06
     defaults_version: 1
+    range_max:
     hidden_pivots: {}
-    value_labels: legend
-    label_type: labPer
-    show_row_numbers: true
-    transpose: false
-    truncate_text: true
-    hide_totals: false
-    hide_row_totals: false
-    size_to_fit: true
-    table_theme: white
-    header_text_alignment: left
-    header_font_size: 12
-    rows_font_size: 12
     listen: {}
-    row: 12
-    col: 16
-    width: 8
-    height: 4
-    tab_name: ''
+    row: 0
+    col: 6
+    width: 6
+    height: 3
+     
   - title: Connection Saturation (%)
     name: Connection Saturation (%)
     model: operational_intelligence_alloy_db
-    explore: alloydb_performance
+    explore: alloydb_real_time_activity
     type: single_value
     fields: [pg_stat_activity.connection_saturation_pct, pg_stat_activity.total_connections]
     filters:
@@ -556,37 +240,6 @@
     conditional_formatting_include_nulls: false
     smart_single_value_size: false
     comparison_label: Active Connections
-    arm_length: 9
-    arm_weight: 48
-    spinner_length: 153
-    spinner_weight: 25
-    target_length: 10
-    target_gap: 10
-    target_weight: 8
-    range_min: 0
-    range_max:
-    value_label_type: both
-    value_label_font: 12
-    value_label_padding: 45
-    target_source: 'off'
-    target_label_type: both
-    target_label_font: 3
-    label_font_size: 3
-    spinner_type: needle
-    fill_color: "#0092E5"
-    background_color: "#CECECE"
-    spinner_color: "#282828"
-    range_color: "#282828"
-    gauge_fill_type: progress
-    fill_colors: ["#7FCDAE", "#ffed6f", "#EE7772"]
-    viz_trellis_by: none
-    trellis_rows: 2
-    trellis_cols: 2
-    angle: 89
-    cutout: 30
-    range_x: 1
-    range_y: 1
-    target_label_padding: 1.06
     x_axis_gridlines: false
     y_axis_gridlines: true
     show_view_names: false
@@ -615,33 +268,203 @@
     show_silhouette: false
     totals_color: "#808080"
     defaults_version: 1
-    hidden_fields: []
-    hidden_points_if_no: []
+    listen:
+      Query Start Time: pg_stat_activity.query_start_time
+    row: 0
+    col: 18
+    width: 6
+    height: 3
+     
+  - title: Query Volume
+    name: Query Volume
+    model: operational_intelligence_alloy_db
+    explore: alloydb_real_time_activity
+    type: looker_area
+    fields: [pg_stat_activity.total_connections, pg_stat_activity.query_start_time]
+    filters:
+      pg_stat_database.is_primary_database: ''
+      pg_stat_activity.query_start_date: NOT NULL
+      pg_stat_activity.total_connections: NOT NULL
+    sorts: [pg_stat_activity.query_start_time desc]
+    limit: 500
+    column_limit: 50
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    legend_position: center
+    point_style: none
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    show_null_points: true
+    interpolation: linear
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    custom_color_enabled: true
+    show_single_value_title: true
+    smart_single_value_size: false
+    show_comparison: true
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    comparison_label: Active Connections
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    ordering: none
+    show_null_labels: false
+    defaults_version: 1
     hidden_pivots: {}
+    listen:
+      Query Start Time: pg_stat_activity.query_start_time
+    row: 3
+    col: 8
+    width: 16
+    height: 6
+     
+  - title: Live Traffic Breakdown
+    name: Live Traffic Breakdown
+    model: operational_intelligence_alloy_db
+    explore: alloydb_real_time_activity
+    type: looker_pie
+    fields: [pg_stat_activity.total_connections, pg_stat_activity.traffic_source]
+    filters:
+      pg_stat_database.is_primary_database: 'Yes'
+    sorts: [pg_stat_activity.total_connections desc 0]
+    limit: 500
+    column_limit: 50
     value_labels: legend
     label_type: labPer
-    show_row_numbers: true
-    transpose: false
-    truncate_text: true
-    hide_totals: false
-    hide_row_totals: false
-    size_to_fit: true
-    table_theme: white
-    header_text_alignment: left
-    header_font_size: 12
-    rows_font_size: 12
-    font_size: 12
+    custom_color_enabled: true
+    show_single_value_title: true
+    smart_single_value_size: false
+    show_comparison: true
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    comparison_label: Active Connections
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    legend_position: center
+    point_style: none
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    defaults_version: 1
+    hidden_pivots: {}
+    show_null_points: true
+    interpolation: linear
+    listen:
+      Query Start Time: pg_stat_activity.query_start_time
+    row: 12
+    col: 0
+    width: 12
+    height: 7
+     
+  - title: WAL Generation Rate
+    name: WAL Generation Rate
+    model: operational_intelligence_alloy_db
+    explore: alloydb_historical_statements
+    type: single_value
+    fields: [pg_stat_statements.total_wal_generation_mb]
+    filters:
+      pg_stat_database.is_primary_database: 'Yes'
+    limit: 500
+    column_limit: 50
+    custom_color_enabled: true
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    hidden_fields: []
+    hidden_points_if_no: []
     series_labels: {}
+    show_view_names: true
+    arm_length: 9
+    arm_weight: 48
+    spinner_length: 153
+    spinner_weight: 25
+    target_length: 10
+    target_gap: 10
+    target_weight: 8
+    range_min: 0
+    value_label_type: both
+    value_label_font: 12
+    value_label_padding: 45
+    target_source: 'off'
+    target_label_type: both
+    target_label_font: 3
+    label_font_size: 3
+    spinner_type: needle
+    fill_color: "#0092E5"
+    background_color: "#CECECE"
+    spinner_color: "#282828"
+    range_color: "#282828"
+    gauge_fill_type: segment
+    fill_colors: ["#EE7772", "#ffed6f", "#7FCDAE"]
+    viz_trellis_by: none
+    trellis_rows: 2
+    trellis_cols: 2
+    angle: 90
+    cutout: 30
+    range_x: 1
+    range_y: 1
+    target_label_padding: 1.06
+    defaults_version: 1
+    range_max:
+    hidden_pivots: {}
     listen: {}
-    row: 3
-    col: 16
-    width: 8
+    row: 9
+    col: 6
+    width: 5
     height: 3
-    tab_name: ''
+     
   - title: Deadlock Frequency
     name: Deadlock Frequency
     model: operational_intelligence_alloy_db
-    explore: alloydb_performance
+    explore: alloydb_historical_statements
     type: single_value
     fields: [pg_stat_database.total_deadlocks]
     filters:
@@ -657,25 +480,137 @@
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
+    hidden_fields: []
+    hidden_points_if_no: []
+    series_labels: {}
+    show_view_names: true
+    arm_length: 9
+    arm_weight: 48
+    spinner_length: 153
+    spinner_weight: 25
+    target_length: 10
+    target_gap: 10
+    target_weight: 8
+    range_min: 0
+    value_label_type: both
+    value_label_font: 12
+    value_label_padding: 45
+    target_source: 'off'
+    target_label_type: both
+    target_label_font: 3
+    label_font_size: 3
+    spinner_type: needle
+    fill_color: "#0092E5"
+    background_color: "#CECECE"
+    spinner_color: "#282828"
+    range_color: "#282828"
+    gauge_fill_type: segment
+    fill_colors: ["#EE7772", "#ffed6f", "#7FCDAE"]
+    viz_trellis_by: none
+    trellis_rows: 2
+    trellis_cols: 2
+    angle: 90
+    cutout: 30
+    range_x: 1
+    range_y: 1
+    target_label_padding: 1.06
     defaults_version: 1
+    range_max:
+    hidden_pivots: {}
+    listen: {}
+    row: 9
+    col: 13
+    width: 5
+    height: 3
+     
+  - title: Database DML Intensity
+    name: Database DML Intensity
+    model: operational_intelligence_alloy_db
+    explore: alloydb_historical_statements
+    type: looker_donut_multiples
+    fields: [pg_stat_database.total_dml_reads, pg_stat_database.total_dml_writes]
+    filters:
+      pg_stat_database.is_primary_database: 'Yes'
+    limit: 500
+    column_limit: 50
+    show_value_labels: true
+    font_size: 12
+    hidden_fields: []
+    hidden_points_if_no: []
+    series_labels: {}
+    show_view_names: true
+    arm_length: 9
+    arm_weight: 48
+    spinner_length: 153
+    spinner_weight: 25
+    target_length: 10
+    target_gap: 10
+    target_weight: 8
+    range_min: 0
+    value_label_type: both
+    value_label_font: 12
+    value_label_padding: 45
+    target_source: 'off'
+    target_label_type: both
+    target_label_font: 3
+    label_font_size: 3
+    spinner_type: needle
+    fill_color: "#0092E5"
+    background_color: "#CECECE"
+    spinner_color: "#282828"
+    range_color: "#282828"
+    gauge_fill_type: segment
+    fill_colors: ["#EE7772", "#ffed6f", "#7FCDAE"]
+    viz_trellis_by: none
+    trellis_rows: 2
+    trellis_cols: 2
+    angle: 90
+    cutout: 30
+    range_x: 1
+    range_y: 1
+    target_label_padding: 1.06
+    custom_color_enabled: true
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    defaults_version: 1
+    range_max:
+    hidden_pivots: {}
     listen: {}
     row: 12
-    col: 8
-    width: 8
-    height: 4
-    tab_name: ''
+    col: 12
+    width: 12
+    height: 7
+     
   filters:
-  - name: Date
-    title: Date
+  - name: Query Start Time
+    title: Query Start Time
     type: field_filter
-    default_value: 7 day
+    default_value: 1 hour
     allow_multiple_values: true
     required: false
     ui_config:
-      type: relative_timeframes
+      type: advanced
+      display: popover
+    model: operational_intelligence_alloy_db
+    explore: alloydb_real_time_activity
+    listens_to_filters: []
+    field: pg_stat_activity.query_start_time
+  - name: Database Name
+    title: Database Name
+    type: field_filter
+    default_value: postgres
+    allow_multiple_values: true
+    required: false
+    ui_config:
+      type: dropdown_menu
       display: inline
-      options: []
     model: operational_intelligence_alloy_db
     explore: alloydb_performance
     listens_to_filters: []
-    field: pg_stat_activity.query_start_date
+    field: pg_stat_database.datname

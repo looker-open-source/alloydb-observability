@@ -1,13 +1,10 @@
 - dashboard: looker_workload_impact
-  extends: navbaralloydb
   title: Looker Workload Impact
+  extends: navbaralloydb
   preferred_viewer: dashboards-next
   description: ''
   preferred_slug: 6x4RslgyN7HjZXSbZkKzLB
   layout: newspaper
-  tabs:
-  - name: ''
-    label: ''
   elements:
   - title: Workload Attribution
     name: Workload Attribution
@@ -42,7 +39,7 @@
     col: 0
     width: 12
     height: 7
-    tab_name: ''
+     
   - title: Concurrency & Stress Correlation
     name: Concurrency & Stress Correlation
     model: operational_intelligence_alloy_db
@@ -103,7 +100,7 @@
     col: 12
     width: 12
     height: 6
-    tab_name: ''
+     
   - title: 'Resource Burn: Primary vs Read Pool'
     name: 'Resource Burn: Primary vs Read Pool'
     model: operational_intelligence_alloy_db
@@ -168,7 +165,7 @@
     col: 12
     width: 12
     height: 7
-    tab_name: ''
+     
   - title: Looker Cache Efficiency Ratio
     name: Looker Cache Efficiency Ratio
     model: operational_intelligence_alloy_db
@@ -194,7 +191,7 @@
     col: 0
     width: 12
     height: 6
-    tab_name: ''
+     
   filters:
   - name: Date
     title: Date
