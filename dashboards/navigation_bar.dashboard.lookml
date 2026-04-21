@@ -5,7 +5,6 @@
   description: ''
   preferred_slug: TlKEG7HTRwYgP8VyWNijtt
   layout: newspaper
-  tabs:
   elements:
   - title: ""
     name: ""
@@ -75,8 +74,7 @@
     row: 0
     col: 0
     width: 24
-    height: 1
-     
+    height: 2
   filters:
   - name: Database Name
     title: Database Name

@@ -1,12 +1,84 @@
 ---
 - dashboard: bottleneck_analysis
   title: Query Performance & Bottleneck Analysis
-  extends: navbaralloydb
   preferred_viewer: dashboards-next
   description: ''
-  preferred_slug: HLdzFwhlM12o3z1I8g3LoZ
+  preferred_slug: kOT2ysYLQ3TEj8bIwA0cQK
   layout: newspaper
+  tabs:
+  - name: ''
+    label: ''
   elements:
+  - title: ''
+    name: ''
+    model: operational_intelligence_alloy_db
+    explore: navigation_bar
+    type: single_value
+    fields: [navigation_bar.tabbed_navigation_bar]
+    filters:
+      navigation_bar.datname: "%postgres%"
+    sorts: [navigation_bar.tabbed_navigation_bar]
+    limit: 500
+    column_limit: 50
+    custom_color_enabled: true
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    hidden_fields: []
+    hidden_points_if_no: []
+    series_labels: {}
+    show_view_names: false
+    font_size_main: ''
+    orientation: auto
+    show_title_navigation_bar.tabbed_navigation_bar: false
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    legend_position: center
+    point_style: none
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    defaults_version: 1
+    show_row_numbers: true
+    transpose: false
+    truncate_text: true
+    hide_totals: false
+    hide_row_totals: false
+    size_to_fit: true
+    table_theme: white
+    header_text_alignment: left
+    header_font_size: 12
+    rows_font_size: 12
+    listen: {}
+    row: 0
+    col: 0
+    width: 24
+    height: 2
+    tab_name: ''
   - title: The Query Inspector Table
     name: The Query Inspector Table
     model: operational_intelligence_alloy_db
@@ -100,14 +172,19 @@
     y_axis_combined: true
     show_null_points: true
     defaults_version: 1
-    listen: {}
-    row: 21
+    note_state: collapsed
+    note_display: hover
+    note_text: The complete master ledger of all queries. Click any Query Hash to
+      drill down into latency trends and top users for that specific statement.
+    listen:
+      Database Name: pg_stat_database.datname
+    row: 30
     col: 0
     width: 24
     height: 7
-     
-  - title: Top 10 Slowest Queries
-    name: Top 10 Slowest Queries
+    tab_name: ''
+  - title: Top 25 Slowest Queries
+    name: Top 25 Slowest Queries
     model: operational_intelligence_alloy_db
     explore: alloydb_historical_statements
     type: looker_grid
@@ -115,7 +192,7 @@
     filters:
       pg_stat_database.is_primary_database: 'Yes'
     sorts: [pg_stat_statements.average_execution_time_ms desc 0]
-    limit: 15
+    limit: 25
     column_limit: 50
     show_view_names: true
     show_row_numbers: true
@@ -176,12 +253,17 @@
     defaults_version: 1
     range_max:
     hidden_pivots: {}
-    listen: {}
-    row: 0
+    note_state: collapsed
+    note_display: hover
+    note_text: Ranked by Average Execution Time. These queries have the worst latency
+      and degrade user experience.
+    listen:
+      Database Name: pg_stat_database.datname
+    row: 8
     col: 0
     width: 10
-    height: 11
-     
+    height: 12
+    tab_name: ''
   - title: High CPU / High Frequency
     name: High CPU / High Frequency
     model: operational_intelligence_alloy_db
@@ -324,12 +406,17 @@
     header_font_size: 12
     rows_font_size: 12
     show_null_labels: true
-    listen: {}
-    row: 0
+    note_state: collapsed
+    note_display: hover
+    note_text: The Top-Right quadrant shows queries that are both slow AND run frequently.
+      Optimizing these yields the highest CPU savings.
+    listen:
+      Database Name: pg_stat_database.datname
+    row: 8
     col: 10
     width: 14
-    height: 11
-     
+    height: 12
+    tab_name: ''
   - title: The Query Inspector Table
     name: The Query Inspector Table (2)
     model: operational_intelligence_alloy_db
@@ -528,12 +615,13 @@
     range_max:
     hidden_pivots: {}
     show_null_labels: true
-    listen: {}
-    row: 11
+    listen:
+      Database Name: pg_stat_database.datname
+    row: 20
     col: 0
     width: 24
     height: 10
-     
+    tab_name: ''
   - title: I/O Overhead Ratio
     name: I/O Overhead Ratio
     model: operational_intelligence_alloy_db
@@ -732,12 +820,17 @@
     range_max:
     hidden_pivots: {}
     show_null_labels: true
-    listen: {}
-    row: 28
+    note_state: collapsed
+    note_display: hover
+    note_text: Queries spending the highest percentage of their time waiting on Disk
+      Reads/Writes. Usually indicates missing indexes.
+    listen:
+      Database Name: pg_stat_database.datname
+    row: 37
     col: 0
     width: 16
     height: 10
-     
+    tab_name: ''
   - title: Temporary Space Spill (GB)
     name: Temporary Space Spill (GB)
     model: operational_intelligence_alloy_db
@@ -936,8 +1029,116 @@
     hide_row_totals: false
     rows_font_size: 12
     show_null_labels: true
-    listen: {}
-    row: 28
+    note_state: collapsed
+    note_display: hover
+    note_text: Total gigabytes spilled to disk because queries required more memory
+      than 'work_mem' allowed. Look for unoptimized JOINs or ORDER BYs.
+    listen:
+      Database Name: pg_stat_database.datname
+    row: 37
     col: 16
     width: 8
     height: 10
+    tab_name: ''
+  - name: " (2)"
+    type: text
+    title_text: ''
+    subtitle_text: ''
+    body_text: '[{"type":"h2","children":[{"text":"🚨 Live Bottlenecks (Happening
+      Right Now)"}],"align":"center"}]'
+    rich_content_json: '{"format":"slate"}'
+    row: 2
+    col: 0
+    width: 24
+    height: 2
+    tab_name: ''
+  - name: " (3)"
+    type: text
+    title_text: ''
+    subtitle_text: ''
+    body_text: '[{"type":"h2","children":[{"text":"🗄️ The Wall of Shame (All-Time
+      Historical)"}],"align":"center"}]'
+    rich_content_json: '{"format":"slate"}'
+    row: 6
+    col: 0
+    width: 24
+    height: 2
+    tab_name: ''
+  - title: Stuck Sessions (Locks)
+    name: Stuck Sessions (Locks)
+    model: operational_intelligence_alloy_db
+    explore: alloydb_real_time_activity
+    type: single_value
+    fields: [pg_stat_activity.stuck_session_count]
+    filters:
+      pg_stat_database.is_primary_database: 'Yes'
+    limit: 500
+    column_limit: 50
+    custom_color_enabled: true
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    defaults_version: 1
+    note_state: collapsed
+    note_display: hover
+    note_text: Real-time count of queries currently blocked by database locks. >0
+      requires immediate attention.
+    listen:
+      Database Name: pg_stat_database.datname
+    row: 4
+    col: 0
+    width: 9
+    height: 2
+    tab_name: ''
+  - title: Longest Running Active Query (Secs)
+    name: Longest Running Active Query (Secs)
+    model: operational_intelligence_alloy_db
+    explore: alloydb_real_time_activity
+    type: single_value
+    fields: [pg_stat_activity.max_query_age_seconds]
+    filters:
+      pg_stat_database.is_primary_database: 'Yes'
+      pg_stat_activity.application_name: "-%Postgresql%,-%PostgreSQL%"
+    limit: 500
+    column_limit: 50
+    custom_color_enabled: true
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    defaults_version: 1
+    hidden_pivots: {}
+    note_state: collapsed
+    note_display: hover
+    note_text: The age (in seconds) of the oldest query currently executing. Watch
+      for "Zombie" queries.
+    listen:
+      Database Name: pg_stat_database.datname
+    row: 4
+    col: 14
+    width: 10
+    height: 2
+    tab_name: ''
+  filters:
+  - name: Database Name
+    title: Database Name
+    type: field_filter
+    default_value: "%postgres%"
+    allow_multiple_values: true
+    required: false
+    ui_config:
+      type: advanced
+      display: popover
+    model: operational_intelligence_alloy_db
+    explore: alloydb_performance
+    listens_to_filters: []
+    field: pg_stat_database.datname

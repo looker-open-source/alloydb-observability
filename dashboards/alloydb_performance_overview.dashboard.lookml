@@ -1,12 +1,25 @@
 ---
 - dashboard: alloydb_performance_overview
   title: AlloyDB Performance Overview
-  extends: navbaralloydb
   preferred_viewer: dashboards-next
   description: ''
-  preferred_slug: Xfoj3N2CrGFVnCBeKDnsCv
+  preferred_slug: ldQeUnMqPyUvKdfdew23B1
   layout: newspaper
+  tabs:
+  - name: ''
+    label: ''
   elements:
+  - name: ''
+    type: text
+    title_text: ''
+    body_text: '[{"type":"h1","children":[{"text":"🏛️ Cumulative Instance Health
+      (All-Time)"}],"align":"center"}]'
+    rich_content_json: '{"format":"slate"}'
+    row: 2
+    col: 0
+    width: 24
+    height: 2
+    tab_name: ''
   - title: Total Compute Load
     name: Total Compute Load
     model: operational_intelligence_alloy_db
@@ -27,12 +40,16 @@
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
     defaults_version: 1
-    listen: {}
-    row: 0
+    note_state: collapsed
+    note_display: hover
+    note_text: Total seconds of CPU time burned across all queries since stats reset.
+    listen:
+      Database Name: pg_stat_database.datname
+    row: 4
     col: 0
-    width: 6
+    width: 5
     height: 3
-     
+    tab_name: ''
   - title: Cache Hit Ratio
     name: Cache Hit Ratio
     model: operational_intelligence_alloy_db
@@ -55,7 +72,7 @@
     target_gap: 10
     target_weight: 8
     range_min: 0
-    value_label_type: both
+    value_label_type: value
     value_label_font: 12
     value_label_padding: 45
     target_source: 'off'
@@ -87,14 +104,16 @@
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
     defaults_version: 0
-    range_max:
-    title_hidden: true
-    listen: {}
-    row: 3
-    col: 0
-    width: 7
+    note_state: collapsed
+    note_display: hover
+    note_text: Target > 99%. Percentage of data read from memory rather than disk.
+    listen:
+      Database Name: pg_stat_database.datname
+    row: 7
+    col: 2
+    width: 8
     height: 6
-     
+    tab_name: ''
   - title: Transaction Failure Rate
     name: Transaction Failure Rate
     model: operational_intelligence_alloy_db
@@ -151,12 +170,16 @@
     defaults_version: 1
     range_max:
     hidden_pivots: {}
-    listen: {}
-    row: 0
-    col: 12
-    width: 6
+    note_state: collapsed
+    note_display: hover
+    note_text: Percentage of transactions resulting in a rollback.
+    listen:
+      Database Name: pg_stat_database.datname
+    row: 4
+    col: 5
+    width: 5
     height: 3
-     
+    tab_name: ''
   - title: Transaction Throughput (TPS)
     name: Transaction Throughput (TPS)
     model: operational_intelligence_alloy_db
@@ -213,12 +236,16 @@
     defaults_version: 1
     range_max:
     hidden_pivots: {}
-    listen: {}
-    row: 0
-    col: 6
-    width: 6
+    note_state: collapsed
+    note_display: hover
+    note_text: Average transactions committed or rolled back per second.
+    listen:
+      Database Name: pg_stat_database.datname
+    row: 4
+    col: 15
+    width: 5
     height: 3
-     
+    tab_name: ''
   - title: Connection Saturation (%)
     name: Connection Saturation (%)
     model: operational_intelligence_alloy_db
@@ -268,13 +295,17 @@
     show_silhouette: false
     totals_color: "#808080"
     defaults_version: 1
+    note_state: collapsed
+    note_display: hover
+    note_text: Percentage of maximum allowed connections currently in use.
     listen:
       Query Start Time: pg_stat_activity.query_start_time
-    row: 0
-    col: 18
-    width: 6
-    height: 3
-     
+      Database Name: pg_stat_database.datname
+    row: 21
+    col: 0
+    width: 7
+    height: 6
+    tab_name: ''
   - title: Query Volume
     name: Query Volume
     model: operational_intelligence_alloy_db
@@ -330,13 +361,17 @@
     show_null_labels: false
     defaults_version: 1
     hidden_pivots: {}
+    note_state: collapsed
+    note_display: hover
+    note_text: Count of active queries that began executing within the selected timeframe
     listen:
       Query Start Time: pg_stat_activity.query_start_time
-    row: 3
-    col: 8
-    width: 16
+      Database Name: pg_stat_database.datname
+    row: 15
+    col: 0
+    width: 24
     height: 6
-     
+    tab_name: ''
   - title: Live Traffic Breakdown
     name: Live Traffic Breakdown
     model: operational_intelligence_alloy_db
@@ -392,13 +427,17 @@
     hidden_pivots: {}
     show_null_points: true
     interpolation: linear
+    note_state: collapsed
+    note_display: hover
+    note_text: Real-time distribution of open connections grouped by originating application.
     listen:
       Query Start Time: pg_stat_activity.query_start_time
-    row: 12
-    col: 0
-    width: 12
-    height: 7
-     
+      Database Name: pg_stat_database.datname
+    row: 21
+    col: 15
+    width: 9
+    height: 6
+    tab_name: ''
   - title: WAL Generation Rate
     name: WAL Generation Rate
     model: operational_intelligence_alloy_db
@@ -455,12 +494,17 @@
     defaults_version: 1
     range_max:
     hidden_pivots: {}
-    listen: {}
-    row: 9
-    col: 6
-    width: 5
+    note_state: collapsed
+    note_display: hover
+    note_text: Total megabytes written to the Write-Ahead Log. Indicates write-heavy
+      workloads.
+    listen:
+      Database Name: pg_stat_database.datname
+    row: 4
+    col: 20
+    width: 4
     height: 3
-     
+    tab_name: ''
   - title: Deadlock Frequency
     name: Deadlock Frequency
     model: operational_intelligence_alloy_db
@@ -517,12 +561,17 @@
     defaults_version: 1
     range_max:
     hidden_pivots: {}
-    listen: {}
-    row: 9
-    col: 13
+    note_state: collapsed
+    note_display: hover
+    note_text: Total deadlocks detected. High numbers indicate application transaction
+      conflicts.
+    listen:
+      Database Name: pg_stat_database.datname
+    row: 4
+    col: 10
     width: 5
     height: 3
-     
+    tab_name: ''
   - title: Database DML Intensity
     name: Database DML Intensity
     model: operational_intelligence_alloy_db
@@ -581,13 +630,175 @@
     defaults_version: 1
     range_max:
     hidden_pivots: {}
-    listen: {}
-    row: 12
+    note_state: collapsed
+    note_display: hover
+    note_text: Ratio of Rows Fetched (Reads) vs. Rows Modified (Writes).
+    listen:
+      Database Name: pg_stat_database.datname
+    row: 7
     col: 12
     width: 12
-    height: 7
-     
+    height: 6
+    tab_name: ''
+  - name: " (2)"
+    type: text
+    title_text: ''
+    body_text: '[{"type":"h1","children":[{"text":"⚡ Live Traffic Pulse (Filtered
+      by Time)"}],"align":"center"}]'
+    rich_content_json: '{"format":"slate"}'
+    row: 13
+    col: 0
+    width: 24
+    height: 2
+    tab_name: ''
+  - title: Current Wait Event Distribution
+    name: Current Wait Event Distribution
+    model: operational_intelligence_alloy_db
+    explore: alloydb_real_time_activity
+    type: looker_pie
+    fields: [pg_stat_activity.wait_event_type, pg_stat_activity.total_active_connections]
+    filters:
+      pg_stat_database.is_primary_database: ''
+      pg_stat_activity.is_waiting: 'Yes'
+    sorts: [pg_stat_activity.total_active_connections desc 0]
+    limit: 500
+    column_limit: 50
+    value_labels: legend
+    label_type: labPer
+    inner_radius: 50
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    legend_position: center
+    point_style: none
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    show_null_points: true
+    interpolation: linear
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    custom_color_enabled: true
+    show_single_value_title: true
+    smart_single_value_size: false
+    show_comparison: true
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    comparison_label: Active Connections
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    ordering: none
+    show_null_labels: false
+    defaults_version: 1
+    hidden_pivots: {}
+    listen:
+      Query Start Time: pg_stat_activity.query_start_time
+      Database Name: pg_stat_database.datname
+    row: 21
+    col: 7
+    width: 8
+    height: 6
+    tab_name: ''
+  - title: " "
+    name: " "
+    model: operational_intelligence_alloy_db
+    explore: navigation_bar
+    type: single_value
+    fields: [navigation_bar.tabbed_navigation_bar]
+    sorts: [navigation_bar.tabbed_navigation_bar]
+    limit: 500
+    column_limit: 50
+    custom_color_enabled: true
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    hidden_fields: []
+    hidden_points_if_no: []
+    series_labels: {}
+    show_view_names: false
+    font_size_main: ''
+    orientation: auto
+    show_title_navigation_bar.tabbed_navigation_bar: false
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    legend_position: center
+    point_style: none
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    defaults_version: 1
+    show_row_numbers: true
+    transpose: false
+    truncate_text: true
+    hide_totals: false
+    hide_row_totals: false
+    size_to_fit: true
+    table_theme: white
+    header_text_alignment: left
+    header_font_size: 12
+    rows_font_size: 12
+    listen:
+      Database Name: navigation_bar.datname
+    row: 0
+    col: 0
+    width: 24
+    height: 2
+    tab_name: ''
   filters:
+  - name: Database Name
+    title: Database Name
+    type: field_filter
+    default_value: "%postgres%"
+    allow_multiple_values: true
+    required: false
+    ui_config:
+      type: advanced
+      display: popover
+    model: operational_intelligence_alloy_db
+    explore: alloydb_performance
+    listens_to_filters: []
+    field: pg_stat_database.datname
   - name: Query Start Time
     title: Query Start Time
     type: field_filter
@@ -601,16 +812,3 @@
     explore: alloydb_real_time_activity
     listens_to_filters: []
     field: pg_stat_activity.query_start_time
-  - name: Database Name
-    title: Database Name
-    type: field_filter
-    default_value: postgres
-    allow_multiple_values: true
-    required: false
-    ui_config:
-      type: dropdown_menu
-      display: inline
-    model: operational_intelligence_alloy_db
-    explore: alloydb_performance
-    listens_to_filters: []
-    field: pg_stat_database.datname
