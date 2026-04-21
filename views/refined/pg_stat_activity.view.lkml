@@ -76,10 +76,6 @@ view: +pg_stat_activity {
     }
   }
 
-  # --------------------------------------------------------------------------
-  # Period-Over-Period (PoP) MEASURES
-  # --------------------------------------------------------------------------
-
   measure: selected_period_active_connections {
     view_label: "_PoP"
     label: "Active Connections (Selected Period)"
@@ -138,6 +134,17 @@ view: +pg_stat_activity {
     description: "Name of the user logged into this backend connection."
     group_label: "Connection Details"
     sql: ${TABLE}.usename ;;
+    drill_fields: [application_name, state, total_connections]
+
+    link: {
+      label: "🍩 User's Application Share (Pie)"
+      url: "@{DRILL_PIE_VIZ}{{ link }}&fields=pg_stat_activity.application_name,pg_stat_activity.total_connections&f[pg_stat_activity.usename]={{ value | url_encode }}&sorts=pg_stat_activity.total_connections+desc&limit=10&toggle=vis"
+    }
+
+    link: {
+      label: "📊 User's Connection States (Bar)"
+      url: "@{DRILL_COLUMN_VIZ}{{ link }}&fields=pg_stat_activity.state,pg_stat_activity.total_connections&f[pg_stat_activity.usename]={{ value | url_encode }}&sorts=pg_stat_activity.total_connections+desc&limit=10&toggle=vis"
+    }
   }
 
   dimension: datname {
@@ -153,6 +160,11 @@ view: +pg_stat_activity {
     description: "Name of the application that is connected to this backend."
     group_label: "Connection Details"
     sql: ${TABLE}.application_name ;;
+
+    link: {
+      label: "🍩 User Distribution for this App (Pie)"
+      url: "@{DRILL_PIE_VIZ}{{ link }}&fields=pg_stat_activity.usename,pg_stat_activity.total_connections&f[pg_stat_activity.application_name]={{ value | url_encode }}&sorts=pg_stat_activity.total_connections+desc&limit=10&toggle=vis"
+    }
   }
 
   dimension: state {
@@ -167,19 +179,20 @@ view: +pg_stat_activity {
     description: "The type of event for which the backend is waiting, if any."
     group_label: "Connection Status"
     sql: ${TABLE}.wait_event_type ;;
+
+    link: {
+      label: "🍩 Current Wait Event Distribution (Pie)"
+      url: "@{DRILL_PIE_VIZ}{{ link }}&fields=pg_stat_activity.wait_event_type,pg_stat_activity.total_active_connections&f[pg_stat_activity.is_waiting]=yes&sorts=pg_stat_activity.total_active_connections+desc&limit=10&toggle=vis"
+    }
   }
 
   dimension: query {
     type: string
     label: "Current Query Text"
-    description: "Text of this backend's most recent query. If state is active, this is the currently executing query."
+    description: "Text of this backend's most recent query."
     group_label: "Query Information"
     sql: ${TABLE}.query ;;
   }
-
-  # --------------------------------------------------------------------------
-  # Dimension Groups
-  # --------------------------------------------------------------------------
 
   dimension_group: query_start {
     type: time
@@ -187,10 +200,6 @@ view: +pg_stat_activity {
     timeframes: [raw, time, minute, hour, date]
     sql: ${TABLE}.query_start ;;
   }
-
-  # --------------------------------------------------------------------------
-  # Instance Utilization (Primary vs Read Pool)
-  # --------------------------------------------------------------------------
 
   dimension: instance_role {
     type: string
@@ -202,10 +211,6 @@ view: +pg_stat_activity {
         ELSE 'Primary Instance'
       END ;;
   }
-
-  # --------------------------------------------------------------------------
-  # Looker Workload Identification (Enhanced Logic)
-  # --------------------------------------------------------------------------
 
   dimension: traffic_source {
     type: string
@@ -221,13 +226,9 @@ view: +pg_stat_activity {
          END ;;
   }
 
-  # --------------------------------------------------------------------------
-  # LIVE FORENSICS: Waiting & Blocking
-  # --------------------------------------------------------------------------
-
   dimension: is_waiting {
     type: yesno
-    description: "Identifies if the session is currently stuck waiting for an event (e.g., a Lock)."
+    description: "Identifies if the session is currently stuck waiting for an event."
     group_label: "Connection Status"
     sql: ${wait_event_type} IS NOT NULL ;;
   }
@@ -255,7 +256,7 @@ view: +pg_stat_activity {
 
   dimension: is_parallel_worker {
     type: yesno
-    description: "Identifies if this PID is a parallel worker process spawned by a leader query."
+    description: "Identifies if this PID is a parallel worker process."
     group_label: "Connection Details"
     sql: ${TABLE}.leader_pid IS NOT NULL ;;
   }
@@ -266,22 +267,37 @@ view: +pg_stat_activity {
 
   measure: total_connections {
     type: count
-    description: "Total number of connections, regardless of their current state."
+    description: "Total number of connections."
     group_label: "Connection Metrics"
   }
 
   measure: total_active_connections {
     type: count
-    description: "Number of currently active query connections across all applications."
+    description: "Number of currently active query connections."
     group_label: "Connection Metrics"
     filters: [state: "active"]
-    drill_fields: [pid, usename, application_name, query, query_start_time]
+    drill_fields: [application_name, usename, wait_event_type, total_active_connections]
+    
+    link: {
+      label: "📊 Active Connections by Application (Bar)"
+      url: "@{DRILL_COLUMN_VIZ}{{ link }}&fields=pg_stat_activity.application_name,pg_stat_activity.usename,pg_stat_activity.total_active_connections&sorts=pg_stat_activity.total_active_connections+desc&limit=10&toggle=vis"
+    }
+
+    link: {
+      label: "📈 Active Connection Trend (Area)"
+      url: "@{DRILL_AREA_VIZ}{{ link }}&fields=pg_stat_activity.query_start_minute,pg_stat_activity.total_active_connections&pivots=pg_stat_activity.traffic_source&sorts=pg_stat_activity.query_start_minute+asc&limit=500&toggle=vis"
+    }
+
+    link: {
+      label: "🍩 Current Wait Event Distribution (Pie)"
+      url: "@{DRILL_PIE_VIZ}{{ link }}&fields=pg_stat_activity.wait_event_type,pg_stat_activity.total_active_connections&f[pg_stat_activity.is_waiting]=yes&sorts=pg_stat_activity.total_active_connections+desc&limit=10&toggle=vis"
+    }
   }
 
   measure: stuck_session_count {
     type: count
     label: "Stuck Sessions (Locks)"
-    description: "Number of sessions currently waiting on a database lock. Spikes indicate severe performance bottlenecks."
+    description: "Number of sessions currently waiting on a database lock."
     group_label: "Connection Metrics"
     filters: [is_blocked_by_lock: "yes"]
     drill_fields: [pid, usename, wait_event_type, query]
@@ -289,42 +305,54 @@ view: +pg_stat_activity {
 
   measure: max_query_age_seconds {
     type: max
-    description: "The age of the longest-running active query in the database."
+    description: "The age of the longest-running active query."
     group_label: "Execution Metrics"
     sql: ${query_age_seconds} ;;
     filters: [state: "active"]
   }
 
-  # KPI 4: Connection Saturation %
   measure: connection_saturation_pct {
     type: number
     label: "Connection Saturation (%)"
-    description: "Percentage of maximum allowed connections currently in use. Calculated as current connections / MAX_CONNECTIONS constant."
+    description: "Percentage of maximum allowed connections currently in use."
     group_label: "Connection Metrics"
     value_format_name: percent_1
-    sql:
-      1.0 * ${total_connections} /
-      NULLIF(@{MAX_CONNECTIONS}, 0) ;;
+    sql: 1.0 * ${total_connections} / NULLIF(@{MAX_CONNECTIONS}, 0) ;;
+    drill_fields: [query_start_time, state, connection_saturation_pct, total_connections]
+    
+    link: {
+      label: "📈 Saturation Trend (Area)"
+      url: "@{DRILL_AREA_VIZ}{{ link }}&fields=pg_stat_activity.query_start_time,pg_stat_activity.state,pg_stat_activity.connection_saturation_pct&pivots=pg_stat_activity.state&sorts=pg_stat_activity.query_start_time+asc&limit=500&toggle=vis"
+    }
+    
+    link: {
+      label: "🍩 Current State Distribution (Pie)"
+      url: "@{DRILL_PIE_VIZ}{{ link }}&fields=pg_stat_activity.state,pg_stat_activity.total_connections&sorts=pg_stat_activity.total_connections+desc&limit=10&toggle=vis"
+    }
   }
 
-  # KPI 8: Idle-in-Transaction Age
   measure: max_idle_in_transaction_age_seconds {
     type: max
     label: "Max Idle-in-Transaction Age (Secs)"
-    description: "The age of the longest-running session that is currently in the 'idle in transaction' state. These sessions are dangerous as they hold locks while doing nothing for extended periods. Official PostgreSQL Documentation: pg_stat_activity.state_change."
+    description: "The age of the longest-running session that is currently in the 'idle in transaction' state."
     group_label: "Execution Metrics"
     value_format_name: decimal_0
     sql: EXTRACT(EPOCH FROM (CURRENT_TIMESTAMP - ${TABLE}.state_change)) ;;
     filters: [state: "idle in transaction"]
   }
 
-  # KPI 10 Fix: Snapshot/Peak Concurrency
   measure: current_active_connections {
     type: count
     label: "Active Connections (Snapshot)"
-    description: "The number of active connections at the exact moment of the query. Represents the 'Peak' in real-time dashboards."
+    description: "The number of active connections at the exact moment of the query."
     group_label: "Connection Metrics"
     filters: [state: "active"]
     value_format_name: decimal_0
+    drill_fields: [application_name, usename, current_active_connections]
+    
+    link: {
+      label: "📊 Active Connections by Application (Bar)"
+      url: "@{DRILL_COLUMN_VIZ}{{ link }}&fields=pg_stat_activity.application_name,pg_stat_activity.usename,pg_stat_activity.current_active_connections&sorts=pg_stat_activity.current_active_connections+desc&limit=10&toggle=vis"
+    }
   }
 }
