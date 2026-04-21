@@ -28,8 +28,8 @@ view: navigation_bar {
     html:
     <div style="background: #ffffff; font-family: 'Google Sans', Arial, sans-serif; border-bottom: 1px solid #e0e0e0; padding: 6px 12px; display: flex; align-items: center; justify-content: flex-start; gap: 10px;">
 
-      {%- assign style_inactive = "display: inline-block; color: #5F6368; padding: 5px 12px; text-decoration: none; font-size: 14px; border-radius: 16px; border: 1px solid #DADCE0;" -%}
-      {%- assign style_active = "display: inline-block; background-color: #E8F0FE; color: #1967D2; padding: 5px 12px; font-weight: bold; border-radius: 16px; text-decoration: none; font-size: 14px; border: 1px solid #1967D2; pointer-events: none; cursor: default;" -%}
+      {%- assign style_inactive = "display: inline-block; color: #5F6368; padding: 5px 12px; text-decoration: none; font-size: 16px; border-radius: 16px; border: 1px solid #DADCE0;" -%}
+      {%- assign style_active = "display: inline-block; background-color: #E8F0FE; color: #1967D2; padding: 5px 12px; font-weight: bold; border-radius: 16px; text-decoration: none; font-size: 16px; border: 1px solid #1967D2; pointer-events: none; cursor: default;" -%}
 
       <!-- Dashboard 1: Executive Health -->
       {% if _explore._dashboard_url contains 'alloydb_performance_overview' %}
@@ -62,8 +62,8 @@ view: navigation_bar {
     html:
     <div style="font-family: 'Google Sans', Arial, sans-serif; display: flex; align-items: flex-end; justify-content: flex-start; gap: 24px; margin: 0; padding: 0; line-height: 1;">
 
-      {%- assign style_inactive = "display: inline-block; color: #5F6368; padding-bottom: 2px; text-decoration: none; font-size: 14px; border-bottom: 2px solid transparent; font-weight: 500;" -%}
-      {%- assign style_active = "display: inline-block; color: #1A73E8; padding-bottom: 2px; font-weight: bold; text-decoration: none; font-size: 14px; border-bottom: 2px solid #1A73E8; pointer-events: none; cursor: default;" -%}
+      {%- assign style_inactive = "display: inline-block; color: #5F6368; padding-bottom: 2px; text-decoration: none; font-size: 16px; border-bottom: 2px solid transparent; font-weight: 500;" -%}
+      {%- assign style_active = "display: inline-block; color: #1A73E8; padding-bottom: 2px; font-weight: bold; text-decoration: none; font-size: 16px; border-bottom: 2px solid #1A73E8; pointer-events: none; cursor: default;" -%}
 
       <!-- Dashboard 1: Executive Health -->
       {% if _explore._dashboard_url contains 'alloydb_performance_overview' %}
