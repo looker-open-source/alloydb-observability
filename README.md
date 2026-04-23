@@ -17,6 +17,7 @@ The project utilizes a `manifest.lkml` file with several constants for plug-and-
 - **`CONNECTION_NAME`**: The name of the Looker connection.
 - **`DATABASE_NAME`**: The primary application database to monitor.
 - **`STATEMENTS_SCHEMA`**: The schema where the `pg_stat_statements` extension is installed.
+- **`SCRATCH_SCHEMA`**: The scratch schema name for self-managed history PDTs.
 - **`PII_QUERY_TEXT`**: A security toggle (`SHOW`/`HIDE`) to mask sensitive SQL text.
 - **`MAX_CONNECTIONS`**: Used for Connection Saturation KPI calculations.
 
@@ -35,7 +36,7 @@ The `manifest.lkml` also includes a set of highly optimized, triple-escaped JSON
 - **`pg_stat_statements`**: The Query Inspector. Tracks the execution details, I/O wait times, and memory spills of all SQL statements.
 - **`pg_stat_activity`**: The Real-time Pulse. Provides a snapshot of active connections, wait events (locks), and session ages.
 - **`pg_stat_database`**: Instance Health. Monitors database-wide metrics including transaction success rates and buffer cache efficiency.
-- **Daily Snapshot PDTs**: `pg_stat_database_daily_snapshot` and `pg_stat_statements_daily_snapshot` use Looker's Incremental PDT feature to track daily performance changes.
+- **Daily Snapshot PDTs**: `pg_stat_database_daily_snapshot` and `pg_stat_statements_daily_snapshot` use Looker's `create_process` to maintain a permanent history of daily snapshots for time-series analysis.
 
 ### Explores
 
@@ -43,7 +44,7 @@ When monitoring PostgreSQL/AlloyDB system views, it is critical to separate cumu
 
 - **AlloyDB Historical Statements (All-Time)**: Focuses on the `pg_stat_statements` "Odometer". This cumulative ledger records total execution time, calls, and I/O wait times since the last stats reset. **Date filters cannot be applied to this explore** because the database does not record timestamps for historical queries. Use this to find the heaviest queries and worst I/O offenders of all time.
 - **AlloyDB Real-Time Activity (Live Forensics)**: Focuses on the `pg_stat_activity` "Speedometer". This provides a real-time snapshot of currently open connections, active queries, and stuck sessions. **Date filters are supported** here, as it tracks the `query_start` timestamp of live connections.
-- **AlloyDB Historical Trends (Time-Series)**: Uses Incremental Persistent Derived Tables (PDTs) to take a daily snapshot of the cumulative historical tables. By calculating the daily delta (the difference between today's total and yesterday's total using window functions like `LAG()`), this explore allows for true time-series analysis (e.g., daily CPU usage or TPS trends) that standard PostgreSQL tables cannot support natively.
+- **AlloyDB Historical Trends (Time-Series)**: Uses self-managed history Persistent Derived Tables (PDTs) to take a daily snapshot of the cumulative historical tables. By calculating the daily delta (the difference between today's total and yesterday's total using window functions like `LAG()`), this explore allows for true time-series analysis (e.g., daily CPU usage or TPS trends) that standard PostgreSQL tables cannot support natively.
 - **AlloyDB Performance Monitoring (Combined)**: Kept for backward compatibility. *Warning:* Joining historical statements with real-time activity can cause filtering artifacts (returning 0 rows) if date filters are inadvertently applied to historical metrics.
 
 ---
@@ -105,13 +106,21 @@ constant: CONNECTION_NAME { value: "cymbal-gadgets-alloydb" } # Match your Looke
 constant: DATABASE_NAME { value: "your_application_db" } # The ACTUAL database you want to monitor
 ```
 
-### 5. Enable Persistent Derived Tables (PDTs) for Time-Series Tracking
-The `alloydb_historical_trends` explore requires Looker to create daily snapshot tables. Because the underlying PostgreSQL tables (`pg_stat_statements`) act like "odometers" (constantly increasing cumulative totals without timestamps), Looker must use Incremental PDTs to capture the total each day. It then calculates the exact amount of work done *that day* (the "Delta") by subtracting yesterday's snapshot from today's snapshot using SQL window functions (`LAG()`).
+### 5. Enable Persistent Derived Tables (PDTs) for Time-Series Tracking (Self-Managed History)
+The `alloydb_historical_trends` explore requires Looker to maintain a permanent history of daily snapshots. Because the underlying PostgreSQL tables (`pg_stat_statements` and `pg_stat_database`) act like "odometers" (constantly increasing cumulative totals without timestamps) and only return a single row representing the live state, standard incremental PDTs suffer from a "sliding window" issue where they only retain the latest day.
 
-For Looker to build these daily snapshot tables, the database user configured in Looker (`looker_monitor`) must have permission to write to a scratch schema inside the **`postgres`** database. As a superuser connected to `postgres`, run:
+To solve this entirely within LookML without requiring external cron jobs, this block utilizes Looker's `create_process` feature. The PDTs execute a multi-step SQL script inside Looker's scratch schema to:
+1. Create a permanent history table (e.g., `alloydb_stat_database_history`) if it doesn't exist.
+2. Idempotently delete any existing snapshot for the current day to prevent duplication if the trigger fires multiple times.
+3. Insert the live cumulative snapshot into the history table.
+4. Return the full historical dataset to Looker.
+
+By calculating the daily delta (the difference between today's total and yesterday's total using window functions like `LAG()`), this approach allows for true time-series analysis (e.g., daily CPU usage or TPS trends).
+
+For Looker to build these self-managed history tables, the database user configured in Looker (`looker_monitor`) must have permission to write to a scratch schema inside the **`postgres`** database. The schema name is configurable via the `SCRATCH_SCHEMA` constant in `manifest.lkml` (defaults to `temp_looker_schema`). As a superuser connected to `postgres`, run:
 
 ```sql
--- 1. Ensure the scratch schema exists (Looker uses temp_looker_schema by default)
+-- 1. Ensure the scratch schema exists
 CREATE SCHEMA IF NOT EXISTS temp_looker_schema;
 
 -- 2. Give the Looker user permission to create tables in it
