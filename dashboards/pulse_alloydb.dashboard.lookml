@@ -1,0 +1,601 @@
+---
+- dashboard: pulse_alloydb
+  title: Pulse AlloyDB
+  preferred_viewer: dashboards-next
+  description: ''
+  preferred_slug: G6hf8HU8fFYPUuxVJOoB82
+  layout: newspaper
+  tabs:
+  - name: ''
+    label: ''
+  elements:
+  - title: Daily Compute Load (Secs)
+    name: Daily Compute Load (Secs)
+    model: operational_intelligence_alloy_db
+    explore: alloydb_historical_trends
+    type: single_value
+    fields: [pg_stat_database_daily_snapshot.snapshot_date, pg_stat_statements_daily_snapshot.overall_daily_execution_time_seconds]
+    fill_fields: [pg_stat_database_daily_snapshot.snapshot_date]
+    sorts: [pg_stat_database_daily_snapshot.snapshot_date desc]
+    limit: 500
+    column_limit: 50
+    custom_color_enabled: true
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    hidden_pivots: {}
+    show_view_names: false
+    defaults_version: 1
+    listen:
+      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+    row: 4
+    col: 0
+    width: 7
+    height: 3
+    tab_name: ''
+  - title: Daily Transaction Volume
+    name: Daily Transaction Volume
+    model: operational_intelligence_alloy_db
+    explore: alloydb_historical_trends
+    type: single_value
+    fields: [pg_stat_database_daily_snapshot.snapshot_date, pg_stat_database_daily_snapshot.daily_transactions]
+    fill_fields: [pg_stat_database_daily_snapshot.snapshot_date]
+    sorts: [pg_stat_database_daily_snapshot.snapshot_date desc]
+    limit: 500
+    column_limit: 50
+    custom_color_enabled: true
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    hidden_pivots: {}
+    show_view_names: false
+    defaults_version: 1
+    listen:
+      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+    row: 4
+    col: 7
+    width: 6
+    height: 3
+    tab_name: ''
+  - title: Daily Data Processed
+    name: Daily Data Processed
+    model: operational_intelligence_alloy_db
+    explore: alloydb_historical_trends
+    type: single_value
+    fields: [pg_stat_database_daily_snapshot.snapshot_date, pg_stat_statements_daily_snapshot.overall_daily_data_processed_gb]
+    fill_fields: [pg_stat_database_daily_snapshot.snapshot_date]
+    sorts: [pg_stat_database_daily_snapshot.snapshot_date desc]
+    limit: 500
+    column_limit: 50
+    custom_color_enabled: true
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    hidden_pivots: {}
+    show_view_names: false
+    defaults_version: 1
+    listen:
+      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+    row: 4
+    col: 13
+    width: 5
+    height: 3
+    tab_name: ''
+  - title: Cache Hit Ratio
+    name: Cache Hit Ratio
+    model: operational_intelligence_alloy_db
+    explore: alloydb_historical_trends
+    type: single_value
+    fields: [pg_stat_database_daily_snapshot.snapshot_date, pg_stat_database_daily_snapshot.daily_cache_hit_ratio]
+    fill_fields: [pg_stat_database_daily_snapshot.snapshot_date]
+    sorts: [pg_stat_database_daily_snapshot.snapshot_date desc]
+    limit: 500
+    column_limit: 50
+    custom_color_enabled: true
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    hidden_pivots: {}
+    show_view_names: false
+    defaults_version: 1
+    listen:
+      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+    row: 4
+    col: 18
+    width: 6
+    height: 3
+    tab_name: ''
+  - title: 'CPU Attribution: Looker vs Application'
+    name: 'CPU Attribution: Looker vs Application'
+    model: operational_intelligence_alloy_db
+    explore: alloydb_historical_trends
+    type: looker_area
+    fields: [pg_stat_database_daily_snapshot.snapshot_date, pg_stat_statements.is_looker_query,
+      pg_stat_statements_daily_snapshot.overall_daily_execution_time_seconds]
+    pivots: [pg_stat_statements.is_looker_query]
+    fill_fields: [pg_stat_statements.is_looker_query, pg_stat_database_daily_snapshot.snapshot_date]
+    sorts: [pg_stat_statements.is_looker_query, pg_stat_database_daily_snapshot.snapshot_date
+        desc]
+    limit: 500
+    column_limit: 50
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    legend_position: center
+    point_style: none
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    show_null_points: true
+    interpolation: linear
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    hidden_pivots: {}
+    defaults_version: 1
+    custom_color_enabled: true
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    listen:
+      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+    row: 11
+    col: 0
+    width: 24
+    height: 6
+    tab_name: ''
+  - title: Temporary Space Spill (GB
+    name: Temporary Space Spill (GB
+    model: operational_intelligence_alloy_db
+    explore: alloydb_historical_trends
+    type: looker_area
+    fields: [pg_stat_database_daily_snapshot.snapshot_date, pg_stat_database_daily_snapshot.daily_temp_spill_gb]
+    fill_fields: [pg_stat_database_daily_snapshot.snapshot_date]
+    sorts: [pg_stat_database_daily_snapshot.snapshot_date desc]
+    limit: 500
+    column_limit: 50
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    legend_position: center
+    point_style: none
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    show_null_points: true
+    interpolation: linear
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    hidden_pivots: {}
+    defaults_version: 1
+    custom_color_enabled: true
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    listen:
+      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+    row: 17
+    col: 0
+    width: 24
+    height: 6
+    tab_name: ''
+  - name: ''
+    type: text
+    title_text: ''
+    subtitle_text: ''
+    body_text: '[{"type":"h2","children":[{"text":"📈 Executive Summary"}],"align":"center"}]'
+    rich_content_json: '{"format":"slate"}'
+    row: 2
+    col: 0
+    width: 24
+    height: 2
+    tab_name: ''
+  - name: " (2)"
+    type: text
+    title_text: ''
+    subtitle_text: ''
+    body_text: '[{"type":"h2","children":[{"text":"🔍 Workload Attribution & Resource
+      Trends"}],"align":"center"}]'
+    rich_content_json: '{"format":"slate"}'
+    row: 9
+    col: 0
+    width: 24
+    height: 2
+    tab_name: ''
+  - title: New Tile
+    name: New Tile
+    model: operational_intelligence_alloy_db
+    explore: navigation_bar
+    type: single_value
+    fields: [navigation_bar.tabbed_navigation_bar]
+    filters:
+      navigation_bar.datname: "%postgres%"
+    sorts: [navigation_bar.tabbed_navigation_bar]
+    limit: 500
+    column_limit: 50
+    custom_color_enabled: true
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    hidden_fields: []
+    hidden_points_if_no: []
+    series_labels: {}
+    show_view_names: false
+    font_size_main: ''
+    orientation: auto
+    show_title_navigation_bar.tabbed_navigation_bar: false
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    legend_position: center
+    point_style: none
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    defaults_version: 1
+    show_row_numbers: true
+    transpose: false
+    truncate_text: true
+    hide_totals: false
+    hide_row_totals: false
+    size_to_fit: true
+    table_theme: white
+    header_text_alignment: left
+    header_font_size: 12
+    rows_font_size: 12
+    listen: {}
+    row: 0
+    col: 0
+    width: 24
+    height: 2
+    tab_name: ''
+  - title: Daily Data Processed
+    name: Daily Data Processed (2)
+    model: operational_intelligence_alloy_db
+    explore: alloydb_historical_trends
+    type: looker_area
+    fields: [pg_stat_database_daily_snapshot.snapshot_date, pg_stat_statements_daily_snapshot.overall_daily_data_processed_gb]
+    fill_fields: [pg_stat_database_daily_snapshot.snapshot_date]
+    sorts: [pg_stat_database_daily_snapshot.snapshot_date desc]
+    limit: 500
+    column_limit: 50
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: false
+    show_x_axis_ticks: false
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    legend_position: center
+    point_style: none
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    show_null_points: true
+    interpolation: linear
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    y_axes: [{label: '', orientation: left, series: [{axisId: pg_stat_statements_daily_snapshot.overall_daily_data_processed_gb,
+            id: pg_stat_statements_daily_snapshot.overall_daily_data_processed_gb,
+            name: Overall Daily Data Processed (GB)}], showLabels: false, showValues: false,
+        unpinAxis: false, tickDensity: default, tickDensityCustom: 5, type: linear}]
+    x_axis_zoom: false
+    y_axis_zoom: false
+    series_colors:
+      pg_stat_statements_daily_snapshot.overall_daily_data_processed_gb: "#e8710a"
+    custom_color_enabled: true
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    hidden_pivots: {}
+    defaults_version: 1
+    title_hidden: true
+    listen:
+      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+    row: 7
+    col: 13
+    width: 5
+    height: 2
+    tab_name: ''
+  - title: 'Daily Compute Load (Secs) '
+    name: 'Daily Compute Load (Secs) '
+    model: operational_intelligence_alloy_db
+    explore: alloydb_historical_trends
+    type: looker_area
+    fields: [pg_stat_database_daily_snapshot.snapshot_date, pg_stat_statements_daily_snapshot.overall_daily_execution_time_seconds]
+    fill_fields: [pg_stat_database_daily_snapshot.snapshot_date]
+    sorts: [pg_stat_database_daily_snapshot.snapshot_date desc]
+    limit: 500
+    column_limit: 50
+    x_axis_gridlines: false
+    y_axis_gridlines: false
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: false
+    show_x_axis_ticks: false
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    legend_position: center
+    point_style: none
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    show_null_points: true
+    interpolation: linear
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    y_axes: [{label: '', orientation: left, series: [{axisId: pg_stat_statements_daily_snapshot.overall_daily_execution_time_seconds,
+            id: pg_stat_statements_daily_snapshot.overall_daily_execution_time_seconds,
+            name: Overall Daily Execution Time (Secs)}], showLabels: false, showValues: false,
+        unpinAxis: false, tickDensity: default, tickDensityCustom: 5, type: linear}]
+    x_axis_zoom: false
+    y_axis_zoom: false
+    custom_color_enabled: true
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    hidden_pivots: {}
+    defaults_version: 1
+    title_hidden: true
+    listen:
+      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+    row: 7
+    col: 0
+    width: 7
+    height: 2
+    tab_name: ''
+  - title: Cache Hit Ratio (Copy)
+    name: Cache Hit Ratio (Copy)
+    model: operational_intelligence_alloy_db
+    explore: alloydb_historical_trends
+    type: looker_area
+    fields: [pg_stat_database_daily_snapshot.snapshot_date, pg_stat_database_daily_snapshot.daily_cache_hit_ratio]
+    fill_fields: [pg_stat_database_daily_snapshot.snapshot_date]
+    sorts: [pg_stat_database_daily_snapshot.snapshot_date desc]
+    limit: 500
+    column_limit: 50
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: false
+    show_x_axis_ticks: false
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    legend_position: center
+    point_style: none
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    show_null_points: true
+    interpolation: linear
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    y_axes: [{label: '', orientation: left, series: [{axisId: pg_stat_database_daily_snapshot.daily_cache_hit_ratio,
+            id: pg_stat_database_daily_snapshot.daily_cache_hit_ratio, name: Daily
+              Cache Hit Ratio}], showLabels: false, showValues: false, unpinAxis: false,
+        tickDensity: default, tickDensityCustom: 5, type: linear}]
+    x_axis_zoom: false
+    y_axis_zoom: false
+    series_colors:
+      pg_stat_database_daily_snapshot.daily_cache_hit_ratio: "#1e8e3e"
+    custom_color_enabled: true
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    hidden_pivots: {}
+    defaults_version: 1
+    title_hidden: true
+    listen:
+      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+    row: 7
+    col: 18
+    width: 6
+    height: 2
+    tab_name: ''
+  - title: Daily Transaction Volume
+    name: Daily Transaction Volume (2)
+    model: operational_intelligence_alloy_db
+    explore: alloydb_historical_trends
+    type: looker_area
+    fields: [pg_stat_database_daily_snapshot.snapshot_date, pg_stat_database_daily_snapshot.daily_transactions]
+    fill_fields: [pg_stat_database_daily_snapshot.snapshot_date]
+    sorts: [pg_stat_database_daily_snapshot.snapshot_date desc]
+    limit: 500
+    column_limit: 50
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: false
+    show_x_axis_ticks: false
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    legend_position: center
+    point_style: none
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    show_null_points: true
+    interpolation: linear
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    y_axes: [{label: '', orientation: left, series: [{axisId: pg_stat_database_daily_snapshot.daily_transactions,
+            id: pg_stat_database_daily_snapshot.daily_transactions, name: Daily Transactions}],
+        showLabels: false, showValues: false, unpinAxis: false, tickDensity: default,
+        tickDensityCustom: 5, type: linear}]
+    x_axis_zoom: false
+    y_axis_zoom: false
+    series_colors:
+      pg_stat_database_daily_snapshot.daily_transactions: "#d93025"
+    custom_color_enabled: true
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    hidden_pivots: {}
+    defaults_version: 1
+    title_hidden: true
+    listen:
+      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+    row: 7
+    col: 7
+    width: 6
+    height: 2
+    tab_name: ''
+  filters:
+  - name: Snapshot Date
+    title: Snapshot Date
+    type: field_filter
+    default_value: ''
+    allow_multiple_values: true
+    required: false
+    ui_config:
+      type: advanced
+      display: popover
+    model: operational_intelligence_alloy_db
+    explore: alloydb_historical_trends
+    listens_to_filters: []
+    field: pg_stat_database_daily_snapshot.snapshot_date

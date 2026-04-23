@@ -45,11 +45,11 @@ view: navigation_bar {
         <a style="{{ style_inactive }}" href="/embed/dashboards/operational_intelligence_alloy_db::bottleneck_analysis?Database+Name={{ _filters['datname'] | url_encode }}">🔍 Bottleneck Analysis</a>
       {% endif %}
 
-      <!-- Dashboard 3: Looker Impact -->
-      {% if _explore._dashboard_url contains 'looker_workload_impact' %}
-        <span style="{{ style_active }}">🎯 Looker Impact</span>
+      <!-- Dashboard 3: Historical Trends -->
+      {% if _explore._dashboard_url contains 'pulse_alloydb' %}
+        <span style="{{ style_active }}">📈 Historical Trends</span>
       {% else %}
-        <a style="{{ style_inactive }}" href="/embed/dashboards/operational_intelligence_alloy_db::looker_workload_impact?Database+Name={{ _filters['datname'] | url_encode }}">🎯 Looker Impact</a>
+        <a style="{{ style_inactive }}" href="/embed/dashboards/operational_intelligence_alloy_db::pulse_alloydb">📈 Pulse AlloyDB Trends</a>
       {% endif %}
 
     </div> ;;
@@ -79,11 +79,11 @@ view: navigation_bar {
         <a style="{{ style_inactive }}" href="/embed/dashboards/operational_intelligence_alloy_db::bottleneck_analysis?Database+Name={{ _filters['datname'] | url_encode }}">🔍 Bottleneck Analysis</a>
       {% endif %}
 
-      <!-- Dashboard 3: Looker Impact -->
-      {% if _explore._dashboard_url contains 'looker_workload_impact' %}
-        <span style="{{ style_active }}">🎯 Looker Impact</span>
+      <!-- Dashboard 3: Historical Trends -->
+      {% if _explore._dashboard_url contains 'pulse_alloydb' %}
+        <span style="{{ style_active }}">📈 Historical Trends</span>
       {% else %}
-        <a style="{{ style_inactive }}" href="/embed/dashboards/operational_intelligence_alloy_db::looker_workload_impact?Database+Name={{ _filters['datname'] | url_encode }}">🎯 Looker Impact</a>
+        <a style="{{ style_inactive }}" href="/embed/dashboards/operational_intelligence_alloy_db::pulse_alloydb">📈 Pulse AlloyDB Trends</a>
       {% endif %}
 
     </div> ;;
@@ -113,11 +113,11 @@ view: navigation_bar {
         <a style="{{ style_inactive }}" href="/embed/dashboards/operational_intelligence_alloy_db::bottleneck_analysis?Database+Name={{ _filters['datname'] | url_encode }}">🔍 Bottleneck Analysis</a>
       {% endif %}
 
-      <!-- Dashboard 3: Looker Impact -->
-      {% if _explore._dashboard_url contains 'looker_workload_impact' %}
-        <span style="{{ style_active }}">🎯 Looker Impact</span>
+      <!-- Dashboard 3: Historical Trends -->
+      {% if _explore._dashboard_url contains 'pulse_alloydb' %}
+        <span style="{{ style_active }}">📈 Historical Trends</span>
       {% else %}
-        <a style="{{ style_inactive }}" href="/embed/dashboards/operational_intelligence_alloy_db::looker_workload_impact?Database+Name={{ _filters['datname'] | url_encode }}">🎯 Looker Impact</a>
+        <a style="{{ style_inactive }}" href="/embed/dashboards/operational_intelligence_alloy_db::pulse_alloydb">📈 Pulse AlloyDB Trends</a>
       {% endif %}
 
     </div> ;;
