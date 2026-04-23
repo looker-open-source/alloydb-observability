@@ -33,6 +33,8 @@
     defaults_version: 1
     listen:
       Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
+      Database Name: pg_stat_database.datname
     row: 4
     col: 0
     width: 7
@@ -62,6 +64,8 @@
     defaults_version: 1
     listen:
       Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
+      Database Name: pg_stat_database.datname
     row: 4
     col: 7
     width: 6
@@ -91,6 +95,8 @@
     defaults_version: 1
     listen:
       Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
+      Database Name: pg_stat_database.datname
     row: 4
     col: 13
     width: 5
@@ -120,6 +126,8 @@
     defaults_version: 1
     listen:
       Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
+      Database Name: pg_stat_database.datname
     row: 4
     col: 18
     width: 6
@@ -178,6 +186,8 @@
     conditional_formatting_include_nulls: false
     listen:
       Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
+      Database Name: pg_stat_database.datname
     row: 11
     col: 0
     width: 24
@@ -233,6 +243,8 @@
     conditional_formatting_include_nulls: false
     listen:
       Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
+      Database Name: pg_stat_database.datname
     row: 17
     col: 0
     width: 24
@@ -390,6 +402,8 @@
     title_hidden: true
     listen:
       Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
+      Database Name: pg_stat_database.datname
     row: 7
     col: 13
     width: 5
@@ -452,6 +466,8 @@
     title_hidden: true
     listen:
       Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
+      Database Name: pg_stat_database.datname
     row: 7
     col: 0
     width: 7
@@ -516,6 +532,8 @@
     title_hidden: true
     listen:
       Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
+      Database Name: pg_stat_database.datname
     row: 7
     col: 18
     width: 6
@@ -580,12 +598,40 @@
     title_hidden: true
     listen:
       Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
+      Database Name: pg_stat_database.datname
     row: 7
     col: 7
     width: 6
     height: 2
     tab_name: ''
   filters:
+  - name: Is Primary Database (Yes / No)
+    title: Is Primary Database (Yes / No)
+    type: field_filter
+    default_value: 'Yes'
+    allow_multiple_values: true
+    required: false
+    ui_config:
+      type: button_toggles
+      display: inline
+    model: operational_intelligence_alloy_db
+    explore: alloydb_historical_trends
+    listens_to_filters: []
+    field: pg_stat_database.is_primary_database
+  - name: Database Name
+    title: Database Name
+    type: field_filter
+    default_value: "%%"
+    allow_multiple_values: true
+    required: false
+    ui_config:
+      type: advanced
+      display: popover
+    model: operational_intelligence_alloy_db
+    explore: alloydb_historical_trends
+    listens_to_filters: [Is Primary Database (Yes / No)]
+    field: pg_stat_database.datname
   - name: Snapshot Date
     title: Snapshot Date
     type: field_filter

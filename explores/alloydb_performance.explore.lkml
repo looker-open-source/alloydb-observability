@@ -90,6 +90,12 @@ explore: alloydb_historical_trends {
 
     fields: [pg_stat_statements.query_formatted, pg_stat_statements.query_pii_masked, pg_stat_statements.is_looker_query]
   }
+
+  join: pg_stat_database {
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${pg_stat_database_daily_snapshot.datid} = ${pg_stat_database.datid} ;;
+  }
 }
 
 # --------------------------------------------------------------------------
