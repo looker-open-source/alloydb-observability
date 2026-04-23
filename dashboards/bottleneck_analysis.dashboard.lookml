@@ -1,5 +1,5 @@
 ---
-- dashboard: query_performance__bottleneck_analysis
+- dashboard: bottleneck_analysis
   title: Query Performance & Bottleneck Analysis
   preferred_viewer: dashboards-next
   description: ''
