@@ -19,6 +19,11 @@ constant: STATEMENTS_SCHEMA {
   export: override_optional
 }
 
+constant: SCRATCH_SCHEMA {
+  value: "temp_looker_schema"
+  export: override_optional
+}
+
 constant: PII_QUERY_TEXT {
   value: "SHOW"
   export: override_optional
