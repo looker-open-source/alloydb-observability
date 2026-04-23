@@ -39,16 +39,27 @@
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
+    smart_single_value_size: false
+    conditional_formatting: [{type: not null, value: !!null '', fields: !!null '',
+        apply_formatting_to_row: false, cell_format: {background_color: "#1a73e8",
+          font_color: !!null '', color_application: {collection_id: looker-blocks,
+            palette_id: looker-blocks-sequential-0, options: {mirror: false, reverse: false,
+              stepped: false}}, font_style: {bold: false, italic: false, strikethrough: false}},
+        row_format: {background_color: "#1a73e8", font_color: !!null '', color_application: {
+            collection_id: looker-blocks, options: {mirror: false, reverse: false,
+              stepped: false}}, font_style: {bold: false, italic: false, strikethrough: false}},
+        apply_to: allNumericFields}]
     defaults_version: 1
     note_state: collapsed
     note_display: hover
     note_text: Total seconds of CPU time burned across all queries since stats reset.
     listen:
+      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
     row: 4
     col: 0
     width: 5
-    height: 3
+    height: 2
     tab_name: ''
   - title: Cache Hit Ratio
     name: Cache Hit Ratio
@@ -81,11 +92,11 @@
     label_font_size: 3
     spinner_type: needle
     fill_color: "#0092E5"
-    background_color: "#CECECE"
+    background_color: "#70596b"
     spinner_color: "#282828"
     range_color: "#282828"
     gauge_fill_type: segment
-    fill_colors: ["#EE7772", "#ffed6f", "#7FCDAE"]
+    fill_colors: ["#d93025", "#f9ab00", "#1e8e3e"]
     viz_trellis_by: none
     trellis_rows: 2
     trellis_cols: 2
@@ -108,8 +119,9 @@
     note_display: hover
     note_text: Target > 99%. Percentage of data read from memory rather than disk.
     listen:
+      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 7
+    row: 6
     col: 2
     width: 8
     height: 6
@@ -133,6 +145,16 @@
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
+    smart_single_value_size: false
+    conditional_formatting: [{type: not null, value: !!null '', fields: !!null '',
+        apply_formatting_to_row: false, cell_format: {background_color: "#f9ab00",
+          font_color: !!null '', color_application: {collection_id: looker-blocks,
+            palette_id: looker-blocks-sequential-0, options: {mirror: false, reverse: false,
+              stepped: false}}, font_style: {bold: false, italic: false, strikethrough: false}},
+        row_format: {background_color: "#1a73e8", font_color: !!null '', color_application: {
+            collection_id: looker-blocks, options: {mirror: false, reverse: false,
+              stepped: false}}, font_style: {bold: false, italic: false, strikethrough: false}},
+        apply_to: allNumericFields}]
     hidden_fields: []
     hidden_points_if_no: []
     series_labels: {}
@@ -174,11 +196,12 @@
     note_display: hover
     note_text: Percentage of transactions resulting in a rollback.
     listen:
+      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
     row: 4
     col: 5
     width: 5
-    height: 3
+    height: 2
     tab_name: ''
   - title: Transaction Throughput (TPS)
     name: Transaction Throughput (TPS)
@@ -199,6 +222,16 @@
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
+    smart_single_value_size: false
+    conditional_formatting: [{type: not null, value: !!null '', fields: !!null '',
+        apply_formatting_to_row: false, cell_format: {background_color: "#12b5cb",
+          font_color: !!null '', color_application: {collection_id: looker-blocks,
+            palette_id: looker-blocks-sequential-0, options: {mirror: false, reverse: false,
+              stepped: false}}, font_style: {bold: false, italic: false, strikethrough: false}},
+        row_format: {background_color: "#1a73e8", font_color: !!null '', color_application: {
+            collection_id: looker-blocks, options: {mirror: false, reverse: false,
+              stepped: false}}, font_style: {bold: false, italic: false, strikethrough: false}},
+        apply_to: allNumericFields}]
     hidden_fields: []
     hidden_points_if_no: []
     series_labels: {}
@@ -240,11 +273,12 @@
     note_display: hover
     note_text: Average transactions committed or rolled back per second.
     listen:
+      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
     row: 4
     col: 15
     width: 5
-    height: 3
+    height: 2
     tab_name: ''
   - title: Connection Saturation (%)
     name: Connection Saturation (%)
@@ -299,9 +333,10 @@
     note_display: hover
     note_text: Percentage of maximum allowed connections currently in use.
     listen:
-      Query Start Time: pg_stat_activity.query_start_time
+      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 21
+      Query Start Time: pg_stat_activity.query_start_time
+    row: 20
     col: 0
     width: 7
     height: 6
@@ -311,12 +346,11 @@
     model: operational_intelligence_alloy_db
     explore: alloydb_real_time_activity
     type: looker_area
-    fields: [pg_stat_activity.total_connections, pg_stat_activity.query_start_time]
+    fields: [pg_stat_activity.total_connections, pg_stat_activity.query_start_hour]
     filters:
       pg_stat_database.is_primary_database: ''
       pg_stat_activity.query_start_date: NOT NULL
       pg_stat_activity.total_connections: NOT NULL
-    sorts: [pg_stat_activity.query_start_time desc]
     limit: 500
     column_limit: 50
     x_axis_gridlines: false
@@ -365,9 +399,10 @@
     note_display: hover
     note_text: Count of active queries that began executing within the selected timeframe
     listen:
-      Query Start Time: pg_stat_activity.query_start_time
+      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 15
+      Query Start Time: pg_stat_activity.query_start_time
+    row: 14
     col: 0
     width: 24
     height: 6
@@ -431,9 +466,10 @@
     note_display: hover
     note_text: Real-time distribution of open connections grouped by originating application.
     listen:
-      Query Start Time: pg_stat_activity.query_start_time
+      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 21
+      Query Start Time: pg_stat_activity.query_start_time
+    row: 20
     col: 15
     width: 9
     height: 6
@@ -457,6 +493,16 @@
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
+    smart_single_value_size: false
+    conditional_formatting: [{type: not null, value: !!null '', fields: !!null '',
+        apply_formatting_to_row: false, cell_format: {background_color: "#681da8",
+          font_color: !!null '', color_application: {collection_id: looker-blocks,
+            palette_id: looker-blocks-sequential-0, options: {mirror: false, reverse: false,
+              stepped: false}}, font_style: {bold: false, italic: false, strikethrough: false}},
+        row_format: {background_color: "#1a73e8", font_color: !!null '', color_application: {
+            collection_id: looker-blocks, options: {mirror: false, reverse: false,
+              stepped: false}}, font_style: {bold: false, italic: false, strikethrough: false}},
+        apply_to: allNumericFields}]
     hidden_fields: []
     hidden_points_if_no: []
     series_labels: {}
@@ -499,11 +545,12 @@
     note_text: Total megabytes written to the Write-Ahead Log. Indicates write-heavy
       workloads.
     listen:
+      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
     row: 4
     col: 20
     width: 4
-    height: 3
+    height: 2
     tab_name: ''
   - title: Deadlock Frequency
     name: Deadlock Frequency
@@ -524,6 +571,16 @@
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
+    smart_single_value_size: false
+    conditional_formatting: [{type: not null, value: !!null '', fields: !!null '',
+        apply_formatting_to_row: false, cell_format: {background_color: "#1e8e3e",
+          font_color: !!null '', color_application: {collection_id: looker-blocks,
+            palette_id: looker-blocks-sequential-0, options: {mirror: false, reverse: false,
+              stepped: false}}, font_style: {bold: false, italic: false, strikethrough: false}},
+        row_format: {background_color: "#1a73e8", font_color: !!null '', color_application: {
+            collection_id: looker-blocks, options: {mirror: false, reverse: false,
+              stepped: false}}, font_style: {bold: false, italic: false, strikethrough: false}},
+        apply_to: allNumericFields}]
     hidden_fields: []
     hidden_points_if_no: []
     series_labels: {}
@@ -566,11 +623,12 @@
     note_text: Total deadlocks detected. High numbers indicate application transaction
       conflicts.
     listen:
+      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
     row: 4
     col: 10
     width: 5
-    height: 3
+    height: 2
     tab_name: ''
   - title: Database DML Intensity
     name: Database DML Intensity
@@ -584,9 +642,11 @@
     column_limit: 50
     show_value_labels: true
     font_size: 12
+    series_colors:
+      pg_stat_database.total_dml_writes: "#f9ab00"
+    series_labels: {}
     hidden_fields: []
     hidden_points_if_no: []
-    series_labels: {}
     show_view_names: true
     arm_length: 9
     arm_weight: 48
@@ -634,8 +694,9 @@
     note_display: hover
     note_text: Ratio of Rows Fetched (Reads) vs. Rows Modified (Writes).
     listen:
+      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 7
+    row: 6
     col: 12
     width: 12
     height: 6
@@ -646,7 +707,7 @@
     body_text: '[{"type":"h1","children":[{"text":"⚡ Live Traffic Pulse (Filtered
       by Time)"}],"align":"center"}]'
     rich_content_json: '{"format":"slate"}'
-    row: 13
+    row: 12
     col: 0
     width: 24
     height: 2
@@ -709,9 +770,10 @@
     defaults_version: 1
     hidden_pivots: {}
     listen:
-      Query Start Time: pg_stat_activity.query_start_time
+      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 21
+      Query Start Time: pg_stat_activity.query_start_time
+    row: 20
     col: 7
     width: 8
     height: 6
@@ -722,6 +784,8 @@
     explore: navigation_bar
     type: single_value
     fields: [navigation_bar.tabbed_navigation_bar]
+    filters:
+      navigation_bar.datname: "%postgres%"
     sorts: [navigation_bar.tabbed_navigation_bar]
     limit: 500
     column_limit: 50
@@ -778,18 +842,30 @@
     header_text_alignment: left
     header_font_size: 12
     rows_font_size: 12
-    listen:
-      Database Name: navigation_bar.datname
+    listen: {}
     row: 0
     col: 0
     width: 24
     height: 2
     tab_name: ''
   filters:
+  - name: Is Primary Database (Yes / No)
+    title: Is Primary Database (Yes / No)
+    type: field_filter
+    default_value: 'Yes'
+    allow_multiple_values: true
+    required: false
+    ui_config:
+      type: button_toggles
+      display: inline
+    model: operational_intelligence_alloy_db
+    explore: alloydb_real_time_activity
+    listens_to_filters: []
+    field: pg_stat_database.is_primary_database
   - name: Database Name
     title: Database Name
     type: field_filter
-    default_value: "%postgres%"
+    default_value: "%%"
     allow_multiple_values: true
     required: false
     ui_config:
@@ -797,7 +873,7 @@
       display: popover
     model: operational_intelligence_alloy_db
     explore: alloydb_performance
-    listens_to_filters: []
+    listens_to_filters: [Is Primary Database (Yes / No)]
     field: pg_stat_database.datname
   - name: Query Start Time
     title: Query Start Time

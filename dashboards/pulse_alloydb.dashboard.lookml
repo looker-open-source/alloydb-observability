@@ -261,8 +261,8 @@
     width: 24
     height: 2
     tab_name: ''
-  - title: New Tile
-    name: New Tile
+  - title: " "
+    name: " "
     model: operational_intelligence_alloy_db
     explore: navigation_bar
     type: single_value

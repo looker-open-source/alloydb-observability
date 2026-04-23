@@ -1,5 +1,5 @@
 ---
-- dashboard: bottleneck_analysis
+- dashboard: query_performance__bottleneck_analysis
   title: Query Performance & Bottleneck Analysis
   preferred_viewer: dashboards-next
   description: ''
@@ -177,6 +177,7 @@
     note_text: The complete master ledger of all queries. Click any Query Hash to
       drill down into latency trends and top users for that specific statement.
     listen:
+      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
     row: 30
     col: 0
@@ -258,6 +259,7 @@
     note_text: Ranked by Average Execution Time. These queries have the worst latency
       and degrade user experience.
     listen:
+      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
     row: 8
     col: 0
@@ -411,6 +413,7 @@
     note_text: The Top-Right quadrant shows queries that are both slow AND run frequently.
       Optimizing these yields the highest CPU savings.
     listen:
+      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
     row: 8
     col: 10
@@ -616,6 +619,7 @@
     hidden_pivots: {}
     show_null_labels: true
     listen:
+      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
     row: 20
     col: 0
@@ -825,6 +829,7 @@
     note_text: Queries spending the highest percentage of their time waiting on Disk
       Reads/Writes. Usually indicates missing indexes.
     listen:
+      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
     row: 37
     col: 0
@@ -1034,6 +1039,7 @@
     note_text: Total gigabytes spilled to disk because queries required more memory
       than 'work_mem' allowed. Look for unoptimized JOINs or ORDER BYs.
     listen:
+      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
     row: 37
     col: 16
@@ -1089,6 +1095,7 @@
     note_text: Real-time count of queries currently blocked by database locks. >0
       requires immediate attention.
     listen:
+      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
     row: 4
     col: 0
@@ -1122,23 +1129,145 @@
     note_text: The age (in seconds) of the oldest query currently executing. Watch
       for "Zombie" queries.
     listen:
+      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
     row: 4
     col: 14
     width: 10
     height: 2
     tab_name: ''
+  - title: Looker's Workload Share
+    name: Looker's Workload Share
+    model: operational_intelligence_alloy_db
+    explore: alloydb_historical_statements
+    type: looker_grid
+    fields: [pg_stat_statements.workload_share]
+    filters:
+      pg_stat_database.is_primary_database: ''
+      pg_stat_statements.is_looker_query: ''
+    limit: 500
+    column_limit: 50
+    show_view_names: false
+    show_row_numbers: true
+    transpose: false
+    truncate_text: true
+    hide_totals: false
+    hide_row_totals: false
+    size_to_fit: true
+    table_theme: white
+    limit_displayed_rows: false
+    enable_conditional_formatting: false
+    header_text_alignment: left
+    header_font_size: 12
+    rows_font_size: 12
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    defaults_version: 1
+    listen:
+      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
+      Database Name: pg_stat_database.datname
+    row: 49
+    col: 0
+    width: 12
+    height: 6
+    tab_name: ''
+  - title: Database Load Attribution
+    name: Database Load Attribution
+    model: operational_intelligence_alloy_db
+    explore: alloydb_historical_statements
+    type: looker_pie
+    fields: [pg_stat_statements.is_looker_query, pg_stat_statements.total_execution_time_seconds]
+    fill_fields: [pg_stat_statements.is_looker_query]
+    filters:
+      pg_stat_database.is_primary_database: ''
+    sorts: [pg_stat_statements.total_execution_time_seconds desc 0]
+    limit: 500
+    column_limit: 50
+    value_labels: legend
+    label_type: labPer
+    inner_radius: 50
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    y_axes: [{label: '', orientation: left, series: [{axisId: pg_stat_statements.workload_share,
+            id: pg_stat_statements.workload_share, name: Workload Share}], showLabels: true,
+        showValues: true, unpinAxis: false, tickDensity: default, tickDensityCustom: 5,
+        type: linear}, {label: !!null '', orientation: right, series: [{axisId: pg_stat_statements.total_execution_time_seconds,
+            id: pg_stat_statements.total_execution_time_seconds, name: Total Execution
+              Time (Secs)}], showLabels: true, showValues: true, unpinAxis: false,
+        tickDensity: default, tickDensityCustom: 5, type: linear}]
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    x_axis_zoom: true
+    y_axis_zoom: true
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    legend_position: center
+    font_size: 12
+    point_style: none
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    defaults_version: 1
+    hidden_pivots: {}
+    listen:
+      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
+      Database Name: pg_stat_database.datname
+    row: 49
+    col: 13
+    width: 11
+    height: 6
+    tab_name: ''
+  - name: " (4)"
+    type: text
+    title_text: ''
+    subtitle_text: ''
+    body_text: '[{"type":"h2","children":[{"text":"Looker Attribution"}],"align":"center"}]'
+    rich_content_json: '{"format":"slate"}'
+    row: 47
+    col: 0
+    width: 24
+    height: 2
+    tab_name: ''
   filters:
+  - name: Is Primary Database (Yes / No)
+    title: Is Primary Database (Yes / No)
+    type: field_filter
+    default_value: 'Yes'
+    allow_multiple_values: true
+    required: false
+    ui_config:
+      type: button_group
+      display: inline
+    model: operational_intelligence_alloy_db
+    explore: alloydb_historical_statements
+    listens_to_filters: []
+    field: pg_stat_database.is_primary_database
   - name: Database Name
     title: Database Name
     type: field_filter
-    default_value: "%postgres%"
+    default_value: "%%"
     allow_multiple_values: true
     required: false
     ui_config:
       type: advanced
       display: popover
     model: operational_intelligence_alloy_db
-    explore: alloydb_performance
-    listens_to_filters: []
+    explore: alloydb_historical_statements
+    listens_to_filters: [Is Primary Database (Yes / No)]
     field: pg_stat_database.datname
