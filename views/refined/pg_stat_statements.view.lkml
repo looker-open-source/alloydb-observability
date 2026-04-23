@@ -174,6 +174,26 @@ view: +pg_stat_statements {
     sql: ${total_execution_time_seconds} ;;
   }
 
+  measure: total_data_processed_gb {
+    type: sum
+    label: "Total Data Processed (GB)"
+    description: "The total amount of data read from disk or cache by these queries. Equivalent to BQ Bytes Processed."
+    group_label: "Execution Metrics"
+    value_format: "#,##0.00 \" GB\""
+    # Postgres blocks are 8KB (8192 bytes). We convert to GB.
+    sql: (${TABLE}.shared_blks_hit + ${TABLE}.shared_blks_read) * 8192.0 / (1024.0 * 1024.0 * 1024.0) ;;
+  }
+
+  measure: average_data_processed_mb_per_call {
+    type: number
+    label: "Avg Data Processed per Call (MB)"
+    description: "The average amount of data scanned each time this query runs. High numbers indicate poor index usage."
+    group_label: "Execution Metrics"
+    value_format: "#,##0.00 \" MB\""
+    # Convert blocks to MB and divide by total calls
+    sql: SUM((${TABLE}.shared_blks_hit + ${TABLE}.shared_blks_read) * 8192.0 / (1024.0 * 1024.0)) / NULLIF(SUM(${calls}), 0) ;;
+  }
+
   measure: total_wal_generation_mb {
     type: sum
     label: "Total WAL Generated (MB)"
