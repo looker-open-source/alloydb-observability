@@ -91,3 +91,13 @@ explore: alloydb_historical_trends {
     fields: [pg_stat_statements.query_formatted, pg_stat_statements.query_pii_masked, pg_stat_statements.is_looker_query]
   }
 }
+
+# --------------------------------------------------------------------------
+# Table Health Explore
+# --------------------------------------------------------------------------
+explore: alloydb_table_health {
+  label: "AlloyDB Table Health"
+  description: "Monitors the size, scan rates, and vacuum health of individual tables in the database."
+
+  view_name: pg_stat_user_tables
+}
