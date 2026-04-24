@@ -273,14 +273,14 @@
     width: 24
     height: 2
     tab_name: ''
-  - title: New Tile
-    name: New Tile
+  - title: " "
+    name: " "
     model: operational_intelligence_alloy_db
     explore: navigation_bar
     type: single_value
     fields: [navigation_bar.vertical_navigation_bar]
     filters:
-      navigation_bar.datname: "%postgres%"
+      navigation_bar.datname: "%%"
     sorts: [navigation_bar.vertical_navigation_bar]
     limit: 500
     column_limit: 50

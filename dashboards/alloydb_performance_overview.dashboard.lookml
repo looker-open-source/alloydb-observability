@@ -784,7 +784,7 @@
     type: single_value
     fields: [navigation_bar.vertical_navigation_bar]
     filters:
-      navigation_bar.datname: "%postgres%"
+      navigation_bar.datname: "%%"
     sorts: [navigation_bar.vertical_navigation_bar]
     limit: 500
     column_limit: 50
