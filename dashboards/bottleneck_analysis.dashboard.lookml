@@ -427,7 +427,8 @@
     type: looker_grid
     fields: [pg_stat_statements.query_formatted, pg_stat_statements.is_looker_query,
       pg_stat_statements.total_calls, pg_stat_statements.average_execution_time_ms,
-      pg_stat_statements.total_execution_time_seconds, pg_stat_statements.max_execution_time_ms]
+      pg_stat_statements.total_execution_time_seconds, pg_stat_statements.max_execution_time_ms,
+      pg_stat_statements.total_data_processed_gb, pg_stat_statements.average_data_processed_mb_per_call]
     filters:
       pg_stat_database.is_primary_database: 'Yes'
     sorts: [pg_stat_statements.total_calls desc 0]
@@ -501,6 +502,27 @@
               reverse: false, stepped: false}}, font_style: {bold: false, italic: false,
             strikethrough: false}}, row_format: {background_color: "#1A73E8", font_color: !!null '',
           color_application: {collection_id: 7c56cc21-66e4-41c9-81ce-a60e1c3967b2,
+            options: {mirror: false, reverse: false, stepped: false}}, font_style: {
+            bold: false, italic: false, strikethrough: false}}, field: pg_stat_statements.total_calls,
+        apply_to: selectFields}, {type: along a scale..., value: !!null '', fields: [
+          pg_stat_statements.total_data_processed_gb], apply_formatting_to_row: false,
+        cell_format: {background_color: "#1a73e8", font_color: !!null '', color_application: {
+            collection_id: looker-blocks, custom: {id: 4e868a65-c7e4-5b34-aaa1-dffa883b0c72,
+              label: Custom, type: continuous, stops: [{color: "#f2fcf9", offset: 0},
+                {color: "#1A73E8", offset: 100}]}, options: {steps: 5, mirror: false,
+              reverse: false, stepped: false}}, font_style: {bold: false, italic: false,
+            strikethrough: false}}, row_format: {background_color: "#1a73e8", font_color: !!null '',
+          color_application: {collection_id: looker-blocks, options: {mirror: false,
+              reverse: false, stepped: false}}, font_style: {bold: false, italic: false,
+            strikethrough: false}}, field: pg_stat_statements.total_calls, apply_to: selectFields},
+      {type: along a scale..., value: !!null '', fields: [pg_stat_statements.average_data_processed_mb_per_call],
+        apply_formatting_to_row: false, cell_format: {background_color: "#1a73e8",
+          font_color: !!null '', color_application: {collection_id: looker-blocks,
+            custom: {id: d6b5449e-6b42-7faf-3f18-0ad6ee8c37c7, label: Custom, type: continuous,
+              stops: [{color: "#f6fcfc", offset: 0}, {color: "#e87017", offset: 100}]},
+            options: {steps: 5, mirror: false, reverse: false, stepped: false}}, font_style: {
+            bold: false, italic: false, strikethrough: false}}, row_format: {background_color: "#1a73e8",
+          font_color: !!null '', color_application: {collection_id: looker-blocks,
             options: {mirror: false, reverse: false, stepped: false}}, font_style: {
             bold: false, italic: false, strikethrough: false}}, field: pg_stat_statements.total_calls,
         apply_to: selectFields}]
@@ -1096,7 +1118,7 @@
     row: 1
     col: 4
     width: 9
-    height: 3
+    height: 2
     tab_name: ''
   - title: Longest Running Active Query (Secs)
     name: Longest Running Active Query (Secs)
@@ -1130,7 +1152,7 @@
     row: 1
     col: 14
     width: 10
-    height: 3
+    height: 2
     tab_name: ''
   - title: Looker's Workload Share
     name: Looker's Workload Share
@@ -1247,6 +1269,68 @@
     col: 16
     width: 8
     height: 3
+    tab_name: ''
+  - title: Max Idle-in-Transaction (Secs)
+    name: Max Idle-in-Transaction (Secs)
+    model: operational_intelligence_alloy_db
+    explore: alloydb_real_time_activity
+    type: single_value
+    fields: [pg_stat_activity.max_idle_in_transaction_age_seconds]
+    filters:
+      pg_stat_database.is_primary_database: ''
+      pg_stat_database.datname: "%%"
+    limit: 500
+    column_limit: 50
+    custom_color_enabled: true
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    defaults_version: 1
+    note_state: collapsed
+    note_display: hover
+    note_text: Age of the oldest session waiting for a COMMIT.
+    hidden_pivots: {}
+    listen: {}
+    row: 3
+    col: 4
+    width: 9
+    height: 2
+    tab_name: ''
+  - title: Total Waiting Sessions
+    name: Total Waiting Sessions
+    model: operational_intelligence_alloy_db
+    explore: alloydb_real_time_activity
+    type: single_value
+    fields: [pg_stat_activity.total_active_connections]
+    filters:
+      pg_stat_database.is_primary_database: 'Yes'
+      pg_stat_activity.is_waiting: 'Yes'
+    limit: 500
+    column_limit: 50
+    custom_color_enabled: true
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    defaults_version: 1
+    note_state: collapsed
+    note_display: hover
+    note_text: Count of sessions currently frozen while waiting for system resources
+      (IO, Memory, or Locks).
+    listen: {}
+    row: 3
+    col: 14
+    width: 10
+    height: 2
     tab_name: ''
   filters:
   - name: Is Primary Database (Yes / No)

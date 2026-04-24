@@ -9,8 +9,8 @@
   - name: ''
     label: ''
   elements:
-  - title: Daily Compute Load (Secs)
-    name: Daily Compute Load (Secs)
+  - title: Compute Load (Secs)
+    name: Compute Load (Secs)
     model: operational_intelligence_alloy_db
     explore: alloydb_historical_trends
     type: single_value
@@ -31,6 +31,10 @@
     hidden_pivots: {}
     show_view_names: false
     defaults_version: 1
+    note_state: collapsed
+    note_display: hover
+    note_text: The total amount of CPU execution time consumed by all queries during
+      the selected period.
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
@@ -40,8 +44,8 @@
     width: 5
     height: 2
     tab_name: ''
-  - title: Daily Transaction Volume
-    name: Daily Transaction Volume
+  - title: Transaction Volume
+    name: Transaction Volume
     model: operational_intelligence_alloy_db
     explore: alloydb_historical_trends
     type: single_value
@@ -62,6 +66,10 @@
     hidden_pivots: {}
     show_view_names: false
     defaults_version: 1
+    note_state: collapsed
+    note_display: above
+    note_text: The total number of Commits and Rollbacks processed, representing the
+      overall volume of database traffic.
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
@@ -71,8 +79,8 @@
     width: 5
     height: 2
     tab_name: ''
-  - title: Daily Data Processed
-    name: Daily Data Processed
+  - title: Data Processed
+    name: Data Processed
     model: operational_intelligence_alloy_db
     explore: alloydb_historical_trends
     type: single_value
@@ -93,6 +101,10 @@
     hidden_pivots: {}
     show_view_names: false
     defaults_version: 1
+    note_state: collapsed
+    note_display: hover
+    note_text: The total volume of data read from memory or physical disk by executing
+      queries.
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
@@ -124,6 +136,10 @@
     hidden_pivots: {}
     show_view_names: false
     defaults_version: 1
+    note_state: collapsed
+    note_display: above
+    note_text: The percentage of data blocks successfully read from RAM rather than
+      requiring a physical disk read.
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
@@ -184,6 +200,10 @@
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
+    note_state: collapsed
+    note_display: hover
+    note_text: The distribution of database CPU load, categorized by queries originating
+      from Looker BI versus other applications.
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
@@ -193,8 +213,8 @@
     width: 24
     height: 6
     tab_name: ''
-  - title: Temporary Space Spill (GB
-    name: Temporary Space Spill (GB
+  - title: Temporary Space Spill (GB)
+    name: Temporary Space Spill (GB)
     model: operational_intelligence_alloy_db
     explore: alloydb_historical_trends
     type: looker_area
@@ -241,6 +261,10 @@
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
+    note_state: collapsed
+    note_display: hover
+    note_text: The volume of data written to temporary disk files because query operations
+      (like sorts or joins) exceeded allocated working memory.
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
@@ -342,7 +366,7 @@
     height: 5
     tab_name: ''
   - title: Daily Data Processed
-    name: Daily Data Processed (2)
+    name: Daily Data Processed
     model: operational_intelligence_alloy_db
     explore: alloydb_historical_trends
     type: looker_area
@@ -538,7 +562,7 @@
     height: 1
     tab_name: ''
   - title: Daily Transaction Volume
-    name: Daily Transaction Volume (2)
+    name: Daily Transaction Volume
     model: operational_intelligence_alloy_db
     explore: alloydb_historical_trends
     type: looker_area

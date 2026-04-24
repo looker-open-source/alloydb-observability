@@ -1,6 +1,6 @@
 ---
 - dashboard: alloydb_performance_overview
-  title: AlloyDB Performance Overview
+  title: Performance Overview
   preferred_viewer: dashboards-next
   description: ''
   preferred_slug: DAqQbhEVfY3rAkQsvckqUZ
