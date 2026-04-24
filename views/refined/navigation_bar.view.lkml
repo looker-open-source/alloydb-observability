@@ -28,8 +28,8 @@ view: navigation_bar {
     html:
     <div style="background: #ffffff; font-family: 'Google Sans', Arial, sans-serif; border-bottom: 1px solid #e0e0e0; padding: 6px 12px; display: flex; align-items: center; justify-content: flex-start; gap: 10px;">
 
-      {%- assign style_inactive = "display: inline-block; color: #5F6368; padding: 5px 12px; text-decoration: none; font-size: 16px; border-radius: 16px; border: 1px solid #DADCE0;" -%}
-      {%- assign style_active = "display: inline-block; background-color: #E8F0FE; color: #1967D2; padding: 5px 12px; font-weight: bold; border-radius: 16px; text-decoration: none; font-size: 16px; border: 1px solid #1967D2; pointer-events: none; cursor: default;" -%}
+      {%- assign style_inactive = "display: inline-block; color: #5F6368; padding: 5px 12px; text-decoration: none; font-size: 18px; border-radius: 16px; border: 1px solid #DADCE0;" -%}
+      {%- assign style_active = "display: inline-block; background-color: #E8F0FE; color: #1967D2; padding: 5px 12px; font-weight: bold; border-radius: 16px; text-decoration: none; font-size: 18px; border: 1px solid #1967D2; pointer-events: none; cursor: default;" -%}
 
       <!-- Dashboard 1: Executive Health -->
       {% if _explore._dashboard_url contains 'alloydb_performance_overview' %}
@@ -45,9 +45,9 @@ view: navigation_bar {
         <a style="{{ style_inactive }}" href="/embed/dashboards/operational_intelligence_alloy_db::bottleneck_analysis?Database+Name={{ _filters['datname'] | url_encode }}">🔍 Bottleneck Analysis</a>
       {% endif %}
 
-      <!-- Dashboard 3: Historical Trends -->
+      <!-- Dashboard 3: Pulse AlloyDB Trends -->
       {% if _explore._dashboard_url contains 'pulse_alloydb_trends' %}
-        <span style="{{ style_active }}">📈 Historical Trends</span>
+        <span style="{{ style_active }}">📈 Pulse AlloyDB Trends</span>
       {% else %}
         <a style="{{ style_inactive }}" href="/embed/dashboards/operational_intelligence_alloy_db::pulse_alloydb_trends">📈 Pulse AlloyDB Trends</a>
       {% endif %}
@@ -62,8 +62,8 @@ view: navigation_bar {
     html:
     <div style="font-family: 'Google Sans', Arial, sans-serif; display: flex; align-items: flex-end; justify-content: flex-start; gap: 24px; margin: 0; padding: 0; line-height: 1;">
 
-      {%- assign style_inactive = "display: inline-block; color: #5F6368; padding-bottom: 2px; text-decoration: none; font-size: 16px; border-bottom: 2px solid transparent; font-weight: 500;" -%}
-      {%- assign style_active = "display: inline-block; color: #1A73E8; padding-bottom: 2px; font-weight: bold; text-decoration: none; font-size: 16px; border-bottom: 2px solid #1A73E8; pointer-events: none; cursor: default;" -%}
+      {%- assign style_inactive = "display: inline-block; color: #5F6368; padding-bottom: 2px; text-decoration: none; font-size: 18px; border-bottom: 2px solid transparent; font-weight: 500;" -%}
+      {%- assign style_active = "display: inline-block; color: #1A73E8; padding-bottom: 2px; font-weight: bold; text-decoration: none; font-size: 18px; border-bottom: 2px solid #1A73E8; pointer-events: none; cursor: default;" -%}
 
       <!-- Dashboard 1: Executive Health -->
       {% if _explore._dashboard_url contains 'alloydb_performance_overview' %}
@@ -79,9 +79,9 @@ view: navigation_bar {
         <a style="{{ style_inactive }}" href="/embed/dashboards/operational_intelligence_alloy_db::bottleneck_analysis?Database+Name={{ _filters['datname'] | url_encode }}">🔍 Bottleneck Analysis</a>
       {% endif %}
 
-      <!-- Dashboard 3: Historical Trends -->
+      <!-- Dashboard 3: Pulse AlloyDB Trends -->
       {% if _explore._dashboard_url contains 'pulse_alloydb_trends' %}
-        <span style="{{ style_active }}">📈 Historical Trends</span>
+        <span style="{{ style_active }}">📈 Pulse AlloyDB Trends</span>
       {% else %}
         <a style="{{ style_inactive }}" href="/embed/dashboards/operational_intelligence_alloy_db::pulse_alloydb_trends">📈 Pulse AlloyDB Trends</a>
       {% endif %}
@@ -96,8 +96,8 @@ view: navigation_bar {
     html:
     <div style="font-family: 'Google Sans', Arial, sans-serif; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; gap: 16px; margin: 0; padding: 12px 0;">
 
-      {%- assign style_inactive = "display: block; color: #5F6368; text-decoration: none; font-size: 14px; font-weight: 500; border-left: 3px solid transparent; padding-left: 8px;" -%}
-      {%- assign style_active = "display: block; color: #1A73E8; font-weight: bold; text-decoration: none; font-size: 14px; border-left: 3px solid #1A73E8; padding-left: 8px; pointer-events: none; cursor: default;" -%}
+      {%- assign style_inactive = "display: block; color: #5F6368; text-decoration: none; font-size: 18px; font-weight: 500; border-left: 3px solid transparent; padding-left: 8px;" -%}
+      {%- assign style_active = "display: block; color: #1A73E8; font-weight: bold; text-decoration: none; font-size: 18px; border-left: 3px solid #1A73E8; padding-left: 8px; pointer-events: none; cursor: default;" -%}
 
       <!-- Dashboard 1: Executive Health -->
       {% if _explore._dashboard_url contains 'alloydb_performance_overview' %}
@@ -113,9 +113,9 @@ view: navigation_bar {
         <a style="{{ style_inactive }}" href="/embed/dashboards/operational_intelligence_alloy_db::bottleneck_analysis?Database+Name={{ _filters['datname'] | url_encode }}">🔍 Bottleneck Analysis</a>
       {% endif %}
 
-      <!-- Dashboard 3: Historical Trends -->
+      <!-- Dashboard 3: Pulse AlloyDB Trends -->
       {% if _explore._dashboard_url contains 'pulse_alloydb_trends' %}
-        <span style="{{ style_active }}">📈 Historical Trends</span>
+        <span style="{{ style_active }}">📈 Pulse AlloyDB Trends</span>
       {% else %}
         <a style="{{ style_inactive }}" href="/embed/dashboards/operational_intelligence_alloy_db::pulse_alloydb_trends">📈 Pulse AlloyDB Trends</a>
       {% endif %}

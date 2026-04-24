@@ -3,7 +3,7 @@
   title: Pulse AlloyDB Trends
   preferred_viewer: dashboards-next
   description: ''
-  preferred_slug: G6hf8HU8fFYPUuxVJOoB82
+  preferred_slug: 0RLuJhEcdPVLJJLtyjfkgZ
   layout: newspaper
   tabs:
   - name: ''
@@ -35,8 +35,8 @@
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
       Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
-    row: 1
-    col: 5
+    row: 2
+    col: 4
     width: 5
     height: 2
     tab_name: ''
@@ -66,9 +66,9 @@
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
       Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
-    row: 1
-    col: 10
-    width: 4
+    row: 2
+    col: 9
+    width: 5
     height: 2
     tab_name: ''
   - title: Daily Data Processed
@@ -97,7 +97,7 @@
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
       Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
-    row: 1
+    row: 2
     col: 14
     width: 5
     height: 2
@@ -128,7 +128,7 @@
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
       Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
-    row: 1
+    row: 2
     col: 19
     width: 5
     height: 2
@@ -253,18 +253,16 @@
   - name: ''
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: '[{"type":"h2","children":[{"text":"📈 Executive Summary"}],"align":"center"}]'
     rich_content_json: '{"format":"slate"}'
     row: 0
-    col: 5
-    width: 19
-    height: 1
+    col: 4
+    width: 20
+    height: 2
     tab_name: ''
   - name: " (2)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: '[{"type":"h2","children":[{"text":"🔍 Workload Attribution & Resource
       Trends"}],"align":"center"}]'
     rich_content_json: '{"format":"slate"}'
@@ -340,7 +338,7 @@
     listen: {}
     row: 0
     col: 0
-    width: 5
+    width: 4
     height: 5
     tab_name: ''
   - title: Daily Data Processed
@@ -404,10 +402,10 @@
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
       Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
-    row: 3
+    row: 4
     col: 14
     width: 5
-    height: 2
+    height: 1
     tab_name: ''
   - title: 'Daily Compute Load (Secs) '
     name: 'Daily Compute Load (Secs) '
@@ -468,10 +466,10 @@
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
       Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
-    row: 3
-    col: 5
+    row: 4
+    col: 4
     width: 5
-    height: 2
+    height: 1
     tab_name: ''
   - title: Cache Hit Ratio (Copy)
     name: Cache Hit Ratio (Copy)
@@ -534,10 +532,10 @@
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
       Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
-    row: 3
+    row: 4
     col: 19
     width: 5
-    height: 2
+    height: 1
     tab_name: ''
   - title: Daily Transaction Volume
     name: Daily Transaction Volume (2)
@@ -600,10 +598,10 @@
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
       Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
-    row: 3
-    col: 10
-    width: 4
-    height: 2
+    row: 4
+    col: 9
+    width: 5
+    height: 1
     tab_name: ''
   filters:
   - name: Is Primary Database (Yes / No)

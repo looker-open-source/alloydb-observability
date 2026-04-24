@@ -3,7 +3,7 @@
   title: Query Performance & Bottleneck Analysis
   preferred_viewer: dashboards-next
   description: ''
-  preferred_slug: kOT2ysYLQ3TEj8bIwA0cQK
+  preferred_slug: khAtMg8SGGp2pIUL10BXGy
   layout: newspaper
   tabs:
   - name: ''
@@ -77,7 +77,7 @@
     row: 0
     col: 0
     width: 4
-    height: 4
+    height: 5
     tab_name: ''
   - title: The Query Inspector Table
     name: The Query Inspector Table
@@ -179,7 +179,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 27
+    row: 29
     col: 0
     width: 24
     height: 7
@@ -261,7 +261,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 5
+    row: 7
     col: 0
     width: 10
     height: 12
@@ -415,7 +415,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 5
+    row: 7
     col: 10
     width: 14
     height: 12
@@ -621,7 +621,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 17
+    row: 19
     col: 0
     width: 24
     height: 10
@@ -831,7 +831,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 34
+    row: 36
     col: 0
     width: 16
     height: 8
@@ -1041,7 +1041,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 37
+    row: 39
     col: 16
     width: 8
     height: 2
@@ -1049,7 +1049,6 @@
   - name: " (2)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: '[{"type":"h2","children":[{"text":"🚨 Real-Time Bottlenecks "}],"align":"center"}]'
     rich_content_json: '{"format":"slate"}'
     row: 0
@@ -1060,13 +1059,12 @@
   - name: " (3)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: '[{"type":"h2","children":[{"text":"🗄️ Historical Query Performace"}],"align":"center"}]'
     rich_content_json: '{"format":"slate"}'
-    row: 4
+    row: 5
     col: 0
     width: 24
-    height: 1
+    height: 2
     tab_name: ''
   - title: Stuck Sessions (Locks)
     name: Stuck Sessions (Locks)
@@ -1098,7 +1096,7 @@
     row: 1
     col: 4
     width: 9
-    height: 2
+    height: 3
     tab_name: ''
   - title: Longest Running Active Query (Secs)
     name: Longest Running Active Query (Secs)
@@ -1132,7 +1130,7 @@
     row: 1
     col: 14
     width: 10
-    height: 2
+    height: 3
     tab_name: ''
   - title: Looker's Workload Share
     name: Looker's Workload Share
@@ -1164,7 +1162,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 44
+    row: 46
     col: 0
     width: 12
     height: 6
@@ -1226,7 +1224,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 44
+    row: 46
     col: 13
     width: 11
     height: 6
@@ -1234,10 +1232,9 @@
   - name: " (4)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: '[{"type":"h2","children":[{"text":"Looker Attribution"}],"align":"center"}]'
     rich_content_json: '{"format":"slate"}'
-    row: 42
+    row: 44
     col: 0
     width: 24
     height: 2
@@ -1245,9 +1242,8 @@
   - name: " (5)"
     type: text
     title_text: ''
-    subtitle_text: ''
     body_text: ''
-    row: 34
+    row: 36
     col: 16
     width: 8
     height: 3

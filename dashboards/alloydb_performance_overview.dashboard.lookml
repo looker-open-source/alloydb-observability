@@ -3,7 +3,7 @@
   title: AlloyDB Performance Overview
   preferred_viewer: dashboards-next
   description: ''
-  preferred_slug: ldQeUnMqPyUvKdfdew23B1
+  preferred_slug: DAqQbhEVfY3rAkQsvckqUZ
   layout: newspaper
   tabs:
   - name: ''
@@ -55,9 +55,9 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 4
-    col: 0
-    width: 10
+    row: 3
+    col: 4
+    width: 5
     height: 2
     tab_name: ''
   - title: Cache Hit Ratio
@@ -120,10 +120,10 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 6
+    row: 5
     col: 0
-    width: 10
-    height: 4
+    width: 9
+    height: 5
     tab_name: ''
   - title: Transaction Failure Rate
     name: Transaction Failure Rate
@@ -695,10 +695,10 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 4
-    col: 10
-    width: 14
-    height: 6
+    row: 3
+    col: 9
+    width: 15
+    height: 7
     tab_name: ''
   - name: " (2)"
     type: text
@@ -845,23 +845,11 @@
     row: 0
     col: 0
     width: 4
-    height: 4
+    height: 5
     tab_name: ''
   - name: " (4)"
     type: text
     title_text: ''
-    subtitle_text: ''
-    body_text: '[{"type":"h1","children":[{"text":" "}],"align":"center"}]'
-    rich_content_json: '{"format":"slate"}'
-    row: 3
-    col: 4
-    width: 20
-    height: 1
-    tab_name: ''
-  - name: " (5)"
-    type: text
-    title_text: ''
-    subtitle_text: ''
     body_text: ''
     row: 18
     col: 0
