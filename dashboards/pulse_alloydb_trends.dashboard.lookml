@@ -1,6 +1,6 @@
 ---
-- dashboard: pulse_alloydb
-  title: Pulse AlloyDB
+- dashboard: pulse_alloydb_trends
+  title: Pulse AlloyDB Trends
   preferred_viewer: dashboards-next
   description: ''
   preferred_slug: G6hf8HU8fFYPUuxVJOoB82
@@ -32,13 +32,13 @@
     show_view_names: false
     defaults_version: 1
     listen:
-      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 4
-    col: 0
-    width: 7
-    height: 3
+      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+    row: 1
+    col: 5
+    width: 5
+    height: 2
     tab_name: ''
   - title: Daily Transaction Volume
     name: Daily Transaction Volume
@@ -63,13 +63,13 @@
     show_view_names: false
     defaults_version: 1
     listen:
-      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 4
-    col: 7
-    width: 6
-    height: 3
+      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+    row: 1
+    col: 10
+    width: 4
+    height: 2
     tab_name: ''
   - title: Daily Data Processed
     name: Daily Data Processed
@@ -94,13 +94,13 @@
     show_view_names: false
     defaults_version: 1
     listen:
-      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 4
-    col: 13
+      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+    row: 1
+    col: 14
     width: 5
-    height: 3
+    height: 2
     tab_name: ''
   - title: Cache Hit Ratio
     name: Cache Hit Ratio
@@ -125,13 +125,13 @@
     show_view_names: false
     defaults_version: 1
     listen:
-      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 4
-    col: 18
-    width: 6
-    height: 3
+      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+    row: 1
+    col: 19
+    width: 5
+    height: 2
     tab_name: ''
   - title: 'CPU Attribution: Looker vs Application'
     name: 'CPU Attribution: Looker vs Application'
@@ -185,10 +185,10 @@
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
     listen:
-      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 11
+      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+    row: 7
     col: 0
     width: 24
     height: 6
@@ -242,10 +242,10 @@
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
     listen:
-      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 17
+      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+    row: 13
     col: 0
     width: 24
     height: 6
@@ -256,10 +256,10 @@
     subtitle_text: ''
     body_text: '[{"type":"h2","children":[{"text":"📈 Executive Summary"}],"align":"center"}]'
     rich_content_json: '{"format":"slate"}'
-    row: 2
-    col: 0
-    width: 24
-    height: 2
+    row: 0
+    col: 5
+    width: 19
+    height: 1
     tab_name: ''
   - name: " (2)"
     type: text
@@ -268,20 +268,20 @@
     body_text: '[{"type":"h2","children":[{"text":"🔍 Workload Attribution & Resource
       Trends"}],"align":"center"}]'
     rich_content_json: '{"format":"slate"}'
-    row: 9
+    row: 5
     col: 0
     width: 24
     height: 2
     tab_name: ''
-  - title: " "
-    name: " "
+  - title: New Tile
+    name: New Tile
     model: operational_intelligence_alloy_db
     explore: navigation_bar
     type: single_value
-    fields: [navigation_bar.tabbed_navigation_bar]
+    fields: [navigation_bar.vertical_navigation_bar]
     filters:
       navigation_bar.datname: "%postgres%"
-    sorts: [navigation_bar.tabbed_navigation_bar]
+    sorts: [navigation_bar.vertical_navigation_bar]
     limit: 500
     column_limit: 50
     custom_color_enabled: true
@@ -340,8 +340,8 @@
     listen: {}
     row: 0
     col: 0
-    width: 24
-    height: 2
+    width: 5
+    height: 5
     tab_name: ''
   - title: Daily Data Processed
     name: Daily Data Processed (2)
@@ -401,11 +401,11 @@
     defaults_version: 1
     title_hidden: true
     listen:
-      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 7
-    col: 13
+      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+    row: 3
+    col: 14
     width: 5
     height: 2
     tab_name: ''
@@ -465,12 +465,12 @@
     defaults_version: 1
     title_hidden: true
     listen:
-      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 7
-    col: 0
-    width: 7
+      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+    row: 3
+    col: 5
+    width: 5
     height: 2
     tab_name: ''
   - title: Cache Hit Ratio (Copy)
@@ -531,12 +531,12 @@
     defaults_version: 1
     title_hidden: true
     listen:
-      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 7
-    col: 18
-    width: 6
+      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+    row: 3
+    col: 19
+    width: 5
     height: 2
     tab_name: ''
   - title: Daily Transaction Volume
@@ -597,12 +597,12 @@
     defaults_version: 1
     title_hidden: true
     listen:
-      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 7
-    col: 7
-    width: 6
+      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+    row: 3
+    col: 10
+    width: 4
     height: 2
     tab_name: ''
   filters:

@@ -12,13 +12,12 @@
   - name: ''
     type: text
     title_text: ''
-    body_text: '[{"type":"h1","children":[{"text":"🏛️ Cumulative Instance Health
-      (All-Time)"}],"align":"center"}]'
+    body_text: '[{"type":"h2","children":[{"text":" 💾 Cumulative Instance Health"}],"align":"center"}]'
     rich_content_json: '{"format":"slate"}'
-    row: 2
-    col: 0
-    width: 24
-    height: 2
+    row: 0
+    col: 4
+    width: 20
+    height: 1
     tab_name: ''
   - title: Total Compute Load
     name: Total Compute Load
@@ -58,7 +57,7 @@
       Database Name: pg_stat_database.datname
     row: 4
     col: 0
-    width: 5
+    width: 10
     height: 2
     tab_name: ''
   - title: Cache Hit Ratio
@@ -122,9 +121,9 @@
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
     row: 6
-    col: 2
-    width: 8
-    height: 6
+    col: 0
+    width: 10
+    height: 4
     tab_name: ''
   - title: Transaction Failure Rate
     name: Transaction Failure Rate
@@ -198,8 +197,8 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 4
-    col: 5
+    row: 1
+    col: 4
     width: 5
     height: 2
     tab_name: ''
@@ -275,8 +274,8 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 4
-    col: 15
+    row: 1
+    col: 14
     width: 5
     height: 2
     tab_name: ''
@@ -339,7 +338,7 @@
     row: 20
     col: 0
     width: 7
-    height: 6
+    height: 2
     tab_name: ''
   - title: Query Volume
     name: Query Volume
@@ -402,7 +401,7 @@
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
       Query Start Time: pg_stat_activity.query_start_time
-    row: 14
+    row: 12
     col: 0
     width: 24
     height: 6
@@ -469,7 +468,7 @@
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
       Query Start Time: pg_stat_activity.query_start_time
-    row: 20
+    row: 18
     col: 15
     width: 9
     height: 6
@@ -547,9 +546,9 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 4
-    col: 20
-    width: 4
+    row: 1
+    col: 19
+    width: 5
     height: 2
     tab_name: ''
   - title: Deadlock Frequency
@@ -625,8 +624,8 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 4
-    col: 10
+    row: 1
+    col: 9
     width: 5
     height: 2
     tab_name: ''
@@ -696,18 +695,18 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 6
-    col: 12
-    width: 12
+    row: 4
+    col: 10
+    width: 14
     height: 6
     tab_name: ''
   - name: " (2)"
     type: text
     title_text: ''
-    body_text: '[{"type":"h1","children":[{"text":"⚡ Live Traffic Pulse (Filtered
+    body_text: '[{"type":"h2","children":[{"text":"⚡ Live Traffic Pulse (Filtered
       by Time)"}],"align":"center"}]'
     rich_content_json: '{"format":"slate"}'
-    row: 12
+    row: 10
     col: 0
     width: 24
     height: 2
@@ -773,20 +772,20 @@
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
       Query Start Time: pg_stat_activity.query_start_time
-    row: 20
+    row: 18
     col: 7
     width: 8
     height: 6
     tab_name: ''
-  - title: " "
-    name: " "
+  - title: ''
+    name: " (3)"
     model: operational_intelligence_alloy_db
     explore: navigation_bar
     type: single_value
-    fields: [navigation_bar.tabbed_navigation_bar]
+    fields: [navigation_bar.vertical_navigation_bar]
     filters:
       navigation_bar.datname: "%postgres%"
-    sorts: [navigation_bar.tabbed_navigation_bar]
+    sorts: [navigation_bar.vertical_navigation_bar]
     limit: 500
     column_limit: 50
     custom_color_enabled: true
@@ -845,7 +844,28 @@
     listen: {}
     row: 0
     col: 0
-    width: 24
+    width: 4
+    height: 4
+    tab_name: ''
+  - name: " (4)"
+    type: text
+    title_text: ''
+    subtitle_text: ''
+    body_text: '[{"type":"h1","children":[{"text":" "}],"align":"center"}]'
+    rich_content_json: '{"format":"slate"}'
+    row: 3
+    col: 4
+    width: 20
+    height: 1
+    tab_name: ''
+  - name: " (5)"
+    type: text
+    title_text: ''
+    subtitle_text: ''
+    body_text: ''
+    row: 18
+    col: 0
+    width: 7
     height: 2
     tab_name: ''
   filters:

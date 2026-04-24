@@ -14,10 +14,10 @@
     model: operational_intelligence_alloy_db
     explore: navigation_bar
     type: single_value
-    fields: [navigation_bar.tabbed_navigation_bar]
+    fields: [navigation_bar.vertical_navigation_bar]
     filters:
       navigation_bar.datname: "%postgres%"
-    sorts: [navigation_bar.tabbed_navigation_bar]
+    sorts: [navigation_bar.vertical_navigation_bar]
     limit: 500
     column_limit: 50
     custom_color_enabled: true
@@ -76,8 +76,8 @@
     listen: {}
     row: 0
     col: 0
-    width: 24
-    height: 2
+    width: 4
+    height: 4
     tab_name: ''
   - title: The Query Inspector Table
     name: The Query Inspector Table
@@ -179,7 +179,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 30
+    row: 27
     col: 0
     width: 24
     height: 7
@@ -261,7 +261,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 8
+    row: 5
     col: 0
     width: 10
     height: 12
@@ -415,7 +415,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 8
+    row: 5
     col: 10
     width: 14
     height: 12
@@ -621,7 +621,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 20
+    row: 17
     col: 0
     width: 24
     height: 10
@@ -831,10 +831,10 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 37
+    row: 34
     col: 0
     width: 16
-    height: 10
+    height: 8
     tab_name: ''
   - title: Temporary Space Spill (GB)
     name: Temporary Space Spill (GB)
@@ -1044,31 +1044,29 @@
     row: 37
     col: 16
     width: 8
-    height: 10
+    height: 2
     tab_name: ''
   - name: " (2)"
     type: text
     title_text: ''
     subtitle_text: ''
-    body_text: '[{"type":"h2","children":[{"text":"🚨 Live Bottlenecks (Happening
-      Right Now)"}],"align":"center"}]'
+    body_text: '[{"type":"h2","children":[{"text":"🚨 Real-Time Bottlenecks "}],"align":"center"}]'
     rich_content_json: '{"format":"slate"}'
-    row: 2
-    col: 0
-    width: 24
-    height: 2
+    row: 0
+    col: 5
+    width: 18
+    height: 1
     tab_name: ''
   - name: " (3)"
     type: text
     title_text: ''
     subtitle_text: ''
-    body_text: '[{"type":"h2","children":[{"text":"🗄️ The Wall of Shame (All-Time
-      Historical)"}],"align":"center"}]'
+    body_text: '[{"type":"h2","children":[{"text":"🗄️ Historical Query Performace"}],"align":"center"}]'
     rich_content_json: '{"format":"slate"}'
-    row: 6
+    row: 4
     col: 0
     width: 24
-    height: 2
+    height: 1
     tab_name: ''
   - title: Stuck Sessions (Locks)
     name: Stuck Sessions (Locks)
@@ -1097,8 +1095,8 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 4
-    col: 0
+    row: 1
+    col: 4
     width: 9
     height: 2
     tab_name: ''
@@ -1131,7 +1129,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 4
+    row: 1
     col: 14
     width: 10
     height: 2
@@ -1166,7 +1164,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 49
+    row: 44
     col: 0
     width: 12
     height: 6
@@ -1228,7 +1226,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 49
+    row: 44
     col: 13
     width: 11
     height: 6
@@ -1239,10 +1237,20 @@
     subtitle_text: ''
     body_text: '[{"type":"h2","children":[{"text":"Looker Attribution"}],"align":"center"}]'
     rich_content_json: '{"format":"slate"}'
-    row: 47
+    row: 42
     col: 0
     width: 24
     height: 2
+    tab_name: ''
+  - name: " (5)"
+    type: text
+    title_text: ''
+    subtitle_text: ''
+    body_text: ''
+    row: 34
+    col: 16
+    width: 8
+    height: 3
     tab_name: ''
   filters:
   - name: Is Primary Database (Yes / No)

@@ -46,10 +46,10 @@ view: navigation_bar {
       {% endif %}
 
       <!-- Dashboard 3: Historical Trends -->
-      {% if _explore._dashboard_url contains 'pulse_alloydb' %}
+      {% if _explore._dashboard_url contains 'pulse_alloydb_trends' %}
         <span style="{{ style_active }}">📈 Historical Trends</span>
       {% else %}
-        <a style="{{ style_inactive }}" href="/embed/dashboards/operational_intelligence_alloy_db::pulse_alloydb">📈 Pulse AlloyDB Trends</a>
+        <a style="{{ style_inactive }}" href="/embed/dashboards/operational_intelligence_alloy_db::pulse_alloydb_trends">📈 Pulse AlloyDB Trends</a>
       {% endif %}
 
     </div> ;;
@@ -80,10 +80,10 @@ view: navigation_bar {
       {% endif %}
 
       <!-- Dashboard 3: Historical Trends -->
-      {% if _explore._dashboard_url contains 'pulse_alloydb' %}
+      {% if _explore._dashboard_url contains 'pulse_alloydb_trends' %}
         <span style="{{ style_active }}">📈 Historical Trends</span>
       {% else %}
-        <a style="{{ style_inactive }}" href="/embed/dashboards/operational_intelligence_alloy_db::pulse_alloydb">📈 Pulse AlloyDB Trends</a>
+        <a style="{{ style_inactive }}" href="/embed/dashboards/operational_intelligence_alloy_db::pulse_alloydb_trends">📈 Pulse AlloyDB Trends</a>
       {% endif %}
 
     </div> ;;
@@ -114,10 +114,10 @@ view: navigation_bar {
       {% endif %}
 
       <!-- Dashboard 3: Historical Trends -->
-      {% if _explore._dashboard_url contains 'pulse_alloydb' %}
+      {% if _explore._dashboard_url contains 'pulse_alloydb_trends' %}
         <span style="{{ style_active }}">📈 Historical Trends</span>
       {% else %}
-        <a style="{{ style_inactive }}" href="/embed/dashboards/operational_intelligence_alloy_db::pulse_alloydb">📈 Pulse AlloyDB Trends</a>
+        <a style="{{ style_inactive }}" href="/embed/dashboards/operational_intelligence_alloy_db::pulse_alloydb_trends">📈 Pulse AlloyDB Trends</a>
       {% endif %}
 
     </div> ;;
