@@ -25,15 +25,15 @@ view: +pg_stat_statements {
     sql: ${query_pii_masked} ;;
     html: <div style="font-family: monospace; white-space: pre-wrap;">{{ value }}</div> ;;
 
-    link: {
-      label: "🎯 Query Performance Signature (Single Value)"
-      url: "@{DRILL_SINGLE_VALUE_VIZ}{{ link }}&fields=pg_stat_statements.average_execution_time_ms&f[pg_stat_statements.query_formatted]={{ value | url_encode }}&toggle=vis"
-    }
+    # link: {
+    #   label: "🎯 Query Performance Signature (Single Value)"
+    #   url: "@{DRILL_SINGLE_VALUE_VIZ}{{ link }}&fields=pg_stat_statements.average_execution_time_ms&f[pg_stat_statements.query_formatted]={{ value | url_encode }}&toggle=vis"
+    # }
 
-    link: {
-      label: "📈 Historical Latency Trend (Line)"
-      url: "@{DRILL_LINE_VIZ}{{ link }}&fields=pg_stat_activity.query_start_date,pg_stat_statements.average_execution_time_ms&f[pg_stat_statements.query_formatted]={{ value | url_encode }}&sorts=pg_stat_activity.query_start_date+asc&toggle=vis"
-    }
+    # link: {
+    #   label: "📈 Historical Latency Trend (Line)"
+    #   url: "@{DRILL_LINE_VIZ}{{ link }}&fields=pg_stat_activity.query_start_date,pg_stat_statements.average_execution_time_ms&f[pg_stat_statements.query_formatted]={{ value | url_encode }}&sorts=pg_stat_activity.query_start_date+asc&toggle=vis"
+    # }
   }
 
   dimension: is_looker_query {
@@ -49,15 +49,15 @@ view: +pg_stat_statements {
     group_label: "Query Identification"
     sql: CAST(${queryid} AS VARCHAR) ;;
 
-    link: {
-      label: "🍩 Who runs this query? (Top Users Pie)"
-      url: "@{DRILL_PIE_VIZ}{{ link }}&fields=pg_stat_activity.usename,pg_stat_statements.total_calls&f[pg_stat_statements.query_hash]={{ value | url_encode }}&sorts=pg_stat_statements.total_calls+desc&limit=10&toggle=vis"
-    }
+    # link: {
+    #   label: "🍩 Who runs this query? (Top Users Pie)"
+    #   url: "@{DRILL_PIE_VIZ}{{ link }}&fields=pg_stat_activity.usename,pg_stat_statements.total_calls&f[pg_stat_statements.query_hash]={{ value | url_encode }}&sorts=pg_stat_statements.total_calls+desc&limit=10&toggle=vis"
+    # }
 
-    link: {
-      label: "📈 Database Load - specific query (Line)"
-      url: "@{DRILL_LINE_VIZ}{{ link }}&fields=pg_stat_activity.query_start_minute,pg_stat_statements.total_execution_time_seconds&f[pg_stat_statements.query_hash]={{ value | url_encode }}&sorts=pg_stat_activity.query_start_minute+asc&limit=500&toggle=vis"
-    }
+    # link: {
+    #   label: "📈 Database Load - specific query (Line)"
+    #   url: "@{DRILL_LINE_VIZ}{{ link }}&fields=pg_stat_activity.query_start_minute,pg_stat_statements.total_execution_time_seconds&f[pg_stat_statements.query_hash]={{ value | url_encode }}&sorts=pg_stat_activity.query_start_minute+asc&limit=500&toggle=vis"
+    # }
 
     link: {
       label: "⏱️ Query Latency Trend (Line)"
@@ -84,17 +84,17 @@ view: +pg_stat_statements {
     group_label: "Execution Metrics"
     value_format: "#,##0.00 \"s\""
     sql: ${total_exec_time} / 1000.0 ;;
-    drill_fields: [query_formatted, total_execution_time_seconds]
-    
-    link: {
-      label: "📊 View Top Heavy Queries (Bar)"
-      url: "@{DRILL_COLUMN_VIZ}{{ link }}&fields=pg_stat_statements.query_formatted,pg_stat_statements.total_execution_time_seconds&sorts=pg_stat_statements.total_execution_time_seconds+desc&limit=10&toggle=vis"
-    }
+    # drill_fields: [query_formatted, total_execution_time_seconds]
 
-    link: {
-      label: "📈 Execution Time Trend (Area)"
-      url: "@{DRILL_AREA_VIZ}{{ link }}&fields=pg_stat_activity.query_start_date,pg_stat_statements.total_execution_time_seconds&pivots=pg_stat_activity.instance_role&sorts=pg_stat_activity.query_start_date+asc&limit=500&toggle=vis"
-    }
+    # link: {
+    #   label: "📊 View Top Heavy Queries (Bar)"
+    #   url: "@{DRILL_COLUMN_VIZ}{{ link }}&fields=pg_stat_statements.query_formatted,pg_stat_statements.total_execution_time_seconds&sorts=pg_stat_statements.total_execution_time_seconds+desc&limit=10&toggle=vis"
+    # }
+
+    # link: {
+    #   label: "📈 Execution Time Trend (Area)"
+    #   url: "@{DRILL_AREA_VIZ}{{ link }}&fields=pg_stat_activity.query_start_date,pg_stat_statements.total_execution_time_seconds&pivots=pg_stat_activity.instance_role&sorts=pg_stat_activity.query_start_date+asc&limit=500&toggle=vis"
+    # }
   }
 
   measure: average_execution_time_ms {
@@ -103,17 +103,17 @@ view: +pg_stat_statements {
     group_label: "Execution Metrics"
     value_format: "#,##0.00 \"ms\""
     sql: 1.0 * SUM(${total_exec_time}) / NULLIF(SUM(${calls}), 0) ;;
-    drill_fields: [query_hash, query_formatted, total_calls, average_execution_time_ms, max_execution_time_ms, total_disk_read_time_seconds, total_temp_blocks_written]
+    # drill_fields: [query_hash, query_formatted, total_calls, average_execution_time_ms, max_execution_time_ms, total_disk_read_time_seconds, total_temp_blocks_written]
 
-    link: {
-      label: "📊 Top 10 Slowest Queries (Bar)"
-      url: "@{DRILL_COLUMN_VIZ}{{ link }}&fields=pg_stat_statements.query_formatted,pg_stat_statements.average_execution_time_ms&sorts=pg_stat_statements.average_execution_time_ms+desc&limit=10&toggle=vis"
-    }
+    # link: {
+    #   label: "📊 Top 10 Slowest Queries (Bar)"
+    #   url: "@{DRILL_COLUMN_VIZ}{{ link }}&fields=pg_stat_statements.query_formatted,pg_stat_statements.average_execution_time_ms&sorts=pg_stat_statements.average_execution_time_ms+desc&limit=10&toggle=vis"
+    # }
 
-    link: {
-      label: "🎯 Latency vs Volume Correlation (Scatter)"
-      url: "@{DRILL_SCATTER_VIZ}{{ link }}&fields=pg_stat_statements.query_hash,pg_stat_statements.total_calls,pg_stat_statements.average_execution_time_ms&sorts=pg_stat_statements.total_calls+desc&limit=50&toggle=vis"
-    }
+    # link: {
+    #   label: "🎯 Latency vs Volume Correlation (Scatter)"
+    #   url: "@{DRILL_SCATTER_VIZ}{{ link }}&fields=pg_stat_statements.query_hash,pg_stat_statements.total_calls,pg_stat_statements.average_execution_time_ms&sorts=pg_stat_statements.total_calls+desc&limit=50&toggle=vis"
+    # }
   }
 
   measure: max_execution_time_ms {
@@ -210,17 +210,17 @@ view: +pg_stat_statements {
     group_label: "Performance Ratios"
     value_format_name: percent_2
     sql: 1.0 * (SUM(${blk_read_time} + ${blk_write_time})) / NULLIF(SUM(${total_exec_time}), 0) ;;
-    drill_fields: [query_formatted, io_overhead_ratio]
-    
-    link: {
-      label: "🔍 Queries with High I/O Overhead (Bar)"
-      url: "@{DRILL_COLUMN_VIZ}{{ link }}&fields=pg_stat_statements.query_formatted,pg_stat_statements.io_overhead_ratio&sorts=pg_stat_statements.io_overhead_ratio+desc&limit=10&toggle=vis"
-    }
+    # drill_fields: [query_formatted, io_overhead_ratio]
 
-    link: {
-      label: "🍩 Total Disk Wait Time by Query (Pie)"
-      url: "@{DRILL_PIE_VIZ}{{ link }}&fields=pg_stat_statements.query_formatted,pg_stat_statements.total_disk_read_time_seconds&sorts=pg_stat_statements.total_disk_read_time_seconds+desc&limit=10&toggle=vis"
-    }
+    # link: {
+    #   label: "🔍 Queries with High I/O Overhead (Bar)"
+    #   url: "@{DRILL_COLUMN_VIZ}{{ link }}&fields=pg_stat_statements.query_formatted,pg_stat_statements.io_overhead_ratio&sorts=pg_stat_statements.io_overhead_ratio+desc&limit=10&toggle=vis"
+    # }
+
+    # link: {
+    #   label: "🍩 Total Disk Wait Time by Query (Pie)"
+    #   url: "@{DRILL_PIE_VIZ}{{ link }}&fields=pg_stat_statements.query_formatted,pg_stat_statements.total_disk_read_time_seconds&sorts=pg_stat_statements.total_disk_read_time_seconds+desc&limit=10&toggle=vis"
+    # }
   }
 
   measure: statement_cache_hit_ratio {

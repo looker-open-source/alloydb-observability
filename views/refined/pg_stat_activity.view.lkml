@@ -134,17 +134,17 @@ view: +pg_stat_activity {
     description: "Name of the user logged into this backend connection."
     group_label: "Connection Details"
     sql: ${TABLE}.usename ;;
-    drill_fields: [application_name, state, total_connections]
+    # drill_fields: [application_name, state, total_connections]
 
-    link: {
-      label: "🍩 User's Application Share (Pie)"
-      url: "@{DRILL_PIE_VIZ}{{ link }}&fields=pg_stat_activity.application_name,pg_stat_activity.total_connections&f[pg_stat_activity.usename]={{ value | url_encode }}&sorts=pg_stat_activity.total_connections+desc&limit=10&toggle=vis"
-    }
+    # link: {
+    #   label: "🍩 User's Application Share (Pie)"
+    #   url: "@{DRILL_PIE_VIZ}{{ link }}&fields=pg_stat_activity.application_name,pg_stat_activity.total_connections&f[pg_stat_activity.usename]={{ value | url_encode }}&sorts=pg_stat_activity.total_connections+desc&limit=10&toggle=vis"
+    # }
 
-    link: {
-      label: "📊 User's Connection States (Bar)"
-      url: "@{DRILL_COLUMN_VIZ}{{ link }}&fields=pg_stat_activity.state,pg_stat_activity.total_connections&f[pg_stat_activity.usename]={{ value | url_encode }}&sorts=pg_stat_activity.total_connections+desc&limit=10&toggle=vis"
-    }
+    # link: {
+    #   label: "📊 User's Connection States (Bar)"
+    #   url: "@{DRILL_COLUMN_VIZ}{{ link }}&fields=pg_stat_activity.state,pg_stat_activity.total_connections&f[pg_stat_activity.usename]={{ value | url_encode }}&sorts=pg_stat_activity.total_connections+desc&limit=10&toggle=vis"
+    # }
   }
 
   dimension: datname {
@@ -161,10 +161,10 @@ view: +pg_stat_activity {
     group_label: "Connection Details"
     sql: ${TABLE}.application_name ;;
 
-    link: {
-      label: "🍩 User Distribution for this App (Pie)"
-      url: "@{DRILL_PIE_VIZ}{{ link }}&fields=pg_stat_activity.usename,pg_stat_activity.total_connections&f[pg_stat_activity.application_name]={{ value | url_encode }}&sorts=pg_stat_activity.total_connections+desc&limit=10&toggle=vis"
-    }
+    # link: {
+    #   label: "🍩 User Distribution for this App (Pie)"
+    #   url: "@{DRILL_PIE_VIZ}{{ link }}&fields=pg_stat_activity.usename,pg_stat_activity.total_connections&f[pg_stat_activity.application_name]={{ value | url_encode }}&sorts=pg_stat_activity.total_connections+desc&limit=10&toggle=vis"
+    # }
   }
 
   dimension: state {
@@ -180,10 +180,10 @@ view: +pg_stat_activity {
     group_label: "Connection Status"
     sql: ${TABLE}.wait_event_type ;;
 
-    link: {
-      label: "🍩 Current Wait Event Distribution (Pie)"
-      url: "@{DRILL_PIE_VIZ}{{ link }}&fields=pg_stat_activity.wait_event_type,pg_stat_activity.total_active_connections&f[pg_stat_activity.is_waiting]=yes&sorts=pg_stat_activity.total_active_connections+desc&limit=10&toggle=vis"
-    }
+    # link: {
+    #   label: "🍩 Current Wait Event Distribution (Pie)"
+    #   url: "@{DRILL_PIE_VIZ}{{ link }}&fields=pg_stat_activity.wait_event_type,pg_stat_activity.total_active_connections&f[pg_stat_activity.is_waiting]=yes&sorts=pg_stat_activity.total_active_connections+desc&limit=10&toggle=vis"
+    # }
   }
 
   dimension: query {
@@ -276,22 +276,22 @@ view: +pg_stat_activity {
     description: "Number of currently active query connections."
     group_label: "Connection Metrics"
     filters: [state: "active"]
-    drill_fields: [application_name, usename, wait_event_type, total_active_connections]
-    
-    link: {
-      label: "📊 Active Connections by Application (Bar)"
-      url: "@{DRILL_COLUMN_VIZ}{{ link }}&fields=pg_stat_activity.application_name,pg_stat_activity.usename,pg_stat_activity.total_active_connections&sorts=pg_stat_activity.total_active_connections+desc&limit=10&toggle=vis"
-    }
+    # drill_fields: [application_name, usename, wait_event_type, total_active_connections]
 
-    link: {
-      label: "📈 Active Connection Trend (Area)"
-      url: "@{DRILL_AREA_VIZ}{{ link }}&fields=pg_stat_activity.query_start_minute,pg_stat_activity.total_active_connections&pivots=pg_stat_activity.traffic_source&sorts=pg_stat_activity.query_start_minute+asc&limit=500&toggle=vis"
-    }
+    # link: {
+    #   label: "📊 Active Connections by Application (Bar)"
+    #   url: "@{DRILL_COLUMN_VIZ}{{ link }}&fields=pg_stat_activity.application_name,pg_stat_activity.usename,pg_stat_activity.total_active_connections&sorts=pg_stat_activity.total_active_connections+desc&limit=10&toggle=vis"
+    # }
 
-    link: {
-      label: "🍩 Current Wait Event Distribution (Pie)"
-      url: "@{DRILL_PIE_VIZ}{{ link }}&fields=pg_stat_activity.wait_event_type,pg_stat_activity.total_active_connections&f[pg_stat_activity.is_waiting]=yes&sorts=pg_stat_activity.total_active_connections+desc&limit=10&toggle=vis"
-    }
+    # link: {
+    #   label: "📈 Active Connection Trend (Area)"
+    #   url: "@{DRILL_AREA_VIZ}{{ link }}&fields=pg_stat_activity.query_start_minute,pg_stat_activity.total_active_connections&pivots=pg_stat_activity.traffic_source&sorts=pg_stat_activity.query_start_minute+asc&limit=500&toggle=vis"
+    # }
+
+    # link: {
+    #   label: "🍩 Current Wait Event Distribution (Pie)"
+    #   url: "@{DRILL_PIE_VIZ}{{ link }}&fields=pg_stat_activity.wait_event_type,pg_stat_activity.total_active_connections&f[pg_stat_activity.is_waiting]=yes&sorts=pg_stat_activity.total_active_connections+desc&limit=10&toggle=vis"
+    # }
   }
 
   measure: stuck_session_count {
@@ -318,17 +318,17 @@ view: +pg_stat_activity {
     group_label: "Connection Metrics"
     value_format_name: percent_1
     sql: 1.0 * ${total_connections} / NULLIF(@{MAX_CONNECTIONS}, 0) ;;
-    drill_fields: [query_start_time, state, connection_saturation_pct, total_connections]
-    
-    link: {
-      label: "📈 Saturation Trend (Area)"
-      url: "@{DRILL_AREA_VIZ}{{ link }}&fields=pg_stat_activity.query_start_time,pg_stat_activity.state,pg_stat_activity.connection_saturation_pct&pivots=pg_stat_activity.state&sorts=pg_stat_activity.query_start_time+asc&limit=500&toggle=vis"
-    }
-    
-    link: {
-      label: "🍩 Current State Distribution (Pie)"
-      url: "@{DRILL_PIE_VIZ}{{ link }}&fields=pg_stat_activity.state,pg_stat_activity.total_connections&sorts=pg_stat_activity.total_connections+desc&limit=10&toggle=vis"
-    }
+    # drill_fields: [query_start_time, state, connection_saturation_pct, total_connections]
+
+    # link: {
+    #   label: "📈 Saturation Trend (Area)"
+    #   url: "@{DRILL_AREA_VIZ}{{ link }}&fields=pg_stat_activity.query_start_time,pg_stat_activity.state,pg_stat_activity.connection_saturation_pct&pivots=pg_stat_activity.state&sorts=pg_stat_activity.query_start_time+asc&limit=500&toggle=vis"
+    # }
+
+    # link: {
+    #   label: "🍩 Current State Distribution (Pie)"
+    #   url: "@{DRILL_PIE_VIZ}{{ link }}&fields=pg_stat_activity.state,pg_stat_activity.total_connections&sorts=pg_stat_activity.total_connections+desc&limit=10&toggle=vis"
+    # }
   }
 
   measure: max_idle_in_transaction_age_seconds {
@@ -348,11 +348,11 @@ view: +pg_stat_activity {
     group_label: "Connection Metrics"
     filters: [state: "active"]
     value_format_name: decimal_0
-    drill_fields: [application_name, usename, current_active_connections]
-    
-    link: {
-      label: "📊 Active Connections by Application (Bar)"
-      url: "@{DRILL_COLUMN_VIZ}{{ link }}&fields=pg_stat_activity.application_name,pg_stat_activity.usename,pg_stat_activity.current_active_connections&sorts=pg_stat_activity.current_active_connections+desc&limit=10&toggle=vis"
-    }
+    # drill_fields: [application_name, usename, current_active_connections]
+
+    # link: {
+    #   label: "📊 Active Connections by Application (Bar)"
+    #   url: "@{DRILL_COLUMN_VIZ}{{ link }}&fields=pg_stat_activity.application_name,pg_stat_activity.usename,pg_stat_activity.current_active_connections&sorts=pg_stat_activity.current_active_connections+desc&limit=10&toggle=vis"
+    # }
   }
 }

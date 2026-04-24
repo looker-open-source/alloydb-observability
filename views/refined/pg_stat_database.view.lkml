@@ -30,15 +30,15 @@ view: +pg_stat_database {
     group_label: "Database Info"
     sql: ${TABLE}.datname ;;
 
-    link: {
-      label: "📈 Transaction Trend (Area)"
-      url: "@{DRILL_AREA_VIZ}{{ link }}&fields=pg_stat_activity.query_start_minute,pg_stat_database.total_transactions&f[pg_stat_database.datname]={{ value | url_encode }}&sorts=pg_stat_activity.query_start_minute+asc&limit=500&toggle=vis"
-    }
+    # link: {
+    #   label: "📈 Transaction Trend (Area)"
+    #   url: "@{DRILL_AREA_VIZ}{{ link }}&fields=pg_stat_activity.query_start_minute,pg_stat_database.total_transactions&f[pg_stat_database.datname]={{ value | url_encode }}&sorts=pg_stat_activity.query_start_minute+asc&limit=500&toggle=vis"
+    # }
 
-    link: {
-      label: "🍩 Write Activity Share (Pie)"
-      url: "@{DRILL_PIE_VIZ}{{ link }}&fields=pg_stat_statements.query_hash,pg_stat_database.total_dml_writes&f[pg_stat_database.datname]={{ value | url_encode }}&sorts=pg_stat_database.total_dml_writes+desc&limit=10&toggle=vis"
-    }
+    # link: {
+    #   label: "🍩 Write Activity Share (Pie)"
+    #   url: "@{DRILL_PIE_VIZ}{{ link }}&fields=pg_stat_statements.query_hash,pg_stat_database.total_dml_writes&f[pg_stat_database.datname]={{ value | url_encode }}&sorts=pg_stat_database.total_dml_writes+desc&limit=10&toggle=vis"
+    # }
   }
 
   dimension: xact_commit {
@@ -107,10 +107,10 @@ view: +pg_stat_database {
     value_format_name: percent_2
     sql: 1.0 * ${total_rollbacks} / NULLIF((${total_commits} + ${total_rollbacks}), 0) ;;
 
-    link: {
-      label: "🔍 Errors by Traffic Source (Bar)"
-      url: "@{DRILL_COLUMN_VIZ}{{ link }}&fields=pg_stat_activity.traffic_source,pg_stat_database.total_rollbacks&sorts=pg_stat_database.total_rollbacks+desc&toggle=vis"
-    }
+    # link: {
+    #   label: "🔍 Errors by Traffic Source (Bar)"
+    #   url: "@{DRILL_COLUMN_VIZ}{{ link }}&fields=pg_stat_activity.traffic_source,pg_stat_database.total_rollbacks&sorts=pg_stat_database.total_rollbacks+desc&toggle=vis"
+    # }
   }
 
   measure: cache_hit_ratio {
@@ -138,17 +138,17 @@ view: +pg_stat_database {
     sql:
       1.0 * ${total_transactions} /
       NULLIF(EXTRACT(EPOCH FROM (CURRENT_TIMESTAMP - MIN(${TABLE}.stats_reset))), 0) ;;
-    drill_fields: [pg_stat_activity.query_start_date, pg_stat_activity.traffic_source, tps]
+    # drill_fields: [pg_stat_activity.query_start_date, pg_stat_activity.traffic_source, tps]
 
-    link: {
-      label: "📈 TPS Trend by Source (Line)"
-      url: "@{DRILL_LINE_VIZ}{{ link }}&fields=pg_stat_activity.query_start_date,pg_stat_activity.traffic_source,pg_stat_database.tps&pivots=pg_stat_activity.traffic_source&sorts=pg_stat_activity.query_start_date+asc&limit=500&toggle=vis"
-    }
+    # link: {
+    #   label: "📈 TPS Trend by Source (Line)"
+    #   url: "@{DRILL_LINE_VIZ}{{ link }}&fields=pg_stat_activity.query_start_date,pg_stat_activity.traffic_source,pg_stat_database.tps&pivots=pg_stat_activity.traffic_source&sorts=pg_stat_activity.query_start_date+asc&limit=500&toggle=vis"
+    # }
 
-    link: {
-      label: "🍩 DML Breakdown by Database (Pie)"
-      url: "@{DRILL_PIE_VIZ}{{ link }}&fields=pg_stat_database.datname,pg_stat_database.total_dml_writes,pg_stat_database.total_dml_reads&toggle=vis"
-    }
+    # link: {
+    #   label: "🍩 DML Breakdown by Database (Pie)"
+    #   url: "@{DRILL_PIE_VIZ}{{ link }}&fields=pg_stat_database.datname,pg_stat_database.total_dml_writes,pg_stat_database.total_dml_reads&toggle=vis"
+    # }
   }
 
   # KPI 3: Database DML Intensity
@@ -197,16 +197,16 @@ view: +pg_stat_database {
     group_label: "Memory & I/O"
     value_format_name: decimal_2
     sql: ${TABLE}.temp_bytes / (1024.0 * 1024.0 * 1024.0) ;;
-    drill_fields: [pg_stat_statements.query_formatted, total_temp_bytes_gb]
+    # drill_fields: [pg_stat_statements.query_formatted, total_temp_bytes_gb]
 
-    link: {
-      label: "📊 Top Spilling Queries (Bar)"
-      url: "@{DRILL_COLUMN_VIZ}{{ link }}&fields=pg_stat_statements.query_formatted,pg_stat_database.total_temp_bytes_gb&sorts=pg_stat_database.total_temp_bytes_gb+desc&limit=10&toggle=vis"
-    }
+    # link: {
+    #   label: "📊 Top Spilling Queries (Bar)"
+    #   url: "@{DRILL_COLUMN_VIZ}{{ link }}&fields=pg_stat_statements.query_formatted,pg_stat_database.total_temp_bytes_gb&sorts=pg_stat_database.total_temp_bytes_gb+desc&limit=10&toggle=vis"
+    # }
 
-    link: {
-      label: "🍩 DML Load Distribution (Pie)"
-      url: "@{DRILL_PIE_VIZ}{{ link }}&fields=pg_stat_activity.traffic_source,pg_stat_database.total_temp_bytes_gb&toggle=vis"
-    }
+    # link: {
+    #   label: "🍩 DML Load Distribution (Pie)"
+    #   url: "@{DRILL_PIE_VIZ}{{ link }}&fields=pg_stat_activity.traffic_source,pg_stat_database.total_temp_bytes_gb&toggle=vis"
+    # }
   }
 }
