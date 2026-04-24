@@ -95,6 +95,14 @@ view: pg_stat_statements_daily_snapshot {
   # 1. OVERALL TRENDS (Use these for high-level daily charts)
   # ==========================================================================
 
+  measure: snapshot_total_exec_time_seconds {
+    type: sum
+    label: "Snapshot Total Exec Time (Secs) - Raw Odometer"
+    description: "Raw cumulative execution time. Use this ONLY with Table Calculations (offset) to calculate daily deltas when using Pivots."
+    value_format: "#,##0.00 \"s\""
+    sql: ${cumulative_total_exec_time} / 1000.0 ;;
+  }
+
   measure: overall_daily_execution_time_seconds {
     type: number
     label: "Overall Daily Execution Time (Secs)"
