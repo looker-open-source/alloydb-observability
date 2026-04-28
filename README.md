@@ -1,4 +1,4 @@
-# Operational Intelligence - AlloyDB Performance Block
+# Operational Intelligence for AlloyDB by Google Cloud
 
 The AlloyDB Performance Block provides a comprehensive observability suite for monitoring the health, performance, and real-time activity of Google Cloud AlloyDB for PostgreSQL instances. By connecting Looker directly to internal system tables, this block surfaces metrics typically hidden from standard BI tools, enabling proactive database optimization and resource management.
 
@@ -66,7 +66,7 @@ When monitoring PostgreSQL/AlloyDB system views, it is critical to separate cumu
 | **Transaction Failure Rate**| **App Stability** | Ratio of Rollbacks vs. Commits. Identifies backend application bugs. | [PostgreSQL Stats Collector](https://www.postgresql.org/docs/current/monitoring-stats.html) |
 
 ### Justification for the "Idle in Transaction" KPI
-The **`idle in transaction`** state ([Official Definition](https://www.postgresql.org/docs/current/monitoring-stats.html#MONITORING-PG-STAT-ACTIVITY-VIEW)) is a critical health indicator for PostgreSQL/AlloyDB. It occurs when an application starts a transaction but fails to send a `COMMIT` or `ROLLBACK`. 
+The **`idle in transaction`** state ([Official Definition](https://www.postgresql.org/docs/current/monitoring-stats.html#MONITORING-PG-STAT-ACTIVITY-VIEW)) is a critical health indicator for PostgreSQL/AlloyDB. It occurs when an application starts a transaction but fails to send a `COMMIT` or `ROLLBACK`.
 
 **Why it matters:**
 1. **Blocks VACUUM:** Prevents the cleanup of dead rows, leading to massive **Table Bloat**.
@@ -77,7 +77,7 @@ The **`idle in transaction`** state ([Official Definition](https://www.postgresq
 
 ## Installation and Configuration: The "Decoupled" Architecture
 
-To adhere to enterprise security best practices, this Looker Block uses a "Decoupled" architecture. Looker **does not** connect directly to your production application database (e.g., `global_gadgets_demo`). Instead, Looker connects to the administrative `postgres` database. 
+To adhere to enterprise security best practices, this Looker Block uses a "Decoupled" architecture. Looker **does not** connect directly to your production application database (e.g., `global_gadgets_demo`). Instead, Looker connects to the administrative `postgres` database.
 
 Because `pg_stat_statements` natively tracks metrics for the *entire cluster*, Looker pulls all metrics from the admin database and uses LookML filters to silently isolate the data for your specific application database. This keeps your production application database completely free of Looker users, extensions, and temp tables.
 
@@ -147,8 +147,8 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA temp_looker_schema GRANT ALL ON TABLES TO loo
 *Note: If your strict enterprise security policies do not allow write access for the Looker service account, the Time-Series explore will not function, but the Live, Table Health, and All-Time explores will continue to work perfectly.*
 
 ### 6. Important Note on Day 0 Behavior (Warm-Up Period)
-When this block is first installed, the **AlloyDB Historical Trends (Time-Series)** dashboard will require a 24 to 48 hour "warm-up" period. 
+When this block is first installed, the **AlloyDB Historical Trends (Time-Series)** dashboard will require a 24 to 48 hour "warm-up" period.
 - On **Day 0**, the PDTs take their first snapshot. Because there is no "yesterday" to compare against, the initial data points will display the full cumulative "Odometer" reading.
-- By **Day 1 and beyond**, the cascading PDTs will have enough history to calculate accurate daily deltas, and the time-series charts will normalize and display correct day-over-day trends. 
+- By **Day 1 and beyond**, the cascading PDTs will have enough history to calculate accurate daily deltas, and the time-series charts will normalize and display correct day-over-day trends.
 
 *The Live Forensics and All-Time Bottlenecks dashboards do not require this warm-up and will function instantly upon installation.*
