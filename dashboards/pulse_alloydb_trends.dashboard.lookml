@@ -276,8 +276,8 @@
     rich_content_json: '{"format":"slate"}'
     row: 0
     col: 4
-    width: 20
-    height: 2
+    width: 17
+    height: 1
     tab_name: ''
   - name: " (2)"
     type: text
@@ -630,12 +630,23 @@
     title_text: ''
     subtitle_text: ''
     body_text: '[{"type":"p","children":[{"text":"Tracks database performance, storage,
-      and workload attribution over time 📊 to identify recurring spikes, long-term
-      degradation, and capacity needs."}],"align":"center"}]'
+      and workload attribution over time 📈 to identify recurring spikes, long-term
+      degradation, and capacity needs."}],"align":"center"},{"type":"p","children":[{"text":"ℹ️
+      Note: This dashboard requires at least 48 hours of data collection to begin
+      displaying accurate trend lines. If you just installed this block, these charts
+      will populate automatically in the coming days."}],"align":"center","id":"50sug"}]'
     rich_content_json: '{"format":"slate"}'
-    row: 2
+    row: 1
     col: 4
     width: 20
+    height: 2
+    tab_name: ''
+  - type: button
+    name: button_773
+    rich_content_json: '{"text":"Looker Home","description":"","newTab":true,"alignment":"right","size":"small","style":"FILLED","color":"#1A73E8","href":"/browse"}'
+    row: 0
+    col: 21
+    width: 3
     height: 1
     tab_name: ''
   filters:

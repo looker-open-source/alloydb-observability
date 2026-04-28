@@ -11,11 +11,11 @@
   - name: ''
     type: text
     title_text: ''
-    body_text: '[{"type":"h2","children":[{"text":" 💾 Cumulative Instance Health"}],"align":"center"}]'
+    body_text: '[{"type":"h2","children":[{"text":" 📊 Cumulative Instance Health"}],"align":"center"}]'
     rich_content_json: '{"format":"slate"}'
     row: 0
     col: 4
-    width: 20
+    width: 17
     height: 1
     tab_name: ''
   - title: Total Compute Load
@@ -632,20 +632,45 @@
     name: Database DML Intensity
     model: operational_intelligence_alloy_db
     explore: alloydb_historical_statements
-    type: looker_donut_multiples
+    type: looker_bar
     fields: [pg_stat_database.total_dml_reads, pg_stat_database.total_dml_writes]
     filters:
       pg_stat_database.is_primary_database: 'Yes'
     limit: 500
     column_limit: 50
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    legend_position: center
+    point_style: none
     show_value_labels: true
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
     font_size: 12
     series_colors:
       pg_stat_database.total_dml_writes: "#f9ab00"
     series_labels: {}
     hidden_fields: []
     hidden_points_if_no: []
-    show_view_names: true
     arm_length: 9
     arm_weight: 48
     spinner_length: 153
@@ -866,6 +891,14 @@
     row: 1
     col: 4
     width: 20
+    height: 1
+    tab_name: ''
+  - type: button
+    name: button_774
+    rich_content_json: '{"text":"Looker Home","description":"","newTab":true,"alignment":"right","size":"small","style":"FILLED","color":"#1A73E8","href":"/browse"}'
+    row: 0
+    col: 21
+    width: 3
     height: 1
     tab_name: ''
   filters:

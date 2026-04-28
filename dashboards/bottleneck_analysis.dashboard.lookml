@@ -1070,11 +1070,11 @@
   - name: " (2)"
     type: text
     title_text: ''
-    body_text: '[{"type":"h2","children":[{"text":"🚨 Real-Time Bottlenecks "}],"align":"center"}]'
+    body_text: '[{"type":"h2","children":[{"text":"🔍 Real-Time Bottlenecks "}],"align":"center"}]'
     rich_content_json: '{"format":"slate"}'
     row: 0
     col: 4
-    width: 20
+    width: 17
     height: 1
     tab_name: ''
   - name: " (3)"
@@ -1336,12 +1336,20 @@
     title_text: ''
     subtitle_text: ''
     body_text: '[{"type":"p","children":[{"text":"Isolates active and historical resource-intensive
-      queries 📈, helping DBAs pinpoint the specific SQL statements causing CPU or
+      queries 🔍, helping DBAs pinpoint the specific SQL statements causing CPU or
       I/O contention."}],"align":"center"}]'
     rich_content_json: '{"format":"slate"}'
     row: 1
     col: 4
     width: 20
+    height: 1
+    tab_name: ''
+  - type: button
+    name: button_775
+    rich_content_json: '{"text":"Looker Home","description":"","newTab":true,"alignment":"right","size":"small","style":"FILLED","color":"#1A73E8","href":"/browse"}'
+    row: 0
+    col: 21
+    width: 3
     height: 1
     tab_name: ''
   filters:
