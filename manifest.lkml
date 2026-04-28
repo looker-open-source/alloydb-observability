@@ -34,11 +34,6 @@ constant: MAX_CONNECTIONS {
   export: override_optional
 }
 
-constant: NO_DATA_LABEL {
-  value: "No Data"
-  export: override_optional
-}
-
 # --------------------------------------------------------------------------
 # Advanced Drilling & Visualization Configurations Library
 # --------------------------------------------------------------------------

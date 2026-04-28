@@ -82,7 +82,6 @@ view: pg_stat_daily_trends {
     description: "Total CPU time burned on this day. (Pivot-safe)"
     value_format: "#,##0.00 \"s\""
     sql: ${TABLE}.daily_exec_time_ms / 1000.0 ;;
-    html: {% if value == nil %} <span style="color: #9aa0a6;">@{NO_DATA_LABEL}</span> {% else %} {{ rendered_value }} {% endif %} ;;
   }
 
   measure: daily_calls {
@@ -91,7 +90,6 @@ view: pg_stat_daily_trends {
     description: "Total number of queries executed on this day. (Pivot-safe)"
     value_format_name: decimal_0
     sql: ${TABLE}.daily_calls ;;
-    html: {% if value == nil %} <span style="color: #9aa0a6;">@{NO_DATA_LABEL}</span> {% else %} {{ rendered_value }} {% endif %} ;;
   }
 
   measure: daily_data_processed_gb {
@@ -100,7 +98,6 @@ view: pg_stat_daily_trends {
     description: "Total data read from disk or cache on this day. (Matches BQ Bytes Processed). (Pivot-safe)"
     value_format: "#,##0.00 \" GB\""
     sql: (${TABLE}.daily_shared_blks_hit + ${TABLE}.daily_shared_blks_read) * 8192.0 / (1024.0 * 1024.0 * 1024.0) ;;
-    html: {% if value == nil %} <span style="color: #9aa0a6;">@{NO_DATA_LABEL}</span> {% else %} {{ rendered_value }} {% endif %} ;;
   }
 
   measure: daily_transactions {
@@ -110,7 +107,6 @@ view: pg_stat_daily_trends {
     value_format_name: decimal_0
     # Because transactions are at the DB level, we only sum them if we aren't fanning out by query
     sql: ${TABLE}.daily_xact_commit + ${TABLE}.daily_xact_rollback ;;
-    html: {% if value == nil %} <span style="color: #9aa0a6;">@{NO_DATA_LABEL}</span> {% else %} {{ rendered_value }} {% endif %} ;;
   }
 
   measure: daily_cache_hit_ratio {
@@ -121,7 +117,6 @@ view: pg_stat_daily_trends {
     sql: 
       CASE WHEN SUM(${TABLE}.daily_shared_blks_hit + ${TABLE}.daily_shared_blks_read) = 0 THEN NULL
       ELSE 1.0 * SUM(${TABLE}.daily_shared_blks_hit) / SUM(${TABLE}.daily_shared_blks_hit + ${TABLE}.daily_shared_blks_read) END ;;
-    html: {% if value == nil %} <span style="color: #9aa0a6;">@{NO_DATA_LABEL}</span> {% else %} {{ rendered_value }} {% endif %} ;;
   }
 
   measure: daily_temp_spill_gb {
@@ -130,6 +125,5 @@ view: pg_stat_daily_trends {
     description: "Total gigabytes spilled to disk on this day. (Matches BQ Spills-to-Disk)"
     value_format: "#,##0.00 \" GB\""
     sql: ${TABLE}.daily_temp_bytes / (1024.0 * 1024.0 * 1024.0) ;;
-    html: {% if value == nil %} <span style="color: #9aa0a6;">@{NO_DATA_LABEL}</span> {% else %} {{ rendered_value }} {% endif %} ;;
   }
 }
