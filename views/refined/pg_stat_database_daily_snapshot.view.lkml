@@ -38,8 +38,7 @@ view: pg_stat_database_daily_snapshot {
           tup_updated,
           tup_deleted,
           temp_bytes
-        FROM pg_catalog.pg_stat_database
-        WHERE datname = '@{DATABASE_NAME}' ;;
+        FROM pg_catalog.pg_stat_database ;;
       sql_step:
         CREATE TABLE ${SQL_TABLE_NAME} AS
         SELECT * FROM @{SCRATCH_SCHEMA}.alloydb_stat_database_history ;;
