@@ -1,8 +1,11 @@
 include: "/views/refined/*.view.lkml"
 
+# --------------------------------------------------------------------------
+# Original Combined Explore (Kept for backwards compatibility)
+# --------------------------------------------------------------------------
 explore: alloydb_performance {
-  label: "AlloyDB Performance Metrics"
-  description: "Explore Query Performance, Active Connections, and Database Health Metrics."
+  label: "AlloyDB Performance Monitoring (Combined)"
+  description: "The central hub for all AlloyDB metrics: Query execution, live connections, and database health. Warning: Joining historical statements with real-time activity can cause filtering artifacts if date filters are applied."
 
   view_name: pg_stat_statements
 
@@ -19,4 +22,75 @@ explore: alloydb_performance {
     relationship: many_to_one
     sql_on: ${pg_stat_statements.dbid} = ${pg_stat_database.datid} ;;
   }
+}
+
+# --------------------------------------------------------------------------
+# Dedicated Real-Time Explore
+# --------------------------------------------------------------------------
+explore: alloydb_real_time_activity {
+  label: "AlloyDB Real-Time Activity (Live Forensics)"
+  description: "Focuses exclusively on real-time, live forensics of the database. Use this Explore to monitor currently active connections, identify blocked sessions, and see exactly what is executing right now."
+
+  view_name: pg_stat_activity
+
+  join: pg_stat_database {
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${pg_stat_activity.datid} = ${pg_stat_database.datid} ;;
+  }
+
+  # Encourage users to only look at the primary monitored database by default
+  # This prevents the explore from pulling in noise from internal system databases
+  always_filter: {
+    filters: [pg_stat_database.is_primary_database: "Yes"]
+  }
+}
+
+# --------------------------------------------------------------------------
+# Dedicated Historical Explore
+# --------------------------------------------------------------------------
+explore: alloydb_historical_statements {
+  label: "AlloyDB Historical Statements (All-Time)"
+  description: "Focuses exclusively on historical analysis of query performance. Use this Explore to find the heaviest queries, highest I/O overhead, and cache efficiency since the last statistics reset. Does NOT contain time-series data."
+
+  view_name: pg_stat_statements
+
+  join: pg_stat_database {
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${pg_stat_statements.dbid} = ${pg_stat_database.datid} ;;
+  }
+
+  # Encourage users to only look at the primary monitored database by default
+  always_filter: {
+    filters: [pg_stat_database.is_primary_database: "Yes"]
+  }
+}
+
+# --------------------------------------------------------------------------
+# Time-Series Trend Explore (Requires PDTs)
+# --------------------------------------------------------------------------
+explore: alloydb_historical_trends {
+  label: "AlloyDB Historical Trends (Time-Series)"
+  description: "Tracks database health and query performance over time using a Tier 2 Cascading PDT to calculate exact daily deltas safely. Requires Persistent Derived Tables (PDTs) to be enabled on the database connection."
+
+  view_name: pg_stat_daily_trends
+
+  join: pg_stat_statements {
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${pg_stat_daily_trends.query_hash} = CAST(${pg_stat_statements.queryid} AS VARCHAR) ;;
+
+    fields: [pg_stat_statements.query_formatted, pg_stat_statements.query_pii_masked, pg_stat_statements.is_looker_query]
+  }
+}
+
+# --------------------------------------------------------------------------
+# Table Health Explore
+# --------------------------------------------------------------------------
+explore: alloydb_table_health {
+  label: "AlloyDB Table Health"
+  description: "Monitors the size, scan rates, and vacuum health of individual tables in the database."
+
+  view_name: pg_stat_user_tables
 }
