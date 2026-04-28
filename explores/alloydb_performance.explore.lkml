@@ -25,7 +25,7 @@ explore: alloydb_performance {
 }
 
 # --------------------------------------------------------------------------
-# Option B: Dedicated Real-Time Explore
+# Dedicated Real-Time Explore
 # --------------------------------------------------------------------------
 explore: alloydb_real_time_activity {
   label: "AlloyDB Real-Time Activity (Live Forensics)"
@@ -47,7 +47,7 @@ explore: alloydb_real_time_activity {
 }
 
 # --------------------------------------------------------------------------
-# Option B: Dedicated Historical Explore
+# Dedicated Historical Explore
 # --------------------------------------------------------------------------
 explore: alloydb_historical_statements {
   label: "AlloyDB Historical Statements (All-Time)"
@@ -72,29 +72,16 @@ explore: alloydb_historical_statements {
 # --------------------------------------------------------------------------
 explore: alloydb_historical_trends {
   label: "AlloyDB Historical Trends (Time-Series)"
-  description: "Tracks database health and query performance over time using daily snapshots. Requires Persistent Derived Tables (PDTs) to be enabled on the database connection."
+  description: "Tracks database health and query performance over time using a Tier 2 Cascading PDT to calculate exact daily deltas safely. Requires Persistent Derived Tables (PDTs) to be enabled on the database connection."
 
-  view_name: pg_stat_database_daily_snapshot
-
-
-  join: pg_stat_statements_daily_snapshot {
-    type: left_outer
-    relationship: one_to_many
-    sql_on: ${pg_stat_database_daily_snapshot.snapshot_date} = ${pg_stat_statements_daily_snapshot.snapshot_date} ;;
-  }
+  view_name: pg_stat_daily_trends
 
   join: pg_stat_statements {
     type: left_outer
     relationship: many_to_one
-    sql_on: ${pg_stat_statements_daily_snapshot.query_hash} = CAST(${pg_stat_statements.queryid} AS VARCHAR) ;;
+    sql_on: ${pg_stat_daily_trends.query_hash} = CAST(${pg_stat_statements.queryid} AS VARCHAR) ;;
 
     fields: [pg_stat_statements.query_formatted, pg_stat_statements.query_pii_masked, pg_stat_statements.is_looker_query]
-  }
-
-  join: pg_stat_database {
-    type: left_outer
-    relationship: many_to_one
-    sql_on: ${pg_stat_database_daily_snapshot.datid} = ${pg_stat_database.datid} ;;
   }
 }
 

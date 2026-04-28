@@ -32,8 +32,7 @@ view: pg_stat_statements_daily_snapshot {
           shared_blks_hit,
           shared_blks_read,
           wal_bytes
-        FROM @{STATEMENTS_SCHEMA}.pg_stat_statements
-        WHERE dbid = (SELECT datid FROM pg_catalog.pg_stat_database WHERE datname = '@{DATABASE_NAME}') ;;
+        FROM @{STATEMENTS_SCHEMA}.pg_stat_statements ;;
       sql_step:
         CREATE TABLE ${SQL_TABLE_NAME} AS
         SELECT * FROM @{SCRATCH_SCHEMA}.alloydb_stat_statements_history ;;
