@@ -14,8 +14,7 @@
     model: operational_intelligence_alloy_db
     explore: alloydb_historical_trends
     type: single_value
-    fields: [pg_stat_database_daily_snapshot.snapshot_date, pg_stat_statements_daily_snapshot.overall_daily_execution_time_seconds]
-    fill_fields: [pg_stat_database_daily_snapshot.snapshot_date]
+    fields: [pg_stat_daily_trends.daily_execution_time_seconds]
     sorts: [pg_stat_database_daily_snapshot.snapshot_date desc]
     limit: 500
     column_limit: 50
@@ -36,9 +35,9 @@
     note_text: The total amount of CPU execution time consumed by all queries during
       the selected period.
     listen:
-      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
-      Database Name: pg_stat_database.datname
-      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+      Is Primary Database (Yes / No): pg_stat_daily_trends.is_primary_database
+      Date: pg_stat_daily_trends.snapshot_date
+      Database Name: pg_stat_daily_trends.datname
     row: 2
     col: 4
     width: 5
@@ -49,8 +48,7 @@
     model: operational_intelligence_alloy_db
     explore: alloydb_historical_trends
     type: single_value
-    fields: [pg_stat_database_daily_snapshot.snapshot_date, pg_stat_database_daily_snapshot.daily_transactions]
-    fill_fields: [pg_stat_database_daily_snapshot.snapshot_date]
+    fields: [pg_stat_daily_trends.daily_transactions]
     sorts: [pg_stat_database_daily_snapshot.snapshot_date desc]
     limit: 500
     column_limit: 50
@@ -71,9 +69,9 @@
     note_text: The total number of Commits and Rollbacks processed, representing the
       overall volume of database traffic.
     listen:
-      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
-      Database Name: pg_stat_database.datname
-      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+      Is Primary Database (Yes / No): pg_stat_daily_trends.is_primary_database
+      Date: pg_stat_daily_trends.snapshot_date
+      Database Name: pg_stat_daily_trends.datname
     row: 2
     col: 9
     width: 5
@@ -84,8 +82,7 @@
     model: operational_intelligence_alloy_db
     explore: alloydb_historical_trends
     type: single_value
-    fields: [pg_stat_database_daily_snapshot.snapshot_date, pg_stat_statements_daily_snapshot.overall_daily_data_processed_gb]
-    fill_fields: [pg_stat_database_daily_snapshot.snapshot_date]
+    fields: [pg_stat_daily_trends.daily_data_processed_gb]
     sorts: [pg_stat_database_daily_snapshot.snapshot_date desc]
     limit: 500
     column_limit: 50
@@ -106,9 +103,9 @@
     note_text: The total volume of data read from memory or physical disk by executing
       queries.
     listen:
-      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
-      Database Name: pg_stat_database.datname
-      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+      Is Primary Database (Yes / No): pg_stat_daily_trends.is_primary_database
+      Date: pg_stat_daily_trends.snapshot_date
+      Database Name: pg_stat_daily_trends.datname
     row: 2
     col: 14
     width: 5
@@ -119,8 +116,7 @@
     model: operational_intelligence_alloy_db
     explore: alloydb_historical_trends
     type: single_value
-    fields: [pg_stat_database_daily_snapshot.snapshot_date, pg_stat_database_daily_snapshot.daily_cache_hit_ratio]
-    fill_fields: [pg_stat_database_daily_snapshot.snapshot_date]
+    fields: [pg_stat_daily_trends.daily_cache_hit_ratio]
     sorts: [pg_stat_database_daily_snapshot.snapshot_date desc]
     limit: 500
     column_limit: 50
@@ -141,9 +137,9 @@
     note_text: The percentage of data blocks successfully read from RAM rather than
       requiring a physical disk read.
     listen:
-      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
-      Database Name: pg_stat_database.datname
-      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+      Is Primary Database (Yes / No): pg_stat_daily_trends.is_primary_database
+      Date: pg_stat_daily_trends.snapshot_date
+      Database Name: pg_stat_daily_trends.datname
     row: 2
     col: 19
     width: 5
@@ -154,10 +150,10 @@
     model: operational_intelligence_alloy_db
     explore: alloydb_historical_trends
     type: looker_area
-    fields: [pg_stat_database_daily_snapshot.snapshot_date, pg_stat_statements.is_looker_query,
-      pg_stat_statements_daily_snapshot.overall_daily_execution_time_seconds]
+    fields: [pg_stat_statements.is_looker_query, pg_stat_daily_trends.snapshot_date,
+      pg_stat_daily_trends.daily_execution_time_seconds]
     pivots: [pg_stat_statements.is_looker_query]
-    fill_fields: [pg_stat_statements.is_looker_query, pg_stat_database_daily_snapshot.snapshot_date]
+    fill_fields: [pg_stat_statements.is_looker_query, pg_stat_daily_trends.snapshot_date]
     sorts: [pg_stat_statements.is_looker_query, pg_stat_database_daily_snapshot.snapshot_date
         desc]
     limit: 500
@@ -205,9 +201,9 @@
     note_text: The distribution of database CPU load, categorized by queries originating
       from Looker BI versus other applications.
     listen:
-      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
-      Database Name: pg_stat_database.datname
-      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+      Is Primary Database (Yes / No): pg_stat_daily_trends.is_primary_database
+      Date: pg_stat_daily_trends.snapshot_date
+      Database Name: pg_stat_daily_trends.datname
     row: 7
     col: 0
     width: 24
@@ -218,8 +214,8 @@
     model: operational_intelligence_alloy_db
     explore: alloydb_historical_trends
     type: looker_area
-    fields: [pg_stat_database_daily_snapshot.snapshot_date, pg_stat_database_daily_snapshot.daily_temp_spill_gb]
-    fill_fields: [pg_stat_database_daily_snapshot.snapshot_date]
+    fields: [pg_stat_daily_trends.snapshot_date, pg_stat_daily_trends.daily_temp_spill_gb]
+    fill_fields: [pg_stat_daily_trends.snapshot_date]
     sorts: [pg_stat_database_daily_snapshot.snapshot_date desc]
     limit: 500
     column_limit: 50
@@ -266,9 +262,9 @@
     note_text: The volume of data written to temporary disk files because query operations
       (like sorts or joins) exceeded allocated working memory.
     listen:
-      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
-      Database Name: pg_stat_database.datname
-      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+      Is Primary Database (Yes / No): pg_stat_daily_trends.is_primary_database
+      Date: pg_stat_daily_trends.snapshot_date
+      Database Name: pg_stat_daily_trends.datname
     row: 13
     col: 0
     width: 24
@@ -370,9 +366,9 @@
     model: operational_intelligence_alloy_db
     explore: alloydb_historical_trends
     type: looker_area
-    fields: [pg_stat_database_daily_snapshot.snapshot_date, pg_stat_statements_daily_snapshot.overall_daily_data_processed_gb]
-    fill_fields: [pg_stat_database_daily_snapshot.snapshot_date]
-    sorts: [pg_stat_database_daily_snapshot.snapshot_date desc]
+    fields: [pg_stat_daily_trends.snapshot_date, pg_stat_daily_trends.daily_data_processed_gb]
+    fill_fields: [pg_stat_daily_trends.snapshot_date]
+    sorts: [pg_stat_daily_trends.snapshot_date desc]
     limit: 500
     column_limit: 50
     x_axis_gridlines: false
@@ -410,6 +406,7 @@
     y_axis_zoom: false
     series_colors:
       pg_stat_statements_daily_snapshot.overall_daily_data_processed_gb: "#e8710a"
+      pg_stat_daily_trends.daily_data_processed_gb: "#f9ab00"
     custom_color_enabled: true
     show_single_value_title: true
     show_comparison: false
@@ -423,9 +420,9 @@
     defaults_version: 1
     title_hidden: true
     listen:
-      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
-      Database Name: pg_stat_database.datname
-      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+      Is Primary Database (Yes / No): pg_stat_daily_trends.is_primary_database
+      Date: pg_stat_daily_trends.snapshot_date
+      Database Name: pg_stat_daily_trends.datname
     row: 4
     col: 14
     width: 5
@@ -436,8 +433,8 @@
     model: operational_intelligence_alloy_db
     explore: alloydb_historical_trends
     type: looker_area
-    fields: [pg_stat_database_daily_snapshot.snapshot_date, pg_stat_statements_daily_snapshot.overall_daily_execution_time_seconds]
-    fill_fields: [pg_stat_database_daily_snapshot.snapshot_date]
+    fields: [pg_stat_daily_trends.snapshot_date, pg_stat_daily_trends.daily_execution_time_seconds]
+    fill_fields: [pg_stat_daily_trends.snapshot_date]
     sorts: [pg_stat_database_daily_snapshot.snapshot_date desc]
     limit: 500
     column_limit: 50
@@ -487,9 +484,9 @@
     defaults_version: 1
     title_hidden: true
     listen:
-      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
-      Database Name: pg_stat_database.datname
-      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+      Is Primary Database (Yes / No): pg_stat_daily_trends.is_primary_database
+      Date: pg_stat_daily_trends.snapshot_date
+      Database Name: pg_stat_daily_trends.datname
     row: 4
     col: 4
     width: 5
@@ -500,9 +497,9 @@
     model: operational_intelligence_alloy_db
     explore: alloydb_historical_trends
     type: looker_area
-    fields: [pg_stat_database_daily_snapshot.snapshot_date, pg_stat_database_daily_snapshot.daily_cache_hit_ratio]
-    fill_fields: [pg_stat_database_daily_snapshot.snapshot_date]
-    sorts: [pg_stat_database_daily_snapshot.snapshot_date desc]
+    fields: [pg_stat_daily_trends.snapshot_date, pg_stat_daily_trends.daily_cache_hit_ratio]
+    fill_fields: [pg_stat_daily_trends.snapshot_date]
+    sorts: [pg_stat_daily_trends.snapshot_date desc]
     limit: 500
     column_limit: 50
     x_axis_gridlines: false
@@ -540,6 +537,7 @@
     y_axis_zoom: false
     series_colors:
       pg_stat_database_daily_snapshot.daily_cache_hit_ratio: "#1e8e3e"
+      pg_stat_daily_trends.daily_cache_hit_ratio: "#1e8e3e"
     custom_color_enabled: true
     show_single_value_title: true
     show_comparison: false
@@ -553,9 +551,9 @@
     defaults_version: 1
     title_hidden: true
     listen:
-      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
-      Database Name: pg_stat_database.datname
-      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+      Is Primary Database (Yes / No): pg_stat_daily_trends.is_primary_database
+      Date: pg_stat_daily_trends.snapshot_date
+      Database Name: pg_stat_daily_trends.datname
     row: 4
     col: 19
     width: 5
@@ -566,9 +564,9 @@
     model: operational_intelligence_alloy_db
     explore: alloydb_historical_trends
     type: looker_area
-    fields: [pg_stat_database_daily_snapshot.snapshot_date, pg_stat_database_daily_snapshot.daily_transactions]
-    fill_fields: [pg_stat_database_daily_snapshot.snapshot_date]
-    sorts: [pg_stat_database_daily_snapshot.snapshot_date desc]
+    fields: [pg_stat_daily_trends.snapshot_date, pg_stat_daily_trends.daily_transactions]
+    fill_fields: [pg_stat_daily_trends.snapshot_date]
+    sorts: [pg_stat_daily_trends.snapshot_date desc]
     limit: 500
     column_limit: 50
     x_axis_gridlines: false
@@ -606,6 +604,7 @@
     y_axis_zoom: false
     series_colors:
       pg_stat_database_daily_snapshot.daily_transactions: "#d93025"
+      pg_stat_daily_trends.daily_transactions: "#d93025"
     custom_color_enabled: true
     show_single_value_title: true
     show_comparison: false
@@ -619,9 +618,9 @@
     defaults_version: 1
     title_hidden: true
     listen:
-      Is Primary Database (Yes / No): pg_stat_database.is_primary_database
-      Database Name: pg_stat_database.datname
-      Snapshot Date: pg_stat_database_daily_snapshot.snapshot_date
+      Is Primary Database (Yes / No): pg_stat_daily_trends.is_primary_database
+      Date: pg_stat_daily_trends.snapshot_date
+      Database Name: pg_stat_daily_trends.datname
     row: 4
     col: 9
     width: 5
@@ -640,7 +639,7 @@
     model: operational_intelligence_alloy_db
     explore: alloydb_historical_trends
     listens_to_filters: []
-    field: pg_stat_database.is_primary_database
+    field: pg_stat_daily_trends.is_primary_database
   - name: Database Name
     title: Database Name
     type: field_filter
@@ -653,11 +652,11 @@
     model: operational_intelligence_alloy_db
     explore: alloydb_historical_trends
     listens_to_filters: [Is Primary Database (Yes / No)]
-    field: pg_stat_database.datname
-  - name: Snapshot Date
-    title: Snapshot Date
+    field: pg_stat_daily_trends.datname
+  - name: Date
+    title: Date
     type: field_filter
-    default_value: ''
+    default_value: 7 day
     allow_multiple_values: true
     required: false
     ui_config:
@@ -666,4 +665,4 @@
     model: operational_intelligence_alloy_db
     explore: alloydb_historical_trends
     listens_to_filters: []
-    field: pg_stat_database_daily_snapshot.snapshot_date
+    field: pg_stat_daily_trends.snapshot_date
