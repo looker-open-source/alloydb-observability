@@ -1,0 +1,41 @@
+{
+  "label": "Operational Intelligence for AlloyDB by Google Cloud",
+  "category_label": "Models",
+  "branding": {
+    "image_uri": "https://marketplace-api.looker.com/block-icons/alloydb-block-icon.png",
+    "tagline": "Monitor database health, identify query bottlenecks, and track historical performance trends directly from Looker in minutes."
+  },
+  "constants": {
+    "CONNECTION_NAME": {
+      "label": "Looker Connection Name",
+      "value_constraint": "connection",
+      "description": "The name of the Looker connection configured to access the AlloyDB 'postgres' administrative database."
+    },
+    "DATABASE_NAME": {
+      "label": "Target Application Database",
+      "description": "The exact name of the primary application database you want to monitor (e.g., 'global_gadgets_demo'). The dashboards will filter to this database by default."
+    },
+    "STATEMENTS_SCHEMA": {
+        "label": "pg_stat_statements Schema",
+        "description": "The schema where the pg_stat_statements extension was created inside the postgres database. (Default: 'public')"
+    },
+    "SCRATCH_SCHEMA": {
+      "label": "Time-Series Scratch Schema",
+      "description": "The schema Looker uses to build the permanent history tables for Time-Series trends. The connection user must have write access to this schema. (Default: 'temp_looker_schema')"
+    },
+    "PII_QUERY_TEXT": {
+        "label": "Mask Sensitive SQL Queries?",
+        "description": "Security toggle. Type 'SHOW' to view full raw SQL queries. Type 'HIDE' to completely mask all SQL query text from Looker users."
+    },
+    "MAX_CONNECTIONS": {
+      "label": "AlloyDB Max Connections Limit",
+      "description": "The maximum number of connections allowed by your AlloyDB instance. Used to calculate Connection Saturation KPIs. (Default: '1000')"
+    }
+  },
+  "models": [
+    {
+      "name": "operational_intelligence_alloy_db",
+      "connection_constant": "CONNECTION_NAME"
+    }
+  ]
+}
