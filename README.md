@@ -145,3 +145,10 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA temp_looker_schema GRANT ALL ON TABLES TO loo
 ```
 
 *Note: If your strict enterprise security policies do not allow write access for the Looker service account, the Time-Series explore will not function, but the Live, Table Health, and All-Time explores will continue to work perfectly.*
+
+### 6. Important Note on Day 0 Behavior (Warm-Up Period)
+When this block is first installed, the **AlloyDB Historical Trends (Time-Series)** dashboard will require a 24 to 48 hour "warm-up" period. 
+- On **Day 0**, the PDTs take their first snapshot. Because there is no "yesterday" to compare against, the initial data points will display the full cumulative "Odometer" reading.
+- By **Day 1 and beyond**, the cascading PDTs will have enough history to calculate accurate daily deltas, and the time-series charts will normalize and display correct day-over-day trends. 
+
+*The Live Forensics and All-Time Bottlenecks dashboards do not require this warm-up and will function instantly upon installation.*
