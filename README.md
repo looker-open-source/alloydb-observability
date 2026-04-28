@@ -36,7 +36,9 @@ The `manifest.lkml` also includes a set of highly optimized, triple-escaped JSON
 - **[`pg_stat_statements`](https://www.postgresql.org/docs/current/pgstatstatements.html)**: The Query Inspector. Tracks the execution details, I/O wait times, and memory spills of all SQL statements.
 - **[`pg_stat_activity`](https://www.postgresql.org/docs/current/monitoring-stats.html#MONITORING-PG-STAT-ACTIVITY-VIEW)**: The Real-time Pulse. Provides a snapshot of active connections, wait events (locks), and session ages.
 - **[`pg_stat_database`](https://www.postgresql.org/docs/current/monitoring-stats.html#MONITORING-PG-STAT-DATABASE-VIEW)**: Instance Health. Monitors database-wide metrics including transaction success rates and buffer cache efficiency.
-- **Daily Snapshot PDTs**: `pg_stat_database_daily_snapshot` and `pg_stat_statements_daily_snapshot` use Looker's [`create_process`](https://cloud.google.com/looker/docs/reference/param-view-create-process) to maintain a permanent history of daily snapshots for time-series analysis.
+- **[`pg_stat_user_tables`](https://www.postgresql.org/docs/current/monitoring-stats.html#MONITORING-PG-STAT-USER-TABLES-VIEW)**: Table Health. Monitors the volume of sequential vs. index scans, row modifications, and "Dead Row" bloat for every table in the database.
+- **Daily Snapshot PDTs**: `pg_stat_database_daily_snapshot` and `pg_stat_statements_daily_snapshot` use Looker's [`create_process`](https://cloud.google.com/looker/docs/reference/param-view-create-process) to maintain a permanent history of daily snapshots.
+- **Cascading Trends PDT**: `pg_stat_daily_trends` builds upon the snapshot PDTs using defensive SQL math to provide clean, pivot-safe daily deltas for the Pulse dashboard.
 
 ### Explores
 
@@ -44,7 +46,8 @@ When monitoring PostgreSQL/AlloyDB system views, it is critical to separate cumu
 
 - **AlloyDB Historical Statements (All-Time)**: Focuses on the `pg_stat_statements` "Odometer". This cumulative ledger records total execution time, calls, and I/O wait times since the last stats reset. **Date filters cannot be applied to this explore** because the database does not record timestamps for historical queries. Use this to find the heaviest queries and worst I/O offenders of all time.
 - **AlloyDB Real-Time Activity (Live Forensics)**: Focuses on the `pg_stat_activity` "Speedometer". This provides a real-time snapshot of currently open connections, active queries, and stuck sessions. **Date filters are supported** here, as it tracks the `query_start` timestamp of live connections.
-- **AlloyDB Historical Trends (Time-Series)**: Uses self-managed history Persistent Derived Tables (PDTs) to take a daily snapshot of the cumulative historical tables. By calculating the daily delta (the difference between today's total and yesterday's total using window functions like `LAG()`), this explore allows for true time-series analysis (e.g., daily CPU usage or TPS trends) that standard PostgreSQL tables cannot support natively.
+- **AlloyDB Historical Trends (Time-Series)**: Relies on the `pg_stat_daily_trends` Cascading PDT. This explore allows for true time-series analysis (e.g., day-over-day CPU usage or TPS trends) and safe pivoting by converting the "Odometer" totals into daily deltas natively in the database.
+- **AlloyDB Table Health**: Focuses on `pg_stat_user_tables`. Use this to identify tables that are suffering from missing indexes (high sequential scans) or require vacuuming (high dead row bloat).
 - **AlloyDB Performance Monitoring (Combined)**: Kept for backward compatibility. *Warning:* Joining historical statements with real-time activity can cause filtering artifacts (returning 0 rows) if date filters are inadvertently applied to historical metrics.
 
 ---
@@ -96,6 +99,7 @@ GRANT CONNECT ON DATABASE postgres TO looker_monitor;
 GRANT USAGE ON SCHEMA public, pg_catalog TO looker_monitor;
 GRANT SELECT ON public.pg_stat_statements TO looker_monitor;
 GRANT SELECT ON pg_catalog.pg_stat_activity, pg_catalog.pg_stat_database TO looker_monitor;
+GRANT SELECT ON pg_catalog.pg_stat_user_tables TO looker_monitor;
 ```
 
 ### 3. Network Configuration
@@ -115,17 +119,15 @@ constant: CONNECTION_NAME { value: "cymbal-gadgets-alloydb" } # Match your Looke
 constant: DATABASE_NAME { value: "your_application_db" } # The ACTUAL database you want to monitor
 ```
 
-### 5. Enable Persistent Derived Tables (PDTs) for Time-Series Tracking (Self-Managed History)
-The `alloydb_historical_trends` explore requires Looker to maintain a permanent history of daily snapshots. Because the underlying PostgreSQL tables (`pg_stat_statements` and `pg_stat_database`) act like "odometers" (constantly increasing cumulative totals without timestamps) and only return a single row representing the live state, standard incremental PDTs suffer from a "sliding window" issue where they only retain the latest day.
+### 5. Enable Time-Series Tracking (Self-Managed History PDTs)
+The `alloydb_historical_trends` explore requires Looker to maintain a permanent history of daily snapshots. Because the underlying PostgreSQL tables (`pg_stat_statements` and `pg_stat_database`) act like "odometers" (constantly increasing cumulative totals without timestamps), standard incremental PDTs suffer from a "sliding window" issue where they only retain the latest day.
 
-To solve this entirely within LookML without requiring external cron jobs, this block utilizes Looker's [`create_process`](https://cloud.google.com/looker/docs/reference/param-view-create-process) feature. The PDTs execute a multi-step SQL script inside Looker's scratch schema to:
-1. Create a permanent history table (e.g., `alloydb_stat_database_history`) if it doesn't exist.
-2. Idempotently delete any existing snapshot for the current day to prevent duplication if the trigger fires multiple times.
-3. Insert the live cumulative snapshot into the history table.
-4. Return the full historical dataset to Looker.
+**The Solution Architecture:**
+1. **Tier 1 (Collectors):** Looker uses the [`create_process`](https://cloud.google.com/looker/docs/reference/param-view-create-process) feature to run a multi-step SQL script inside the scratch schema. This builds a permanent table (e.g., `alloydb_stat_database_history`) and inserts the live cumulative snapshot every night at midnight.
+2. **Tier 2 (Cascading Trends):** A secondary PDT (`pg_stat_daily_trends`) cascades from the Tier 1 collectors. It uses SQL window functions to calculate the daily deltas natively in the database (`Today - Yesterday`).
+3. **Defensive Math:** Because `pg_stat_statements` actively [evicts older queries to stay under the `max` limit](https://www.postgresql.org/docs/current/pgstatstatements.html#PGSTATSTATEMENTS-CONFIG-PARAMS) (resetting their counters to 0), the Tier 2 PDT employs "Defensive Math" using `CASE` statements. If a query counter drops below yesterday's value (indicating an eviction or reset), the SQL automatically ignores the previous day to prevent negative deltas.
 
-By calculating the daily delta (the difference between today's total and yesterday's total using window functions like `LAG()`), this approach allows for true time-series analysis (e.g., daily CPU usage or TPS trends).
-
+**Configuration:**
 For Looker to build these self-managed history tables, the database user configured in Looker (`looker_monitor`) must have permission to write to a scratch schema inside the **`postgres`** database. The schema name is configurable via the `SCRATCH_SCHEMA` constant in `manifest.lkml` (defaults to `temp_looker_schema`). As a superuser connected to `postgres`, run:
 
 ```sql
@@ -142,4 +144,4 @@ GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA temp_looker_schema TO looker_monito
 ALTER DEFAULT PRIVILEGES IN SCHEMA temp_looker_schema GRANT ALL ON TABLES TO looker_monitor;
 ```
 
-*Note: If your strict enterprise security policies do not allow write access for the Looker service account, the Time-Series explore will not function, but the Live and All-Time explores will continue to work perfectly.*
+*Note: If your strict enterprise security policies do not allow write access for the Looker service account, the Time-Series explore will not function, but the Live, Table Health, and All-Time explores will continue to work perfectly.*
