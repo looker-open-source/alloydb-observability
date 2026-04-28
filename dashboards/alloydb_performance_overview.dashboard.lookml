@@ -3,7 +3,6 @@
   title: Performance Overview
   preferred_viewer: dashboards-next
   description: ''
-  preferred_slug: DAqQbhEVfY3rAkQsvckqUZ
   layout: newspaper
   tabs:
   - name: ''
@@ -55,7 +54,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 3
+    row: 4
     col: 4
     width: 5
     height: 2
@@ -120,7 +119,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 5
+    row: 6
     col: 0
     width: 9
     height: 5
@@ -197,7 +196,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 1
+    row: 2
     col: 4
     width: 5
     height: 2
@@ -274,7 +273,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 1
+    row: 2
     col: 14
     width: 5
     height: 2
@@ -335,7 +334,7 @@
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
       Query Start Time: pg_stat_activity.query_start_time
-    row: 20
+    row: 21
     col: 0
     width: 7
     height: 2
@@ -401,7 +400,7 @@
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
       Query Start Time: pg_stat_activity.query_start_time
-    row: 12
+    row: 13
     col: 0
     width: 24
     height: 6
@@ -468,7 +467,7 @@
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
       Query Start Time: pg_stat_activity.query_start_time
-    row: 18
+    row: 19
     col: 15
     width: 9
     height: 6
@@ -546,7 +545,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 1
+    row: 2
     col: 19
     width: 5
     height: 2
@@ -624,7 +623,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 1
+    row: 2
     col: 9
     width: 5
     height: 2
@@ -695,7 +694,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 3
+    row: 4
     col: 9
     width: 15
     height: 7
@@ -706,7 +705,7 @@
     body_text: '[{"type":"h2","children":[{"text":"⚡ Live Traffic Pulse (Filtered
       by Time)"}],"align":"center"}]'
     rich_content_json: '{"format":"slate"}'
-    row: 10
+    row: 11
     col: 0
     width: 24
     height: 2
@@ -772,7 +771,7 @@
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
       Query Start Time: pg_stat_activity.query_start_time
-    row: 18
+    row: 19
     col: 7
     width: 8
     height: 6
@@ -845,16 +844,29 @@
     row: 0
     col: 0
     width: 4
-    height: 5
+    height: 6
     tab_name: ''
   - name: " (4)"
     type: text
     title_text: ''
     body_text: ''
-    row: 18
+    row: 19
     col: 0
     width: 7
     height: 2
+    tab_name: ''
+  - name: " (5)"
+    type: text
+    title_text: ''
+    subtitle_text: ''
+    body_text: '[{"type":"p","children":[{"text":"Provides a high-level snapshot of
+      AlloyDB health, connection saturation, and throughput to instantly gauge real-time
+      system stability. 📊"}],"align":"center"}]'
+    rich_content_json: '{"format":"slate"}'
+    row: 1
+    col: 4
+    width: 20
+    height: 1
     tab_name: ''
   filters:
   - name: Is Primary Database (Yes / No)

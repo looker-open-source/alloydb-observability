@@ -3,7 +3,6 @@
   title: Query Performance & Bottleneck Analysis
   preferred_viewer: dashboards-next
   description: ''
-  preferred_slug: khAtMg8SGGp2pIUL10BXGy
   layout: newspaper
   tabs:
   - name: ''
@@ -77,7 +76,7 @@
     row: 0
     col: 0
     width: 4
-    height: 5
+    height: 6
     tab_name: ''
   - title: The Query Inspector Table
     name: The Query Inspector Table
@@ -179,7 +178,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 29
+    row: 30
     col: 0
     width: 24
     height: 7
@@ -261,7 +260,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 7
+    row: 8
     col: 0
     width: 10
     height: 12
@@ -415,7 +414,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 7
+    row: 8
     col: 10
     width: 14
     height: 12
@@ -643,7 +642,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 19
+    row: 20
     col: 0
     width: 24
     height: 10
@@ -853,7 +852,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 36
+    row: 37
     col: 0
     width: 16
     height: 8
@@ -1063,7 +1062,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 39
+    row: 40
     col: 16
     width: 8
     height: 2
@@ -1074,8 +1073,8 @@
     body_text: '[{"type":"h2","children":[{"text":"🚨 Real-Time Bottlenecks "}],"align":"center"}]'
     rich_content_json: '{"format":"slate"}'
     row: 0
-    col: 5
-    width: 18
+    col: 4
+    width: 20
     height: 1
     tab_name: ''
   - name: " (3)"
@@ -1083,7 +1082,7 @@
     title_text: ''
     body_text: '[{"type":"h2","children":[{"text":"🗄️ Historical Query Performace"}],"align":"center"}]'
     rich_content_json: '{"format":"slate"}'
-    row: 5
+    row: 6
     col: 0
     width: 24
     height: 2
@@ -1115,7 +1114,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 1
+    row: 2
     col: 4
     width: 9
     height: 2
@@ -1149,7 +1148,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 1
+    row: 2
     col: 14
     width: 10
     height: 2
@@ -1184,7 +1183,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 46
+    row: 47
     col: 0
     width: 12
     height: 6
@@ -1246,7 +1245,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 46
+    row: 47
     col: 13
     width: 11
     height: 6
@@ -1256,7 +1255,7 @@
     title_text: ''
     body_text: '[{"type":"h2","children":[{"text":"Looker Attribution"}],"align":"center"}]'
     rich_content_json: '{"format":"slate"}'
-    row: 44
+    row: 45
     col: 0
     width: 24
     height: 2
@@ -1265,7 +1264,7 @@
     type: text
     title_text: ''
     body_text: ''
-    row: 36
+    row: 37
     col: 16
     width: 8
     height: 3
@@ -1296,7 +1295,7 @@
     note_text: Age of the oldest session waiting for a COMMIT.
     hidden_pivots: {}
     listen: {}
-    row: 3
+    row: 4
     col: 4
     width: 9
     height: 2
@@ -1327,10 +1326,23 @@
     note_text: Count of sessions currently frozen while waiting for system resources
       (IO, Memory, or Locks).
     listen: {}
-    row: 3
+    row: 4
     col: 14
     width: 10
     height: 2
+    tab_name: ''
+  - name: " (6)"
+    type: text
+    title_text: ''
+    subtitle_text: ''
+    body_text: '[{"type":"p","children":[{"text":"Isolates active and historical resource-intensive
+      queries 📈, helping DBAs pinpoint the specific SQL statements causing CPU or
+      I/O contention."}],"align":"center"}]'
+    rich_content_json: '{"format":"slate"}'
+    row: 1
+    col: 4
+    width: 20
+    height: 1
     tab_name: ''
   filters:
   - name: Is Primary Database (Yes / No)

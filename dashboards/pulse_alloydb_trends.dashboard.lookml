@@ -3,7 +3,6 @@
   title: Pulse AlloyDB Trends
   preferred_viewer: dashboards-next
   description: ''
-  preferred_slug: 0RLuJhEcdPVLJJLtyjfkgZ
   layout: newspaper
   tabs:
   - name: ''
@@ -38,7 +37,7 @@
       Is Primary Database (Yes / No): pg_stat_daily_trends.is_primary_database
       Date: pg_stat_daily_trends.snapshot_date
       Database Name: pg_stat_daily_trends.datname
-    row: 2
+    row: 3
     col: 4
     width: 5
     height: 2
@@ -72,7 +71,7 @@
       Is Primary Database (Yes / No): pg_stat_daily_trends.is_primary_database
       Date: pg_stat_daily_trends.snapshot_date
       Database Name: pg_stat_daily_trends.datname
-    row: 2
+    row: 3
     col: 9
     width: 5
     height: 2
@@ -106,7 +105,7 @@
       Is Primary Database (Yes / No): pg_stat_daily_trends.is_primary_database
       Date: pg_stat_daily_trends.snapshot_date
       Database Name: pg_stat_daily_trends.datname
-    row: 2
+    row: 3
     col: 14
     width: 5
     height: 2
@@ -140,7 +139,7 @@
       Is Primary Database (Yes / No): pg_stat_daily_trends.is_primary_database
       Date: pg_stat_daily_trends.snapshot_date
       Database Name: pg_stat_daily_trends.datname
-    row: 2
+    row: 3
     col: 19
     width: 5
     height: 2
@@ -204,7 +203,7 @@
       Is Primary Database (Yes / No): pg_stat_daily_trends.is_primary_database
       Date: pg_stat_daily_trends.snapshot_date
       Database Name: pg_stat_daily_trends.datname
-    row: 7
+    row: 8
     col: 0
     width: 24
     height: 6
@@ -265,7 +264,7 @@
       Is Primary Database (Yes / No): pg_stat_daily_trends.is_primary_database
       Date: pg_stat_daily_trends.snapshot_date
       Database Name: pg_stat_daily_trends.datname
-    row: 13
+    row: 14
     col: 0
     width: 24
     height: 6
@@ -286,7 +285,7 @@
     body_text: '[{"type":"h2","children":[{"text":"🔍 Workload Attribution & Resource
       Trends"}],"align":"center"}]'
     rich_content_json: '{"format":"slate"}'
-    row: 5
+    row: 6
     col: 0
     width: 24
     height: 2
@@ -359,7 +358,7 @@
     row: 0
     col: 0
     width: 4
-    height: 5
+    height: 6
     tab_name: ''
   - title: Daily Data Processed
     name: Daily Data Processed
@@ -423,7 +422,7 @@
       Is Primary Database (Yes / No): pg_stat_daily_trends.is_primary_database
       Date: pg_stat_daily_trends.snapshot_date
       Database Name: pg_stat_daily_trends.datname
-    row: 4
+    row: 5
     col: 14
     width: 5
     height: 1
@@ -487,7 +486,7 @@
       Is Primary Database (Yes / No): pg_stat_daily_trends.is_primary_database
       Date: pg_stat_daily_trends.snapshot_date
       Database Name: pg_stat_daily_trends.datname
-    row: 4
+    row: 5
     col: 4
     width: 5
     height: 1
@@ -554,7 +553,7 @@
       Is Primary Database (Yes / No): pg_stat_daily_trends.is_primary_database
       Date: pg_stat_daily_trends.snapshot_date
       Database Name: pg_stat_daily_trends.datname
-    row: 4
+    row: 5
     col: 19
     width: 5
     height: 1
@@ -621,9 +620,22 @@
       Is Primary Database (Yes / No): pg_stat_daily_trends.is_primary_database
       Date: pg_stat_daily_trends.snapshot_date
       Database Name: pg_stat_daily_trends.datname
-    row: 4
+    row: 5
     col: 9
     width: 5
+    height: 1
+    tab_name: ''
+  - name: " (3)"
+    type: text
+    title_text: ''
+    subtitle_text: ''
+    body_text: '[{"type":"p","children":[{"text":"Tracks database performance, storage,
+      and workload attribution over time 📊 to identify recurring spikes, long-term
+      degradation, and capacity needs."}],"align":"center"}]'
+    rich_content_json: '{"format":"slate"}'
+    row: 2
+    col: 4
+    width: 20
     height: 1
     tab_name: ''
   filters:
