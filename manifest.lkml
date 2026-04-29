@@ -5,12 +5,12 @@ project_name: "operational-intelligence-alloy-db"
 # --------------------------------------------------------------------------
 
 constant: CONNECTION_NAME {
-  value: "cymbal-gadgets-alloydb"
+  value: "alloydb_connection_name"
   export: override_optional
 }
 
 constant: DATABASE_NAME {
-  value: "global_gadgets_demo"
+  value: "main_database"
   export: override_optional
 }
 
@@ -38,7 +38,7 @@ constant: MAX_CONNECTIONS {
 # Advanced Drilling & Visualization Configurations Library
 # --------------------------------------------------------------------------
 # Note: The JSON below is heavily escaped to survive Looker's Liquid parser
-# and URL encoding process. 
+# and URL encoding process.
 
 constant: DRILL_LINE_VIZ {
   value: "{% assign vis_config = '{\\\"type\\\": \\\"looker_line\\\", \\\"x_axis_gridlines\\\": false, \\\"y_axis_gridlines\\\": true, \\\"show_view_names\\\": false, \\\"show_y_axis_labels\\\": true, \\\"show_y_axis_ticks\\\": true, \\\"show_x_axis_label\\\": true, \\\"show_x_axis_ticks\\\": true, \\\"interpolation\\\": \\\"linear\\\", \\\"show_null_points\\\": true, \\\"x_axis_zoom\\\": true, \\\"y_axis_zoom\\\": true}' %}"
