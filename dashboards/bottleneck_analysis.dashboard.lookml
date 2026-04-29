@@ -76,7 +76,7 @@
     row: 0
     col: 0
     width: 4
-    height: 6
+    height: 7
     tab_name: ''
   - title: The Query Inspector Table
     name: The Query Inspector Table
@@ -178,7 +178,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 30
+    row: 31
     col: 0
     width: 24
     height: 7
@@ -260,7 +260,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 8
+    row: 9
     col: 0
     width: 10
     height: 12
@@ -414,7 +414,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 8
+    row: 9
     col: 10
     width: 14
     height: 12
@@ -642,7 +642,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 20
+    row: 21
     col: 0
     width: 24
     height: 10
@@ -852,7 +852,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 37
+    row: 38
     col: 0
     width: 16
     height: 8
@@ -1062,7 +1062,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 40
+    row: 41
     col: 16
     width: 8
     height: 2
@@ -1075,14 +1075,14 @@
     row: 0
     col: 4
     width: 17
-    height: 1
+    height: 2
     tab_name: ''
   - name: " (3)"
     type: text
     title_text: ''
     body_text: '[{"type":"h2","children":[{"text":"🗄️ Historical Query Performace"}],"align":"center"}]'
     rich_content_json: '{"format":"slate"}'
-    row: 6
+    row: 7
     col: 0
     width: 24
     height: 2
@@ -1114,7 +1114,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 2
+    row: 3
     col: 4
     width: 9
     height: 2
@@ -1148,7 +1148,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 2
+    row: 3
     col: 14
     width: 10
     height: 2
@@ -1183,7 +1183,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 47
+    row: 48
     col: 0
     width: 12
     height: 6
@@ -1245,7 +1245,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 47
+    row: 48
     col: 13
     width: 11
     height: 6
@@ -1255,7 +1255,7 @@
     title_text: ''
     body_text: '[{"type":"h2","children":[{"text":"Looker Attribution"}],"align":"center"}]'
     rich_content_json: '{"format":"slate"}'
-    row: 45
+    row: 46
     col: 0
     width: 24
     height: 2
@@ -1264,7 +1264,7 @@
     type: text
     title_text: ''
     body_text: ''
-    row: 37
+    row: 38
     col: 16
     width: 8
     height: 3
@@ -1295,7 +1295,7 @@
     note_text: Age of the oldest session waiting for a COMMIT.
     hidden_pivots: {}
     listen: {}
-    row: 4
+    row: 5
     col: 4
     width: 9
     height: 2
@@ -1326,23 +1326,10 @@
     note_text: Count of sessions currently frozen while waiting for system resources
       (IO, Memory, or Locks).
     listen: {}
-    row: 4
+    row: 5
     col: 14
     width: 10
     height: 2
-    tab_name: ''
-  - name: " (6)"
-    type: text
-    title_text: ''
-    subtitle_text: ''
-    body_text: '[{"type":"p","children":[{"text":"Isolates active and historical resource-intensive
-      queries 🔍, helping DBAs pinpoint the specific SQL statements causing CPU or
-      I/O contention."}],"align":"center"}]'
-    rich_content_json: '{"format":"slate"}'
-    row: 1
-    col: 4
-    width: 20
-    height: 1
     tab_name: ''
   - type: button
     name: button_775
@@ -1350,6 +1337,18 @@
     row: 0
     col: 21
     width: 3
+    height: 2
+    tab_name: ''
+  - name: " (6)"
+    type: text
+    title_text: ''
+    subtitle_text: ''
+    body_text: '<p style="font-size:13px; margin: 0px; padding: 0px; line-height:
+      1.2; text-align: center">Isolates active and historical resource-intensive queries
+      🔍, helping DBAs pinpoint the specific SQL statements causing CPU or I/O contention.</p>'
+    row: 2
+    col: 4
+    width: 20
     height: 1
     tab_name: ''
   filters:

@@ -16,7 +16,7 @@
     row: 0
     col: 4
     width: 17
-    height: 1
+    height: 2
     tab_name: ''
   - title: Total Compute Load
     name: Total Compute Load
@@ -54,7 +54,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 4
+    row: 5
     col: 4
     width: 5
     height: 2
@@ -119,7 +119,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 6
+    row: 7
     col: 0
     width: 9
     height: 5
@@ -196,7 +196,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 2
+    row: 3
     col: 4
     width: 5
     height: 2
@@ -273,7 +273,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 2
+    row: 3
     col: 14
     width: 5
     height: 2
@@ -334,7 +334,7 @@
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
       Query Start Time: pg_stat_activity.query_start_time
-    row: 21
+    row: 22
     col: 0
     width: 7
     height: 2
@@ -400,7 +400,7 @@
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
       Query Start Time: pg_stat_activity.query_start_time
-    row: 13
+    row: 14
     col: 0
     width: 24
     height: 6
@@ -467,7 +467,7 @@
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
       Query Start Time: pg_stat_activity.query_start_time
-    row: 19
+    row: 20
     col: 15
     width: 9
     height: 6
@@ -545,7 +545,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 2
+    row: 3
     col: 19
     width: 5
     height: 2
@@ -623,7 +623,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 2
+    row: 3
     col: 9
     width: 5
     height: 2
@@ -719,7 +719,7 @@
     listen:
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
-    row: 4
+    row: 5
     col: 9
     width: 15
     height: 7
@@ -730,7 +730,7 @@
     body_text: '[{"type":"h2","children":[{"text":"⚡ Live Traffic Pulse (Filtered
       by Time)"}],"align":"center"}]'
     rich_content_json: '{"format":"slate"}'
-    row: 11
+    row: 12
     col: 0
     width: 24
     height: 2
@@ -796,7 +796,7 @@
       Is Primary Database (Yes / No): pg_stat_database.is_primary_database
       Database Name: pg_stat_database.datname
       Query Start Time: pg_stat_activity.query_start_time
-    row: 19
+    row: 20
     col: 7
     width: 8
     height: 6
@@ -869,29 +869,16 @@
     row: 0
     col: 0
     width: 4
-    height: 6
+    height: 7
     tab_name: ''
   - name: " (4)"
     type: text
     title_text: ''
     body_text: ''
-    row: 19
+    row: 20
     col: 0
     width: 7
     height: 2
-    tab_name: ''
-  - name: " (5)"
-    type: text
-    title_text: ''
-    subtitle_text: ''
-    body_text: '[{"type":"p","children":[{"text":"Provides a high-level snapshot of
-      AlloyDB health, connection saturation, and throughput to instantly gauge real-time
-      system stability. 📊"}],"align":"center"}]'
-    rich_content_json: '{"format":"slate"}'
-    row: 1
-    col: 4
-    width: 20
-    height: 1
     tab_name: ''
   - type: button
     name: button_774
@@ -899,6 +886,18 @@
     row: 0
     col: 21
     width: 3
+    height: 2
+    tab_name: ''
+  - name: " (5)"
+    type: text
+    title_text: ''
+    subtitle_text: ''
+    body_text: '<p style="font-size:13px; margin: 0px; padding: 0px; line-height:
+      1.2; text-align: center">Provides a high-level snapshot of AlloyDB health, connection
+      saturation, and throughput to instantly gauge real-time system stability. 📊</p>'
+    row: 2
+    col: 4
+    width: 20
     height: 1
     tab_name: ''
   filters:

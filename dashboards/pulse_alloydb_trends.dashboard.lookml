@@ -37,7 +37,7 @@
       Is Primary Database (Yes / No): pg_stat_daily_trends.is_primary_database
       Date: pg_stat_daily_trends.snapshot_date
       Database Name: pg_stat_daily_trends.datname
-    row: 3
+    row: 4
     col: 4
     width: 5
     height: 2
@@ -71,7 +71,7 @@
       Is Primary Database (Yes / No): pg_stat_daily_trends.is_primary_database
       Date: pg_stat_daily_trends.snapshot_date
       Database Name: pg_stat_daily_trends.datname
-    row: 3
+    row: 4
     col: 9
     width: 5
     height: 2
@@ -105,7 +105,7 @@
       Is Primary Database (Yes / No): pg_stat_daily_trends.is_primary_database
       Date: pg_stat_daily_trends.snapshot_date
       Database Name: pg_stat_daily_trends.datname
-    row: 3
+    row: 4
     col: 14
     width: 5
     height: 2
@@ -139,7 +139,7 @@
       Is Primary Database (Yes / No): pg_stat_daily_trends.is_primary_database
       Date: pg_stat_daily_trends.snapshot_date
       Database Name: pg_stat_daily_trends.datname
-    row: 3
+    row: 4
     col: 19
     width: 5
     height: 2
@@ -203,7 +203,7 @@
       Is Primary Database (Yes / No): pg_stat_daily_trends.is_primary_database
       Date: pg_stat_daily_trends.snapshot_date
       Database Name: pg_stat_daily_trends.datname
-    row: 8
+    row: 9
     col: 0
     width: 24
     height: 6
@@ -264,7 +264,7 @@
       Is Primary Database (Yes / No): pg_stat_daily_trends.is_primary_database
       Date: pg_stat_daily_trends.snapshot_date
       Database Name: pg_stat_daily_trends.datname
-    row: 14
+    row: 15
     col: 0
     width: 24
     height: 6
@@ -277,7 +277,7 @@
     row: 0
     col: 4
     width: 17
-    height: 1
+    height: 2
     tab_name: ''
   - name: " (2)"
     type: text
@@ -285,7 +285,7 @@
     body_text: '[{"type":"h2","children":[{"text":"🔍 Workload Attribution & Resource
       Trends"}],"align":"center"}]'
     rich_content_json: '{"format":"slate"}'
-    row: 6
+    row: 7
     col: 0
     width: 24
     height: 2
@@ -358,7 +358,7 @@
     row: 0
     col: 0
     width: 4
-    height: 6
+    height: 7
     tab_name: ''
   - title: Daily Data Processed
     name: Daily Data Processed
@@ -422,7 +422,7 @@
       Is Primary Database (Yes / No): pg_stat_daily_trends.is_primary_database
       Date: pg_stat_daily_trends.snapshot_date
       Database Name: pg_stat_daily_trends.datname
-    row: 5
+    row: 6
     col: 14
     width: 5
     height: 1
@@ -486,7 +486,7 @@
       Is Primary Database (Yes / No): pg_stat_daily_trends.is_primary_database
       Date: pg_stat_daily_trends.snapshot_date
       Database Name: pg_stat_daily_trends.datname
-    row: 5
+    row: 6
     col: 4
     width: 5
     height: 1
@@ -553,7 +553,7 @@
       Is Primary Database (Yes / No): pg_stat_daily_trends.is_primary_database
       Date: pg_stat_daily_trends.snapshot_date
       Database Name: pg_stat_daily_trends.datname
-    row: 5
+    row: 6
     col: 19
     width: 5
     height: 1
@@ -620,26 +620,10 @@
       Is Primary Database (Yes / No): pg_stat_daily_trends.is_primary_database
       Date: pg_stat_daily_trends.snapshot_date
       Database Name: pg_stat_daily_trends.datname
-    row: 5
+    row: 6
     col: 9
     width: 5
     height: 1
-    tab_name: ''
-  - name: " (3)"
-    type: text
-    title_text: ''
-    subtitle_text: ''
-    body_text: '[{"type":"p","children":[{"text":"Tracks database performance, storage,
-      and workload attribution over time 📈 to identify recurring spikes, long-term
-      degradation, and capacity needs."}],"align":"center"},{"type":"p","children":[{"text":"ℹ️
-      Note: This dashboard requires at least 48 hours of data collection to begin
-      displaying accurate trend lines. If you just installed this block, these charts
-      will populate automatically in the coming days."}],"align":"center","id":"50sug"}]'
-    rich_content_json: '{"format":"slate"}'
-    row: 1
-    col: 4
-    width: 20
-    height: 2
     tab_name: ''
   - type: button
     name: button_773
@@ -647,7 +631,20 @@
     row: 0
     col: 21
     width: 3
-    height: 1
+    height: 2
+    tab_name: ''
+  - name: " (3)"
+    type: text
+    title_text: ''
+    subtitle_text: ''
+    body_text: |-
+      <p style="font-size:13px; margin: 0px; padding: 0px; line-height: 1.2; text-align: center">Tracks database performance, storage, and workload attribution over time 📈 to identify recurring spikes, long-term degradation, and capacity needs.
+      ℹ️ Note: This dashboard requires at least 48 hours of data collection to begin displaying accurate trend lines. If you just installed this block, these charts will populate automatically in the coming days.
+      </p>
+    row: 2
+    col: 4
+    width: 20
+    height: 2
     tab_name: ''
   filters:
   - name: Is Primary Database (Yes / No)
