@@ -5,12 +5,12 @@ project_name: "operational-intelligence-alloy-db"
 # --------------------------------------------------------------------------
 
 constant: CONNECTION_NAME {
-  value: "alloydb_connection_name"
+  value: "cymbal-gadgets-alloydb"
   export: override_optional
 }
 
 constant: DATABASE_NAME {
-  value: "main_database"
+  value: "global_gadgets_demo"
   export: override_optional
 }
 
