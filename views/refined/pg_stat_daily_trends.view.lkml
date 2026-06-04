@@ -8,45 +8,45 @@ view: pg_stat_daily_trends {
         db.snapshot_date,
         db.datname,
         stmt.queryid as queryid,
-        
-        CASE WHEN LAG(db.snapshot_date) OVER (PARTITION BY stmt.queryid, db.datid ORDER BY db.snapshot_date) IS NULL THEN 0 
+
+        CASE WHEN LAG(db.snapshot_date) OVER (PARTITION BY stmt.queryid, db.datid ORDER BY db.snapshot_date) IS NULL THEN 0
              WHEN stmt.total_exec_time < LAG(stmt.total_exec_time) OVER (PARTITION BY stmt.queryid, db.datid ORDER BY db.snapshot_date) THEN stmt.total_exec_time
              ELSE (stmt.total_exec_time - LAG(stmt.total_exec_time) OVER (PARTITION BY stmt.queryid, db.datid ORDER BY db.snapshot_date))
         END AS daily_exec_time_ms,
 
-        CASE WHEN LAG(db.snapshot_date) OVER (PARTITION BY stmt.queryid, db.datid ORDER BY db.snapshot_date) IS NULL THEN 0 
+        CASE WHEN LAG(db.snapshot_date) OVER (PARTITION BY stmt.queryid, db.datid ORDER BY db.snapshot_date) IS NULL THEN 0
              WHEN stmt.calls < LAG(stmt.calls) OVER (PARTITION BY stmt.queryid, db.datid ORDER BY db.snapshot_date) THEN stmt.calls
              ELSE (stmt.calls - LAG(stmt.calls) OVER (PARTITION BY stmt.queryid, db.datid ORDER BY db.snapshot_date))
         END AS daily_calls,
 
-        CASE WHEN LAG(db.snapshot_date) OVER (PARTITION BY stmt.queryid, db.datid ORDER BY db.snapshot_date) IS NULL THEN 0 
+        CASE WHEN LAG(db.snapshot_date) OVER (PARTITION BY stmt.queryid, db.datid ORDER BY db.snapshot_date) IS NULL THEN 0
              WHEN stmt.shared_blks_hit < LAG(stmt.shared_blks_hit) OVER (PARTITION BY stmt.queryid, db.datid ORDER BY db.snapshot_date) THEN stmt.shared_blks_hit
              ELSE (stmt.shared_blks_hit - LAG(stmt.shared_blks_hit) OVER (PARTITION BY stmt.queryid, db.datid ORDER BY db.snapshot_date))
         END AS daily_shared_blks_hit,
 
-        CASE WHEN LAG(db.snapshot_date) OVER (PARTITION BY stmt.queryid, db.datid ORDER BY db.snapshot_date) IS NULL THEN 0 
+        CASE WHEN LAG(db.snapshot_date) OVER (PARTITION BY stmt.queryid, db.datid ORDER BY db.snapshot_date) IS NULL THEN 0
              WHEN stmt.shared_blks_read < LAG(stmt.shared_blks_read) OVER (PARTITION BY stmt.queryid, db.datid ORDER BY db.snapshot_date) THEN stmt.shared_blks_read
              ELSE (stmt.shared_blks_read - LAG(stmt.shared_blks_read) OVER (PARTITION BY stmt.queryid, db.datid ORDER BY db.snapshot_date))
         END AS daily_shared_blks_read,
 
-        CASE WHEN LAG(db.snapshot_date) OVER (PARTITION BY db.datid ORDER BY db.snapshot_date) IS NULL THEN 0 
+        CASE WHEN LAG(db.snapshot_date) OVER (PARTITION BY db.datid ORDER BY db.snapshot_date) IS NULL THEN 0
              WHEN db.xact_commit < LAG(db.xact_commit) OVER (PARTITION BY db.datid ORDER BY db.snapshot_date) THEN db.xact_commit
              ELSE (db.xact_commit - LAG(db.xact_commit) OVER (PARTITION BY db.datid ORDER BY db.snapshot_date))
         END AS daily_xact_commit,
 
-        CASE WHEN LAG(db.snapshot_date) OVER (PARTITION BY db.datid ORDER BY db.snapshot_date) IS NULL THEN 0 
+        CASE WHEN LAG(db.snapshot_date) OVER (PARTITION BY db.datid ORDER BY db.snapshot_date) IS NULL THEN 0
              WHEN db.xact_rollback < LAG(db.xact_rollback) OVER (PARTITION BY db.datid ORDER BY db.snapshot_date) THEN db.xact_rollback
              ELSE (db.xact_rollback - LAG(db.xact_rollback) OVER (PARTITION BY db.datid ORDER BY db.snapshot_date))
         END AS daily_xact_rollback,
 
-        CASE WHEN LAG(db.snapshot_date) OVER (PARTITION BY db.datid ORDER BY db.snapshot_date) IS NULL THEN 0 
+        CASE WHEN LAG(db.snapshot_date) OVER (PARTITION BY db.datid ORDER BY db.snapshot_date) IS NULL THEN 0
              WHEN db.temp_bytes < LAG(db.temp_bytes) OVER (PARTITION BY db.datid ORDER BY db.snapshot_date) THEN db.temp_bytes
              ELSE (db.temp_bytes - LAG(db.temp_bytes) OVER (PARTITION BY db.datid ORDER BY db.snapshot_date))
         END AS daily_temp_bytes
 
       FROM ${pg_stat_database_daily_snapshot.SQL_TABLE_NAME} db
-      LEFT JOIN ${pg_stat_statements_daily_snapshot.SQL_TABLE_NAME} stmt 
-             ON db.snapshot_date = stmt.snapshot_date 
+      LEFT JOIN ${pg_stat_statements_daily_snapshot.SQL_TABLE_NAME} stmt
+             ON db.snapshot_date = stmt.snapshot_date
     ;;
   }
 
@@ -114,7 +114,7 @@ view: pg_stat_daily_trends {
     label: "Daily Cache Hit Ratio"
     description: "Percentage of data read from memory rather than disk on this specific day."
     value_format_name: percent_2
-    sql: 
+    sql:
       CASE WHEN SUM(${TABLE}.daily_shared_blks_hit + ${TABLE}.daily_shared_blks_read) = 0 THEN NULL
       ELSE 1.0 * SUM(${TABLE}.daily_shared_blks_hit) / SUM(${TABLE}.daily_shared_blks_hit + ${TABLE}.daily_shared_blks_read) END ;;
   }
@@ -129,8 +129,7 @@ view: pg_stat_daily_trends {
     link: {
       label: "View Top 5 Spilling Queries"
       url: "
-      @{DRILL_TEMP_SPILL_VIZ}
-      /explore/operational_intelligence_alloy_db/alloydb_historical_statements?fields=pg_stat_statements.query_formatted,pg_stat_statements.total_temp_blocks_written&f[pg_stat_database.is_primary_database]=Yes&sorts=pg_stat_statements.total_temp_blocks_written+desc&limit=5&toggle=vis&vis_config={{ vis_config | encode_uri }}
+      @{DRILL_TEMP_SPILL_VIZ}/explore/operational_intelligence_alloy_db/alloydb_historical_statements?fields=pg_stat_statements.query_formatted,pg_stat_statements.total_temp_blocks_written&f[pg_stat_database.is_primary_database]=Yes&sorts=pg_stat_statements.total_temp_blocks_written+desc&limit=5&toggle=vis&vis_config={{ vis_config | encode_uri }}
       "
     }
   }

@@ -201,8 +201,7 @@ view: +pg_stat_database {
     link: {
       label: "View Top 5 Spilling Queries"
       url: "
-      @{DRILL_TEMP_SPILL_VIZ}
-      /explore/operational_intelligence_alloy_db/alloydb_historical_statements?fields=pg_stat_statements.query_formatted,pg_stat_statements.total_temp_blocks_written,pg_stat_database.total_temp_bytes_gb&f[pg_stat_database.is_primary_database]=Yes&sorts=pg_stat_statements.total_temp_blocks_written+desc&limit=5&toggle=vis&vis_config={{ vis_config | encode_uri }}
+      @{DRILL_TEMP_SPILL_VIZ}/explore/operational_intelligence_alloy_db/alloydb_historical_statements?fields=pg_stat_statements.query_formatted,pg_stat_statements.total_temp_blocks_written,pg_stat_database.total_temp_bytes_gb&f[pg_stat_database.is_primary_database]=Yes&sorts=pg_stat_statements.total_temp_blocks_written+desc&limit=5&toggle=vis&vis_config={{ vis_config | encode_uri }}
       "
     }
   }
