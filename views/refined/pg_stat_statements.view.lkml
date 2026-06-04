@@ -166,6 +166,15 @@ view: +pg_stat_statements {
     sql: ${temp_blks_written} ;;
   }
 
+  measure: total_temp_spill_gb {
+    type: sum
+    label: "Total Temporary Space Spill (GB)"
+    description: "Total gigabytes spilled to disk because queries required more memory than 'work_mem' allowed."
+    group_label: "Memory & I/O"
+    value_format: "#,##0.00 \" GB\""
+    sql: ${temp_blks_written} * 8192.0 / (1024.0 * 1024.0 * 1024.0) ;;
+  }
+
   measure: workload_share {
     type: percent_of_total
     direction: "column"
