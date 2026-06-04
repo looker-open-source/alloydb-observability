@@ -105,7 +105,7 @@ view: pg_stat_daily_trends {
     label: "Daily Transactions"
     description: "Total Commits + Rollbacks processed on this day."
     value_format_name: decimal_0
-    # Because transactions are at the DB level, we only sum them if we aren't fanning out by query
+    # Because transactions are at the DB level, we only sum them if we arent fanning out by query
     sql: ${TABLE}.daily_xact_commit + ${TABLE}.daily_xact_rollback ;;
   }
 
@@ -125,5 +125,13 @@ view: pg_stat_daily_trends {
     description: "Total gigabytes spilled to disk on this day. (Matches BQ Spills-to-Disk)"
     value_format: "#,##0.00 \" GB\""
     sql: ${TABLE}.daily_temp_bytes / (1024.0 * 1024.0 * 1024.0) ;;
+    drill_fields: []
+    link: {
+      label: "View Top 5 Spilling Queries"
+      url: "
+      @{DRILL_TEMP_SPILL_VIZ}
+      /explore/operational_intelligence_alloy_db/alloydb_historical_statements?fields=pg_stat_statements.query_formatted,pg_stat_statements.total_temp_blocks_written&f[pg_stat_database.is_primary_database]=Yes&sorts=pg_stat_statements.total_temp_blocks_written+desc&limit=5&toggle=vis&vis_config={{ vis_config | encode_uri }}
+      "
+    }
   }
 }

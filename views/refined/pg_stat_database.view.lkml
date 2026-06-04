@@ -197,16 +197,13 @@ view: +pg_stat_database {
     group_label: "Memory & I/O"
     value_format_name: decimal_2
     sql: ${TABLE}.temp_bytes / (1024.0 * 1024.0 * 1024.0) ;;
-    # drill_fields: [pg_stat_statements.query_formatted, total_temp_bytes_gb]
-
-    # link: {
-    #   label: "📊 Top Spilling Queries (Bar)"
-    #   url: "@{DRILL_COLUMN_VIZ}{{ link }}&fields=pg_stat_statements.query_formatted,pg_stat_database.total_temp_bytes_gb&sorts=pg_stat_database.total_temp_bytes_gb+desc&limit=10&toggle=vis"
-    # }
-
-    # link: {
-    #   label: "🍩 DML Load Distribution (Pie)"
-    #   url: "@{DRILL_PIE_VIZ}{{ link }}&fields=pg_stat_activity.traffic_source,pg_stat_database.total_temp_bytes_gb&toggle=vis"
-    # }
+    drill_fields: []
+    link: {
+      label: "View Top 5 Spilling Queries"
+      url: "
+      @{DRILL_TEMP_SPILL_VIZ}
+      /explore/operational_intelligence_alloy_db/alloydb_historical_statements?fields=pg_stat_statements.query_formatted,pg_stat_statements.total_temp_blocks_written,pg_stat_database.total_temp_bytes_gb&f[pg_stat_database.is_primary_database]=Yes&sorts=pg_stat_statements.total_temp_blocks_written+desc&limit=5&toggle=vis&vis_config={{ vis_config | encode_uri }}
+      "
+    }
   }
 }
