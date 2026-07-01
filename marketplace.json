@@ -2,7 +2,7 @@
   "label": "Operational Intelligence for AlloyDB by Google Cloud",
   "category_label": "Models",
   "branding": {
-    "image_uri": "https://marketplace-api.looker.com/block-icons/alloydb-block-icon.png",
+    "image_uri": "https://static-a.cdn.looker.app/marketplace/block-icons/alloydb-block-icon.png",
     "tagline": "Monitor database health, identify query bottlenecks, and track historical performance trends directly from Looker in minutes."
   },
   "constants": {
